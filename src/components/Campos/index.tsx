@@ -7,11 +7,11 @@ interface CampoFormularioCadastroProps {
   label: string;
   id: string;
   name: string;
-  type: "text" | "number";
+  type: "text" | "number" | "email" | "password";
   value: string;
   placeholder: string;
-  error: any;
-  touched: any;
+  error?: any;
+  touched?: any;
 }
 
 export function CampoFormularioCadastro(props: CampoFormularioCadastroProps) {
