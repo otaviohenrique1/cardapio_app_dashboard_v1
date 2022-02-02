@@ -1,5 +1,9 @@
+import { ContainerApp } from "../../../components/ContainerApp";
+
 export function RefeicaoDados() {
   return (
-    <h1>RefeicaoDados</h1>
+    <ContainerApp>
+      <h1>RefeicaoDados</h1>
+    </ContainerApp>
   );
 }

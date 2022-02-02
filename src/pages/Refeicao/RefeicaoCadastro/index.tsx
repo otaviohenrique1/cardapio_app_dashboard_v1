@@ -1,8 +1,9 @@
 import { Field, Form, Formik } from "formik";
-import { Button, ButtonGroup, Col, Container, Label, Row } from "reactstrap";
+import { Button, ButtonGroup, Col, Label, Row } from "reactstrap";
 import { Titulo } from "../../../components/Titulo";
 import * as Yup from "yup";
 import { CampoFormularioCadastro } from "../../../components/Campos";
+import { ContainerApp } from "../../../components/ContainerApp";
 
 interface FormTypes {
   nome: string;
@@ -26,7 +27,7 @@ const validacaoSchema = Yup.object().shape({
 
 export function RefeicaoCadastro() {
   return (
-    <Container>
+    <ContainerApp>
       <Row>
         <Col md={12}>
           <Titulo tag="h1">RefeicaoCadastro</Titulo>
@@ -89,6 +90,6 @@ export function RefeicaoCadastro() {
           </Formik>
         </Col>
       </Row>
-    </Container>
+    </ContainerApp>
   );
 }

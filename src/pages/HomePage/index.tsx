@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
-import { Col, Container, DropdownItem, DropdownMenu, DropdownToggle, Form as FormReactstrap, Input, Label, Pagination, PaginationItem, PaginationLink, Row, Table, UncontrolledButtonDropdown } from "reactstrap";
+import { Col, DropdownItem, DropdownMenu, DropdownToggle, Form as FormReactstrap, Input, Label, Pagination, PaginationItem, PaginationLink, Row, Table, UncontrolledButtonDropdown } from "reactstrap";
 import { Titulo } from "../../components/Titulo";
 import { FormataValorMonetarioTexto } from "../../utils/utils";
 import { BsFillGearFill } from "react-icons/bs";
@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { CampoFiltroGlobalTabela } from "../../components/Filtros";
 import { FaSortDown, FaSortUp } from "react-icons/fa";
+import { ContainerApp } from "../../components/ContainerApp";
 
 const SwalModal = withReactContent(Swal);
 
@@ -87,9 +88,9 @@ export function HomePage() {
     }, useGlobalFilter, useSortBy, usePagination);
 
   return (
-    <Container>
+    <ContainerApp>
       <Row>
-        <Col md={12}>
+        <Col md={12} className="mt-3 mb-3">
           <Titulo tag="h1">HomePage</Titulo>
         </Col>
         <Col md={12}>
@@ -209,7 +210,7 @@ export function HomePage() {
           </Col>
         )}
       </Row>
-    </Container>
+    </ContainerApp>
   );
 }
 

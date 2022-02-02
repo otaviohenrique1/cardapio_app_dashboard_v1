@@ -44,10 +44,10 @@ export function UsuarioCadastro() {
   }
 
   return (
-    <Container>
+    <Container className="pt-5">
       <Row>
         <Col md={12}>
-          <Titulo tag="h1">RefeicaoCadastro</Titulo>
+          <Titulo tag="h1">Novo Usuário</Titulo>
         </Col>
         <Col md={12}>
           <Formik
@@ -101,7 +101,7 @@ export function UsuarioCadastro() {
                     value={values.confirmar_senha}
                     error={errors.confirmar_senha}
                   />
-                  <Col md={12} className="d-flex justify-content-end">
+                  <Col md={12} className="d-flex justify-content-end mt-3">
                     <ButtonGroup>
                       <Button type="submit" color="primary">Salvar</Button>
                       <Button type="reset" color="danger">Limpar</Button>
