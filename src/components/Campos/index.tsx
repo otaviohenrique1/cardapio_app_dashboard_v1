@@ -16,7 +16,7 @@ interface CampoFormularioCadastroProps {
 
 export function CampoFormularioCadastro(props: CampoFormularioCadastroProps) {
   return (
-    <Col md={props.md} className="d-flex flex-column">
+    <Col md={props.md} className="d-flex flex-column mt-3">
       <Label className="form-label" htmlFor={props.id}>{props.label}</Label>
       <Field  className="form-control" id={props.id} name={props.name}
         type={props.type} value={props.value} placeholder={props.placeholder} />
