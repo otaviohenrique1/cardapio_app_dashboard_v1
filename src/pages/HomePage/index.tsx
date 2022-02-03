@@ -11,10 +11,12 @@ import { Link } from "react-router-dom";
 import { CampoFiltroGlobalTabela } from "../../components/Filtros";
 import { FaSortDown, FaSortUp } from "react-icons/fa";
 import { ContainerApp } from "../../components/ContainerApp";
+import { lista_teste_refeicoes } from "../../utils/listas";
 
 const SwalModal = withReactContent(Swal);
 
 interface FormTypes {
+  id: number;
   nome: string;
   preco: string;
   ativo: string;
@@ -26,6 +28,7 @@ export function HomePage() {
   useEffect(() => {
     let listaData = lista_teste_refeicoes.map((item) => {
       return {
+        id: item.id,
         nome: item.nome,
         preco: `R$ ${FormataValorMonetarioTexto(item.preco)}`,
         ativo: item.ativo,
@@ -57,7 +60,9 @@ export function HomePage() {
                     <BsFillGearFill size={20} />
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem>Exibir</DropdownItem>
+                    <DropdownItem>
+                      <Link to={`/refeicao/${1}`} className="nav-link">Exibir</Link>
+                    </DropdownItem>
                     <DropdownItem
                       onClick={() => {
                         SwalModal.fire({
@@ -232,46 +237,3 @@ const UncontrolledButtonDropdownEstilizado = styled(UncontrolledButtonDropdown)`
   
   width: 100%;
 `;
-
-const lista_teste_refeicoes = [
-  {
-    nome: 'X-burger 1',
-    preco: 10,
-    ativo: 'ativo'
-  },
-  {
-    nome: 'X-burger 2',
-    preco: 10,
-    ativo: 'ativo'
-  },
-  {
-    nome: 'X-burger 3',
-    preco: 10,
-    ativo: 'ativo'
-  },
-  {
-    nome: 'X-burger 4',
-    preco: 10,
-    ativo: 'ativo'
-  },
-  {
-    nome: 'X-burger 5',
-    preco: 10,
-    ativo: 'ativo'
-  },
-  {
-    nome: 'X-burger 6',
-    preco: 10,
-    ativo: 'inativo'
-  },
-  {
-    nome: 'X-burger 7',
-    preco: 10,
-    ativo: 'inativo'
-  },
-  {
-    nome: 'X-burger 8',
-    preco: 10,
-    ativo: 'inativo'
-  },
-];
