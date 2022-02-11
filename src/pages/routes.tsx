@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Calendario } from "./Calenario";
 import { HomePage } from "./HomePage";
 import { Login } from "./Login";
 import { Pagina404 } from "./Pagina404";
@@ -18,6 +19,7 @@ export function RoutesApp() {
         <Route path="/refeicao/cadastro" element={<RefeicaoCadastro/>} />
         <Route path="/refeicao/:id" element={<RefeicaoDados/>} />
         <Route element={<Pagina404 />} path="*" />
+        <Route path="/calendario" element={<Calendario/>} />
       </Routes>
     </BrowserRouter>
   );

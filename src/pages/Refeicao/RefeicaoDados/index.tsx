@@ -72,7 +72,6 @@ export function RefeicaoDados() {
           <Button type="button" color="primary" onClick={abreTelaEdicao}>Editar</Button>
         </Col>
       </Row>
-      
     </ContainerApp>
   );
 }
