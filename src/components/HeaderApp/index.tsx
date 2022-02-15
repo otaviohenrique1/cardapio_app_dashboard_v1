@@ -2,7 +2,11 @@ import { Nav, Navbar, NavItem, Collapse, DropdownItem, DropdownMenu, DropdownTog
 import { BiUserCircle } from "react-icons/bi";
 import { MdMenuBook } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const SwalModal = withReactContent(Swal);
 
 export interface UsuarioLogadoDataTypes {
   id_usuario: string;
@@ -20,6 +24,7 @@ const dadosIniciais: UsuarioLogadoDataTypes = {
 
 export function HeaderApp(props: HeaderAppProps) {
   const [data, setData] = useState<UsuarioLogadoDataTypes>(dadosIniciais);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (props.data_usuario_logado) {
@@ -41,6 +46,24 @@ export function HeaderApp(props: HeaderAppProps) {
     setDropdownAberto(!dropdownAberto)
   };
 
+  function logout() {
+    SwalModal.fire({
+      title: "Deseja sair?",
+      buttonsStyling: false,
+      confirmButtonText: 'Sim',
+      showCancelButton: true,
+      cancelButtonText: 'Não',
+      customClass: {
+        confirmButton: 'btn btn-primary me-1',
+        cancelButton: 'btn btn-danger',
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/");
+      }
+    });
+  }
+
   return (
     <Navbar color="dark" dark expand="sm" light className="rounded-top">
       <NavbarBrand>
@@ -59,13 +82,9 @@ export function HeaderApp(props: HeaderAppProps) {
               <BiUserCircle size={30} className="ms-2" />
             </DropdownToggle>
             <DropdownMenu dark>
-              <DropdownItem>
-                Perfil
-              </DropdownItem>
+              <DropdownItem>Perfil</DropdownItem>
               <DropdownItem divider />
-              <DropdownItem>
-                Sair
-              </DropdownItem>
+              <DropdownItem onClick={logout}>Sair</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </Nav>
