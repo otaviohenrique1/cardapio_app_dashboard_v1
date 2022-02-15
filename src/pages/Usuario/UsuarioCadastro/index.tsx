@@ -3,7 +3,8 @@ import { Button, ButtonGroup, Col, Container, Row } from "reactstrap";
 import { Titulo } from "../../../components/Titulo";
 import * as Yup from "yup";
 import { CampoFormularioCadastro } from "../../../components/Campos";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../../../utils/api";
 
 interface FormTypes {
   nome: string;
@@ -27,7 +28,9 @@ const validacaoSchema = Yup.object().shape({
 });
 
 export function UsuarioCadastro() {
-  function onSubmit(values: FormTypes, helpers: FormikHelpers<FormTypes>) {
+  const navigate = useNavigate();
+
+  async function onSubmit(values: FormTypes, helpers: FormikHelpers<FormTypes>) {
     let nome = values.nome;
     let email = values.email;
     let senha = values.senha;
@@ -38,9 +41,16 @@ export function UsuarioCadastro() {
       return;
     }
 
-    let data= { nome, email, senha };
+    const data = new FormData();
+    
+    data.append('nome', nome);
+    data.append('email', email);
+    data.append('senha', senha);
 
-    console.log(data);
+    await api.post('/usuario', data);
+
+    navigate('/');
+    // console.log(data);
   }
 
   return (
