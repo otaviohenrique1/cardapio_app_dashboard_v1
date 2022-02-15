@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import api from "../../utils/api";
 import { adicionaLogin } from "../../features/login/LoginSlice";
-// import Swal from 'sweetalert2';
-// import withReactContent from 'sweetalert2-react-content';
-// const SwalModal = withReactContent(Swal);
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+const SwalModal = withReactContent(Swal);
 
 interface FormTypes {
   email: string;
@@ -54,26 +54,16 @@ export function Login() {
         navigate('/home');
       })
       .catch((error) => {
-        alert('Usuario ou senha invalidos');
-        // setMensagemErro('Usuario ou senha invalidos');
-        // setExibeMensagemErro(!exibeMensagemErro);
+        // alert('Usuario ou senha invalidos');
+        SwalModal.fire({
+          title: "Erro",
+          buttonsStyling: false,
+          html: <p>{`${error}`}</p>,
+          confirmButtonText: 'Fechar',
+          customClass: { confirmButton: 'btn btn-primary' },
+        });
         console.error(error);
       });
-    // const valida_email = values.email === 'usuario@email.com';
-    // const valida_senha = values.senha === '0123456789';
-
-    // if (valida_email && valida_senha) {
-    //   return SwalModal.fire({
-    //     title: <h3>Email ou Senha inválidos</h3>,
-    //     buttonsStyling: false,
-    //     confirmButtonText: 'Fechar',
-    //     customClass: { confirmButton: 'btn btn-primary' },
-    //   });
-    // } else {
-    //   navigate('/home-page');
-    //   formikHelpers.resetForm();
-    // }
-    navigate('/home');
   }
 
   return (
