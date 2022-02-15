@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
 import { Col, DropdownItem, DropdownMenu, DropdownToggle, Form as FormReactstrap, Input, Label, Pagination, PaginationItem, PaginationLink, Row, Table, UncontrolledButtonDropdown } from "reactstrap";
 import { Titulo } from "../../components/Titulo";
-import { FormataValorMonetarioTexto } from "../../utils/utils";
+// import { FormataValorMonetarioTexto } from "../../utils/utils";
 import { BsFillGearFill } from "react-icons/bs";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -11,7 +11,8 @@ import { Link } from "react-router-dom";
 import { CampoFiltroGlobalTabela } from "../../components/Filtros";
 import { FaSortDown, FaSortUp } from "react-icons/fa";
 import { ContainerApp } from "../../components/ContainerApp";
-import { lista_teste_refeicoes } from "../../utils/listas";
+// import { lista_teste_refeicoes } from "../../utils/listas";
+import api from "../../utils/api";
 
 const SwalModal = withReactContent(Swal);
 
@@ -26,15 +27,23 @@ export function HomePage() {
   const [data, setData] = useState<FormTypes[]>([]);
 
   useEffect(() => {
-    let listaData = lista_teste_refeicoes.map((item) => {
-      return {
-        id: item.id,
-        nome: item.nome,
-        preco: `R$ ${FormataValorMonetarioTexto(item.preco)}`,
-        ativo: item.ativo,
-      }
-    });
-    setData(listaData);
+    // let listaData = lista_teste_refeicoes.map((item) => {
+    //   return {
+    //     id: item.id,
+    //     nome: item.nome,
+    //     preco: `R$ ${FormataValorMonetarioTexto(item.preco)}`,
+    //     ativo: item.ativo,
+    //   }
+    // });
+    // setData(listaData);
+
+    api.get('/refeicao')
+      .then((item) => {
+        setData(item.data)
+      })
+      .catch((erro) => {
+        console.error(erro);
+      });
   }, []);
 
   const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow,
@@ -66,7 +75,7 @@ export function HomePage() {
                     <DropdownItem
                       onClick={() => {
                         SwalModal.fire({
-                          title: <h3>Excluir</h3>,
+                          title: "Excluir",
                           buttonsStyling: false,
                           confirmButtonText: 'Sim',
                           showCancelButton: true,
