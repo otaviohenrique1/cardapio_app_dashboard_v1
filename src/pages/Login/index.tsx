@@ -5,6 +5,8 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { CampoFormularioCadastro } from "../../components/Campos";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import api from "../../utils/api";
+import { adicionaLogin } from "../../features/login/LoginSlice";
 // import Swal from 'sweetalert2';
 // import withReactContent from 'sweetalert2-react-content';
 // const SwalModal = withReactContent(Swal);
@@ -28,6 +30,35 @@ export function Login() {
   let navigate = useNavigate();
 
   function onSubmit(values: FormTypes, formikHelpers: FormikHelpers<FormTypes>) {
+    api.post('usuarios/login', {
+      email: values.email,
+      senha: values.senha,
+    }, {
+      auth: {
+        username: values.email,
+        password: values.senha,
+      }
+    })
+      .then((data) => {
+        const id = data.data.data_user.id;
+        const nome = data.data.data_user.nome;
+        const email = data.data.data_user.email;
+        dispatch(adicionaLogin({
+          id: id,
+          nome: nome,
+          email: email,
+        }));
+        sessionStorage.setItem('id', `${id}`);
+        sessionStorage.setItem('nome', `${nome}`);
+        sessionStorage.setItem('email', `${email}`);
+        navigate('/home');
+      })
+      .catch((error) => {
+        alert('Usuario ou senha invalidos');
+        // setMensagemErro('Usuario ou senha invalidos');
+        // setExibeMensagemErro(!exibeMensagemErro);
+        console.error(error);
+      });
     // const valida_email = values.email === 'usuario@email.com';
     // const valida_senha = values.senha === '0123456789';
 
@@ -106,3 +137,7 @@ export function Login() {
     </Container>
   );
 }
+function dispatch(arg0: any) {
+  throw new Error("Function not implemented.");
+}
+
