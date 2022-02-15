@@ -48,13 +48,6 @@ export function RefeicaoCadastro() {
 
     await api.post('/refeicao', data);
 
-    console.log(id_usuario);
-    console.log(data_cadastro);
-    console.log(nome);
-    console.log(preco);
-    console.log(ingredientes);
-    console.log(ativo);
-
     helpers.resetForm();
   }
 
