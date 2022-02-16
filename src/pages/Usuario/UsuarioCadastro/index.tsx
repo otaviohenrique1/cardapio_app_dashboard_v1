@@ -5,26 +5,24 @@ import * as Yup from "yup";
 import { CampoFormularioCadastro } from "../../../components/Campos";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../../utils/api";
+import { format } from "date-fns";
 
 interface FormTypes {
   nome: string;
   email: string;
   senha: string;
-  confirmar_senha: string;
 }
 
 const valoresIniciais: FormTypes = {
   nome: "",
   email: "",
   senha: "",
-  confirmar_senha: "",
 };
 
 const validacaoSchema = Yup.object().shape({
   nome: Yup.string().required("Campo vazio"),
   email: Yup.string().email("E-mail invalido").required("Campo vazio"),
-  senha: Yup.string().min(8, "Minimo 8 carateres").required("Campo vazio"),
-  confirmar_senha: Yup.string().required("Campo vazio"),
+  senha: Yup.string().min(8, "Minimo 8 carateres").max(64, 'Maximo 64 carateres').required("Campo vazio"),
 });
 
 export function UsuarioCadastro() {
@@ -34,23 +32,23 @@ export function UsuarioCadastro() {
     let nome = values.nome;
     let email = values.email;
     let senha = values.senha;
-    let confirmar_senha = values.confirmar_senha;
-
-    if (senha !== confirmar_senha) {
-      helpers.setFieldError("confirmar_senha", "senhas não correspondem");
-      return;
-    }
+    let data_cadastro = format(new Date(), 'yyyy-MM-dd');
 
     const data = new FormData();
     
     data.append('nome', nome);
     data.append('email', email);
     data.append('senha', senha);
-
-    await api.post('/usuario', data);
+    data.append('data_cadastro', data_cadastro);
+    await api.post('usuario', data);
+    
+    // await api.post('usuario', {
+    //   'nome': nome,
+    //   'email': email,
+    //   'senha': senha,
+    // });
 
     navigate('/');
-    // console.log(data);
   }
 
   return (
@@ -100,16 +98,6 @@ export function UsuarioCadastro() {
                     value={values.senha}
                     error={errors.senha}
                     touched={touched.senha}
-                  />
-                  <CampoFormularioCadastro
-                    md={12}
-                    id="confirmar_senha"
-                    label="Confirme a sua senha"
-                    name="confirmar_senha"
-                    type="password"
-                    placeholder="Confirme a sua senha"
-                    value={values.confirmar_senha}
-                    error={errors.confirmar_senha}
                   />
                   <Col md={12} className="d-flex justify-content-end mt-3">
                     <ButtonGroup>
