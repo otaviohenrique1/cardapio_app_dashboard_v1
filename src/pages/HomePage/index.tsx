@@ -37,7 +37,7 @@ export function HomePage() {
     // });
     // setData(listaData);
 
-    api.get('/refeicao')
+    api.get('refeicao')
       .then((item) => {
         setData(item.data)
       })

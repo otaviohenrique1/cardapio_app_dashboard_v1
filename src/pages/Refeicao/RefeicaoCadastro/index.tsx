@@ -46,7 +46,7 @@ export function RefeicaoCadastro() {
     data.append('id_usuario', id_usuario);
     data.append('data_cadastro', data_cadastro);
 
-    await api.post('/refeicao', data);
+    await api.post('refeicao', data);
 
     helpers.resetForm();
   }
