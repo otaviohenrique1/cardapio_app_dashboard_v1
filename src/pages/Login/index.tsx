@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import api from "../../utils/api";
 import { adicionaLogin } from "../../features/login/LoginSlice";
+import { useDispatch } from "react-redux";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 const SwalModal = withReactContent(Swal);
@@ -28,9 +29,10 @@ const schemaValidacao = Yup.object().shape({
 
 export function Login() {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  function onSubmit(values: FormTypes, formikHelpers: FormikHelpers<FormTypes>) {
-    api.post('usuarios/login', {
+  async function onSubmit(values: FormTypes, formikHelpers: FormikHelpers<FormTypes>) {
+    await api.post('usuario/login', {
       email: values.email,
       senha: values.senha,
     }, {
@@ -127,7 +129,3 @@ export function Login() {
     </Container>
   );
 }
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}
-
