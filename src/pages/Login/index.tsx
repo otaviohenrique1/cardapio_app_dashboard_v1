@@ -44,15 +44,12 @@ export function Login() {
       .then((data) => {
         const id = data.data.data_user.id;
         const nome = data.data.data_user.nome;
-        const email = data.data.data_user.email;
         dispatch(adicionaLogin({
           id: id,
           nome: nome,
-          email: email,
         }));
         sessionStorage.setItem('id', `${id}`);
         sessionStorage.setItem('nome', `${nome}`);
-        sessionStorage.setItem('email', `${email}`);
         navigate('/home');
       })
       .catch((error) => {
