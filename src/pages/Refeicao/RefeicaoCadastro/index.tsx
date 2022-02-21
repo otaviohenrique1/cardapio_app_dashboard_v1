@@ -30,23 +30,33 @@ const validacaoSchema = Yup.object().shape({
 
 export function RefeicaoCadastro() {
   async function handleSubmit(values: FormTypes, helpers: FormikHelpers<FormTypes>) {
-    const data = new FormData();
+    // const data = new FormData();
+    // let data_cadastro = format(new Date(), 'yyyy-MM-dd');
+    // let nome = values.nome;
+    // let preco = (values.preco).toString();
+    // let ingredientes = values.ingredientes;
+    // let ativo = (values.ativo).toString();
+    // data.append('nome', nome);
+    // data.append('preco', preco);
+    // data.append('ingredientes', ingredientes);
+    // data.append('ativo', ativo);
+    // data.append('id_usuario', id_usuario);
+    // data.append('data_cadastro', data_cadastro);
+    // await api.post('refeicao', data);
     
     let id_usuario = '1';
-    let data_cadastro = format(new Date(), 'yyyy-MM-dd');
-    let nome = values.nome;
-    let preco = (values.preco).toString();
-    let ingredientes = values.ingredientes;
-    let ativo = (values.ativo).toString();
-    
-    data.append('nome', nome);
-    data.append('preco', preco);
-    data.append('ingredientes', ingredientes);
-    data.append('ativo', ativo);
-    data.append('id_usuario', id_usuario);
-    data.append('data_cadastro', data_cadastro);
-
-    await api.post('refeicao', data);
+    await api.post('refeicao', {
+      'nome': values.nome,
+      'preco': values.preco,
+      'ingredientes': values.ingredientes,
+      'ativo': values.ativo,
+      'id_usuario': id_usuario,
+      'data_cadastro': format(new Date(), 'yyyy-MM-dd')
+    }).then(() => {
+      alert('Cadastro realizado com sucesso!');
+    }).catch((error) => {
+      console.error(error);
+    });
 
     helpers.resetForm();
   }
