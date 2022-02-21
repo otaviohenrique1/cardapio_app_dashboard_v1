@@ -29,26 +29,28 @@ export function UsuarioCadastro() {
   const navigate = useNavigate();
 
   async function onSubmit(values: FormTypes, helpers: FormikHelpers<FormTypes>) {
-    let nome = values.nome;
-    let email = values.email;
-    let senha = values.senha;
-    let data_cadastro = format(new Date(), 'yyyy-MM-dd');
+    // let nome = values.nome;
+    // let email = values.email;
+    // let senha = values.senha;
+    // let data_cadastro = format(new Date(), 'yyyy-MM-dd');
+    // const data = new FormData();
+    // data.append('nome', nome);
+    // data.append('email', email);
+    // data.append('senha', senha);
+    // data.append('data_cadastro', data_cadastro);
+    // await api.post('usuario', data);
 
-    const data = new FormData();
-    
-    data.append('nome', nome);
-    data.append('email', email);
-    data.append('senha', senha);
-    data.append('data_cadastro', data_cadastro);
-    await api.post('usuario', data);
-    
-    // await api.post('usuario', {
-    //   'nome': nome,
-    //   'email': email,
-    //   'senha': senha,
-    // });
-
-    navigate('/');
+    await api.post('usuario', {
+      'nome': values.nome,
+      'email': values.email,
+      'senha': values.senha,
+      'data_cadastro': format(new Date(), 'yyyy-MM-dd')
+    }).then(() => {
+      alert('Cadastro realizado com sucesso!');
+      navigate('/');
+    }).catch((error) => {
+      console.error(error);
+    });
   }
 
   return (
