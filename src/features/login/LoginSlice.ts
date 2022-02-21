@@ -3,13 +3,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface LoginState {
   id: string;
   nome: string;
-  email: string;
 }
 
 const loginInitialState: LoginState = {
   id: '',
   nome: '',
-  email: '',
 };
 
 export const loginSlice = createSlice({
