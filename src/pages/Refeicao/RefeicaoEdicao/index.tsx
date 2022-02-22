@@ -31,16 +31,12 @@ export function RefeicaoEdicao() {
   useEffect(() => {
     api.get(`refeicao/${id}`)
       .then((item) => {
-        if (!id) {
-          return;
-        }
-
-        let nome = item.data.nome;
-        let preco = item.data.preco;
-        let ativo = item.data.ativo;
-        let ingredientes = item.data.ingredientes;
-
-        setData({ nome, preco, ativo, ingredientes });
+        setData({
+          nome: item.data.nome,
+          preco: item.data.preco,
+          ativo: item.data.ativo,
+          ingredientes: item.data.ingredientes
+        });
       })
       .catch((erro) => {
         console.error(erro);
@@ -129,7 +125,6 @@ export function RefeicaoEdicao() {
                   <Col md={12} className="d-flex justify-content-end">
                     <ButtonGroup>
                       <Button type="submit" color="primary">Salvar</Button>
-                      <Button type="reset" color="danger">Limpar</Button>
                       <Link to={`/refeicao/${id}`} className="btn btn-info">Voltar</Link>
                     </ButtonGroup>
                   </Col>
