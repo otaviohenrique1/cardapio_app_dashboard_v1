@@ -5,6 +5,7 @@ import { Login } from "./Login";
 import { Pagina404 } from "./Pagina404";
 import { RefeicaoCadastro } from "./Refeicao/RefeicaoCadastro";
 import { RefeicaoDados } from "./Refeicao/RefeicaoDados";
+import { RefeicaoEdicao } from "./Refeicao/RefeicaoEdicao";
 import { UsuarioCadastro } from "./Usuario/UsuarioCadastro";
 import { UsuarioDados } from "./Usuario/UsuarioDados";
 
@@ -17,7 +18,8 @@ export function RoutesApp() {
         <Route path="/usuario/:id" element={<UsuarioDados/>} />
         <Route path="/home" element={<HomePage/>} />
         <Route path="/refeicao/cadastro" element={<RefeicaoCadastro/>} />
-        <Route path="/refeicao/:id" element={<RefeicaoDados/>} />
+        <Route path="/refeicao/:id" element={<RefeicaoDados />} />
+        <Route path="/refeicao/:id/edicao" element={<RefeicaoEdicao />} />
         <Route element={<Pagina404 />} path="*" />
         <Route path="/calendario" element={<Calendario/>} />
       </Routes>
