@@ -22,8 +22,15 @@ interface FormularioTypes {
   ingredientes: string,
 }
 
+const valoresIniciaisUseState: FormularioTypes = {
+  nome: '',
+  preco: 0,
+  ativo: false,
+  ingredientes: ''
+};
+
 export function RefeicaoEdicao() {
-  const [data, setData] = useState<FormularioTypes>({ nome: '', preco: 0, ativo: false, ingredientes: '' });
+  const [data, setData] = useState<FormularioTypes>(valoresIniciaisUseState);
   const navigation = useNavigate();
 
   let { id } = useParams();
@@ -43,7 +50,7 @@ export function RefeicaoEdicao() {
       });
   }, [id]);
 
-  const valoresIniciaisFormulario: FormularioTypes = {
+  const dadosDaRefeicao: FormularioTypes = {
     nome: data.nome,
     preco: data.preco,
     ativo: data.ativo,
@@ -73,7 +80,7 @@ export function RefeicaoEdicao() {
         </Col>
         <Col md={12}>
           <Formik
-            initialValues={valoresIniciaisFormulario}
+            initialValues={dadosDaRefeicao}
             validationSchema={validacaoSchema}
             onSubmit={handleSubmit}
             enableReinitialize
