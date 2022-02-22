@@ -54,7 +54,7 @@ export function HeaderApp(props: HeaderAppProps) {
   }
 
   return (
-    <Navbar color="dark" dark expand="sm" light className="rounded-top">
+    <Navbar color="dark" dark expand="sm" light>
       <NavbarBrand>
         <MdMenuBook size={30} />
         <span className="fw-bold ms-2">Chat App</span>
