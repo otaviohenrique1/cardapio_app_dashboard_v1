@@ -18,11 +18,11 @@ export function CampoFiltroGlobalTabela(props: CampoFiltroGlobalTabelaProps) {
     <Form className="d-flex flex-row align-items-center" onSubmit={event => event.preventDefault()}>
       <Label for="filter_table" className="mb-0 me-3 fw-bold form-label">Pesquisar</Label>
       <InputGroup>
-        <InputGroupText>
+        <InputGroupText className="rounded-start">
           <FaSearch />
         </InputGroupText>
         <Input
-          className="rounded-pill"
+          className="rounded-end"
           type="text"
           id="filter_table"
           value={value || ""}
