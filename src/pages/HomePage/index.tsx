@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
 import { Col, DropdownItem, DropdownMenu, DropdownToggle, Form as FormReactstrap, Input, Label, Pagination, PaginationItem, PaginationLink, Row, Table, UncontrolledButtonDropdown } from "reactstrap";
 import { Titulo } from "../../components/Titulo";
-// import { FormataValorMonetarioTexto } from "../../utils/utils";
 import { BsFillGearFill } from "react-icons/bs";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -11,7 +10,6 @@ import { Link } from "react-router-dom";
 import { CampoFiltroGlobalTabela } from "../../components/Filtros";
 import { FaSortDown, FaSortUp } from "react-icons/fa";
 import { ContainerApp } from "../../components/ContainerApp";
-// import { lista_teste_refeicoes } from "../../utils/listas";
 import api from "../../utils/api";
 import { FormataValorMonetarioTexto } from "../../utils/utils";
 
@@ -30,14 +28,6 @@ export function HomePage() {
   useEffect(() => {
     api.get('refeicao')
       .then((item) => {
-        // let data = item.data.map((item: any) => {
-        //   return {
-        //     id: (item.id).toString(),
-        //     nome: item.data.nome,
-        //     preco: FormataValorMonetarioTexto(item.preco),
-        //     ativo: item.ativo,
-        //   }
-        // });
         setData(item.data)
       })
       .catch((erro) => {
