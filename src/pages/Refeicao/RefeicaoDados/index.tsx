@@ -1,11 +1,10 @@
-import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Col, ListGroup, ListGroupItem, Row } from "reactstrap";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { Titulo } from "../../../components/Titulo";
 import api from "../../../utils/api";
-import { FormataValorMonetarioTexto } from "../../../utils/utils";
+import { FormataData, FormataValorMonetarioTexto } from "../../../utils/utils";
 import { Link } from "react-router-dom";
 
 interface RefeicaoDadosTypes {
@@ -37,14 +36,14 @@ export function RefeicaoDados() {
           return;
         }
 
-        let nome = item.data.nome;
-        let preco = item.data.preco;
-        let ativo = item.data.ativo;
-        let ingredientes = item.data.ingredientes;
-        let data_cadastro = item.data.data_cadastro;
-        // let data_cadastro = format(new Date(item.data.data_cadastro), 'dd/MM/yyyy');
-
-        setData({ id, nome, preco, ativo, ingredientes, data_cadastro });
+        setData({ 
+          id,
+          nome: item.data.nome,
+          preco: item.data.preco,
+          ativo: item.data.ativo,
+          ingredientes: item.data.ingredientes,
+          data_cadastro: FormataData(item.data.data_cadastro)
+        });
       })
       .catch((erro) => {
         console.error(erro);
@@ -77,12 +76,116 @@ export function RefeicaoDados() {
             />
             <ItemRefeicaoDados
               titulo="Data de cadastro"
-              valor={format(new Date(data.data_cadastro), 'dd/MM/yyyy')}
+              valor={data.data_cadastro}
             />
           </ListGroup>
         </Col>
         <Col md={12} className="d-flex justify-content-end mt-5">
-          <Link to={`/refeicao/${id}/editar`} className="btn btn-info">Exibir</Link>
+          <Link to={`/refeicao/${id}/edicao`} className="btn btn-primary">Editar</Link>
+        </Col>
+      </Row>
+    </ContainerApp>
+  );
+}
+
+interface ItemRefeicaoDadosProps {
+  titulo: string;
+  valor: any;
+}
+
+function ItemRefeicaoDados(props: ItemRefeicaoDadosProps) {
+  return (
+    <ListGroupItem className="d-flex flex-row justify-content-between">
+      <Titulo tag="h5" className="w-100">{props.titulo}</Titulo>
+      <Titulo tag="h5" className="w-100">{props.valor}</Titulo>
+    </ListGroupItem>
+  );
+}
+
+/*
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Col, ListGroup, ListGroupItem, Row } from "reactstrap";
+import { ContainerApp } from "../../../components/ContainerApp";
+import { Titulo } from "../../../components/Titulo";
+import api from "../../../utils/api";
+import { FormataData, FormataValorMonetarioTexto } from "../../../utils/utils";
+import { Link } from "react-router-dom";
+
+interface RefeicaoDadosTypes {
+  id: string;
+  nome: string;
+  preco: string;
+  ativo: string;
+  ingredientes: string;
+  data_cadastro: string;
+}
+
+const valoresIniciaisRefeicaoDados: RefeicaoDadosTypes = {
+  id: "",
+  nome: "",
+  preco: "",
+  ativo: "",
+  ingredientes: "",
+  data_cadastro: ""
+};
+
+export function RefeicaoDados() {
+  const [data, setData] = useState<RefeicaoDadosTypes>(valoresIniciaisRefeicaoDados);
+  let { id } = useParams();
+
+  useEffect(() => {
+    api.get(`refeicao/${id}`)
+      .then((item) => {
+        if (!id) {
+          return;
+        }
+
+        let nome = item.data.nome;
+        let preco = FormataValorMonetarioTexto(item.data.preco);
+        let ativo = (item.data.ativo) ? 'Ativo' : 'Inativo';
+        let ingredientes = item.data.ingredientes;
+        let data_cadastro = FormataData(item.data.data_cadastro);
+
+        setData({ id, nome, preco, ativo, ingredientes, data_cadastro });
+      })
+      .catch((erro) => {
+        console.error(erro);
+      });
+  }, [id]);
+
+  return (
+    <ContainerApp>
+      <Row>
+        <Col md={12}>
+          <Titulo tag="h1" className="w-100 text-center mb-5">{data.nome}</Titulo>
+        </Col>
+        <Col md={12}>
+          <ListGroup>
+            <ItemRefeicaoDados
+              titulo="Código"
+              valor={data.id}
+            />
+            <ItemRefeicaoDados
+              titulo="Preço (R$)"
+              valor={data.preco}
+            />
+            <ItemRefeicaoDados
+              titulo="Status"
+              valor={data.ativo}
+            />
+            <ItemRefeicaoDados
+              titulo="Ingredientes"
+              valor={data.ingredientes}
+            />
+            <ItemRefeicaoDados
+              titulo="Data de cadastro"
+              valor={data.data_cadastro}
+            />
+          </ListGroup>
+        </Col>
+        <Col md={12} className="d-flex justify-content-end mt-5">
+          <Link to={`/refeicao/${id}/edicao`} className="btn btn-primary">Editar</Link>
         </Col>
       </Row>
     </ContainerApp>
@@ -102,6 +205,7 @@ function ItemRefeicaoDados(props: ItemRefeicaoDadosProps) {
     </ListGroupItem>
   );
 }
+*/
 
 /*
 import { format } from "date-fns";
