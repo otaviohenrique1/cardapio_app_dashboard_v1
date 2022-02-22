@@ -13,13 +13,14 @@ import { FaSortDown, FaSortUp } from "react-icons/fa";
 import { ContainerApp } from "../../components/ContainerApp";
 // import { lista_teste_refeicoes } from "../../utils/listas";
 import api from "../../utils/api";
+import { FormataValorMonetarioTexto } from "../../utils/utils";
 
 const SwalModal = withReactContent(Swal);
 
 interface FormTypes {
   id: number;
   nome: string;
-  preco: string;
+  preco: number;
   ativo: string;
 }
 
@@ -27,18 +28,16 @@ export function HomePage() {
   const [data, setData] = useState<FormTypes[]>([]);
 
   useEffect(() => {
-    // let listaData = lista_teste_refeicoes.map((item) => {
-    //   return {
-    //     id: item.id,
-    //     nome: item.nome,
-    //     preco: `R$ ${FormataValorMonetarioTexto(item.preco)}`,
-    //     ativo: item.ativo,
-    //   }
-    // });
-    // setData(listaData);
-
     api.get('refeicao')
       .then((item) => {
+        // let data = item.data.map((item: any) => {
+        //   return {
+        //     id: (item.id).toString(),
+        //     nome: item.data.nome,
+        //     preco: FormataValorMonetarioTexto(item.preco),
+        //     ativo: item.ativo,
+        //   }
+        // });
         setData(item.data)
       })
       .catch((erro) => {
@@ -56,13 +55,34 @@ export function HomePage() {
         id: 'refeicoes',
         hideHeader: false,
         columns: [
+          { Header: 'Codigo', accessor: 'id', id: 'id' },
           { Header: 'Nome', accessor: 'nome', id: 'nome' },
-          { Header: 'Preço', accessor: 'preco', id: 'preco' },
-          { Header: 'Ativo', accessor: 'ativo', id: 'ativo' },
+          {
+            Header: 'Preço',
+            accessor: 'preco',
+            id: 'preco',
+            Cell: (cell) => {
+              let preco = cell.row.values['preco'];
+              let valorFormatado = FormataValorMonetarioTexto(preco);
+              return valorFormatado;
+            }
+          },
+          {
+            Header: 'Ativo',
+            accessor: 'ativo',
+            id: 'ativo',
+            Cell: (cell) => {
+              let status = cell.row.values['ativo'];
+              let refeicaoStatus = (status) ? 'Ativo' : 'Inativo';
+              return refeicaoStatus;
+            }
+          },
           {
             Header: () => null,
             id: 'menu_item',
             Cell: (cell) => {
+              const id_refeicao = cell.row.values['id'];
+              
               return (
                 <UncontrolledButtonDropdownEstilizado>
                   <DropdownToggle caret className="caret-off d-flex justify-content-center align-items-center w-50 btn-success">
@@ -70,9 +90,13 @@ export function HomePage() {
                   </DropdownToggle>
                   <DropdownMenu>
                     <DropdownItem>
-                      <Link to={`/refeicao/${1}`} className="nav-link">Exibir</Link>
+                      <Link
+                        to={`/refeicao/${id_refeicao}`}
+                        className="nav-link text-center"
+                      >Exibir</Link>
                     </DropdownItem>
                     <DropdownItem
+                      className="nav-link text-center"
                       onClick={() => {
                         SwalModal.fire({
                           title: "Excluir",
