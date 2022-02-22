@@ -52,6 +52,7 @@ export function RefeicaoEdicao() {
 
   async function handleSubmit(values: FormularioTypes) {
     await api.put(`refeicao/${id}`, {
+      'id': id,
       'nome': values.nome,
       'preco': (values.preco).toString(),
       'ingredientes': values.ingredientes,
