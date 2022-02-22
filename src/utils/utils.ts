@@ -6,6 +6,10 @@ export function FormataDataHora(valor: Date) {
   return `${dataFinal} às ${horaFinal}`;
 }
 
+export function FormataData(valor: string) {
+  return format(new Date(valor), 'dd/MM/yyyy');
+}
+
 export function FormataValorMonetarioTexto(valor: number) {
   return valor.toFixed(2).toString().replace('.', ',');
 }
