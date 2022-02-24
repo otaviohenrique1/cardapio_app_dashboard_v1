@@ -48,6 +48,7 @@ export function HeaderApp(props: HeaderAppProps) {
       },
     }).then((result) => {
       if (result.isConfirmed) {
+        sessionStorage.clear();
         navigate("/");
       }
     });
@@ -71,7 +72,12 @@ export function HeaderApp(props: HeaderAppProps) {
               <BiUserCircle size={30} className="ms-2" />
             </DropdownToggle>
             <DropdownMenu dark>
-              <DropdownItem>Perfil</DropdownItem>
+              <DropdownItem>
+                <Link
+                  to={`/usuario/${props.data_usuario_logado.id}`}
+                  className="nav-link"
+                >Perfil</Link>
+              </DropdownItem>
               <DropdownItem divider />
               <DropdownItem onClick={logout}>Sair</DropdownItem>
             </DropdownMenu>
