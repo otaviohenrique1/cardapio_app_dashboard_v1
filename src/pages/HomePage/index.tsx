@@ -102,6 +102,7 @@ export function HomePage() {
                           let id = cell.row.index;
                           data.splice(id, 1);
                           setData([...data]);
+                          api.delete(`refeicao/${id_refeicao}`);
                         });
                       }}
                     >Excluir</DropdownItem>
