@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Col, ListGroup, ListGroupItem, Row } from "reactstrap";
+import { Col, ListGroup, Row } from "reactstrap";
 // import { UncontrolledCarousel } from "reactstrap";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { Titulo } from "../../../components/Titulo";
 import api from "../../../utils/api";
 import { FormataData, FormataValorMonetarioTexto } from "../../../utils/utils";
 import { Link } from "react-router-dom";
+import { ItemListaFichaDados } from "../../../components/Lista";
 
 interface RefeicaoDadosTypes {
   id: string;
@@ -59,23 +60,23 @@ export function RefeicaoDados() {
         </Col>
         <Col md={12}>
           <ListGroup>
-            <ItemRefeicaoDados
+            <ItemListaFichaDados
               titulo="Código"
               valor={data.id}
             />
-            <ItemRefeicaoDados
+            <ItemListaFichaDados
               titulo="Preço (R$)"
               valor={FormataValorMonetarioTexto(data.preco)}
             />
-            <ItemRefeicaoDados
+            <ItemListaFichaDados
               titulo="Status"
               valor={(data.ativo) ? 'Ativo' : 'Inativo'}
             />
-            <ItemRefeicaoDados
+            <ItemListaFichaDados
               titulo="Ingredientes"
               valor={data.ingredientes}
             />
-            <ItemRefeicaoDados
+            <ItemListaFichaDados
               titulo="Data de cadastro"
               valor={data.data_cadastro}
             />
@@ -110,19 +111,5 @@ export function RefeicaoDados() {
         </Col>
       </Row>
     </ContainerApp>
-  );
-}
-
-interface ItemRefeicaoDadosProps {
-  titulo: string;
-  valor: any;
-}
-
-function ItemRefeicaoDados(props: ItemRefeicaoDadosProps) {
-  return (
-    <ListGroupItem className="d-flex flex-row justify-content-between">
-      <Titulo tag="h5" className="w-100">{props.titulo}</Titulo>
-      <Titulo tag="h5" className="w-100">{props.valor}</Titulo>
-    </ListGroupItem>
   );
 }
