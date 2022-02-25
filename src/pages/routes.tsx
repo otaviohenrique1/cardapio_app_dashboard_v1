@@ -1,3 +1,4 @@
+// import { ReactNode, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Calendario } from "./Calenario";
 import { HomePage } from "./HomePage";
@@ -30,3 +31,15 @@ export function RoutesApp() {
     </BrowserRouter>
   );
 }
+
+// interface AuthProviderProps {
+//   children: ReactNode;
+// }
+
+// export function AuthProvider(props: AuthProviderProps) {
+//   let [user, setUser] = useState<any>(null);
+
+//   return (
+//     <div></div>
+//   );
+// }
