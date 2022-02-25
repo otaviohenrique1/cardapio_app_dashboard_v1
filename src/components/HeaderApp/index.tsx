@@ -57,8 +57,10 @@ export function HeaderApp(props: HeaderAppProps) {
   return (
     <Navbar color="dark" dark expand="sm" light>
       <NavbarBrand>
-        <MdMenuBook size={30} />
-        <span className="fw-bold ms-2">Chat App</span>
+        <Link to="/" className="nav-link d-flex flex-row">
+          <MdMenuBook size={30} color="white" />
+          <span className="fw-bold ms-2 text-white">Cardapio</span>
+        </Link>
       </NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse navbar isOpen={aberto}>
