@@ -5,8 +5,10 @@ import { HomePage } from "./HomePage";
 import { Login } from "./Login";
 import { Pagina404 } from "./Pagina404";
 import { RefeicaoCadastro } from "./Refeicao/RefeicaoCadastro";
+import { RefeicaoCadastro2 } from "./Refeicao/RefeicaoCadastro2";
 import { RefeicaoDados } from "./Refeicao/RefeicaoDados";
 import { RefeicaoEdicao } from "./Refeicao/RefeicaoEdicao";
+import { TesteFormularioListaString } from "./TesteFormularioListaString";
 import { TesteUuid } from "./TesteUuid";
 import { UsuarioCadastro } from "./Usuario/UsuarioCadastro";
 import { UsuarioDados } from "./Usuario/UsuarioDados";
@@ -22,8 +24,10 @@ export function RoutesApp() {
         <Route path="/usuario/:id/edicao" element={<UsuarioEdicao />} />
         <Route path="/home" element={<HomePage/>} />
         <Route path="/refeicao/cadastro" element={<RefeicaoCadastro/>} />
+        <Route path="/refeicao/cadastro2" element={<RefeicaoCadastro2/>} /> {/* Pagina de teste, Retirar */}
         <Route path="/refeicao/:id" element={<RefeicaoDados />} />
         <Route path="/refeicao/:id/edicao" element={<RefeicaoEdicao />} />
+        <Route path="/teste-formulario-lista-string" element={<TesteFormularioListaString />} /> {/* Pagina de teste, Retirar */}
         <Route element={<Pagina404 />} path="*" />
         <Route path="/calendario" element={<Calendario/>} /> {/* Pagina de teste, Retirar */}
         <Route path="/testeuuid" element={<TesteUuid/>} /> {/* Pagina de teste, Retirar */}
