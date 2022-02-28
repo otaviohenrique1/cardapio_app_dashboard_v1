@@ -1,5 +1,6 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { Button, ButtonGroup, Col, Input, Label, Row } from "reactstrap";
+import { Button, ButtonGroup, Col, Label, Row } from "reactstrap";
+// import { Input } from "reactstrap";
 import { Titulo } from "../../../components/Titulo";
 import * as Yup from "yup";
 import { CampoFormularioCadastro } from "../../../components/Campos";
@@ -98,10 +99,11 @@ export function RefeicaoCadastro() {
                     <Field className="form-check" type="checkbox" name="ativo" />
                     <Label className="form-label ms-2">Ativo</Label>
                   </Col>
-                  <Col md={12} className="d-flex flex-column align-items-start pt-3">
+
+                  {/* <Col md={12} className="d-flex flex-column align-items-start pt-3">
                     <Titulo tag="h6" className="mb-2">Imagem</Titulo>
                     <Input type="file" id="imagem" />
-                  </Col>
+                  </Col> */}
                   <Col md={12} className="d-flex justify-content-end pt-3">
                     <ButtonGroup>
                       <Button type="submit" color="primary">Salvar</Button>
