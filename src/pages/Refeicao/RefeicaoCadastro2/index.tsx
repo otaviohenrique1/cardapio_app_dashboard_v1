@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik, FormikHelpers } from "formik";
-import { Alert, Button, ButtonGroup, Col, InputGroup, Label, Row } from "reactstrap";
+import { Button, ButtonGroup, Col, InputGroup, Label, Row } from "reactstrap";
 // import { Input } from "reactstrap";
 import { Titulo } from "../../../components/Titulo";
 import * as Yup from "yup";
@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 // import api from "../../../utils/api";
 import { format } from "date-fns";
 import { AiOutlineClose } from "react-icons/ai";
+import { GrAddCircle } from "react-icons/gr";
 
 interface FormTypes {
   nome: string;
@@ -20,7 +21,11 @@ interface FormTypes {
 const valoresIniciais: FormTypes = {
   nome: "",
   preco: 0,
-  ingredientes: [],
+  ingredientes: [
+    {
+      nome: ''
+    }
+  ],
   ativo: false
 };
 
@@ -34,8 +39,9 @@ const validacaoSchema = Yup.object().shape({
       nome: Yup.string().required("Campo nome do ingrediente vazio")
     })
   )
+    .min(1, 'Minimo 1 ingrediente')
+    // .length(0, "Lista vazia")
     .required("Campo ingredientes vazio")
-    .min(1, 'Minimo 1 ingrediente'),
 });
 
 export function RefeicaoCadastro2() {
@@ -49,10 +55,14 @@ export function RefeicaoCadastro2() {
 
     console.log(`nome: ${nome}`);
     console.log(`preco: ${preco}`);
-    console.log(`ingredientes: ${ingredientes}`);
     console.log(`ativo: ${ativo}`);
     console.log(`id_usuario: ${idUsuario}`);
     console.log(`data_cadastro: ${data_cadastro}`);
+    console.log(`ingredientes1: ${ingredientes.join(';')}`);
+    console.log('ingredientes2:');
+    for (let i = 0; i < ingredientes.length; i++) {
+      console.log(`ingrediente[${i}]: ${ingredientes[i].nome}`);
+    }
 
     // await api.post('refeicao', {
     //   'nome': nome,
@@ -108,50 +118,56 @@ export function RefeicaoCadastro2() {
                     touched={touched.preco}
                   />
                   <Col md={12} className="d-flex flex-column pt-3 pb-3 mt-3 mb-3 border-dark border-top border-bottom">
-                    <Titulo tag="h6" className="fw-normal">Ingredientes</Titulo>
                     <FieldArray name="ingredientes">
                       {({ insert, remove, push }) => (
-                        <div>
+                        <Row>
+                          <Col md={12} className="d-flex flex-row justify-content-between pb-1">
+                            <Titulo tag="h6" className="fw-normal">Lista de ingredientes</Titulo>
+                            <Button
+                              type="button"
+                              color="info"
+                              onClick={() => push({ nome: '' })}
+                              className="d-flex flex-row justify-content-center align-items-center"
+                            >
+                              <span className="me-2">Adicionar ingrediente</span>
+                              <GrAddCircle size={25} className="m-0 p-0" />
+                            </Button>
+                          </Col>
                           {values.ingredientes.length > 0 &&
                             values.ingredientes.map((ingrediente, index) => (
-                              <Row key={index}>
-                                <Col md={12}>
-                                  <InputGroup>
-                                    <Field
+                              <Col md={6} key={index} className="p-2">
+                                <Row>
+                                  <Col md={12}>
+                                    <InputGroup>
+                                      <Field
+                                        name={`ingredientes.${index}.nome`}
+                                        placeholder="Ingrediente"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                      <Button
+                                        type="button"
+                                        color="danger"
+                                        className="d-flex justify-content-center align-items-center"
+                                        onClick={() => remove(index)}
+                                      >
+                                        <AiOutlineClose size={20} />
+                                      </Button>
+                                    </InputGroup>
+                                  </Col>
+                                  <Col md={12}>
+                                    <ErrorMessage
                                       name={`ingredientes.${index}.nome`}
-                                      placeholder="Ingrediente"
-                                      type="text"
-                                      className="form-control"
+                                      component="div"
+                                      className="field-error"
                                     />
-                                    <Button
-                                      type="button"
-                                      color="danger"
-                                      className="d-flex justify-content-center align-items-center"
-                                      onClick={() => remove(index)}
-                                    >
-                                      <AiOutlineClose size={20} />
-                                    </Button>
-                                  </InputGroup>
-                                </Col>
-                                <Col md={12}>
-                                  <ErrorMessage
-                                    name={`ingredientes.${index}.nome`}
-                                    component="div"
-                                    className="field-error"
-                                  />
-                                </Col>
-                              </Row>
+                                  </Col>
+                                </Row>
+                              </Col>
                             ))}
-                          <Button
-                            type="button"
-                            color="secondary"
-                            className="mt-3 mb-1"
-                            onClick={() => push({ nome: '' })}
-                          >Adicionar ingrediente</Button>
-                        </div>
+                        </Row>
                       )}
                     </FieldArray>
-                    {errors.ingredientes && touched.ingredientes ? (<Alert color="danger">{errors.ingredientes}</Alert>) : null}
                   </Col>
                   <Col md={12} className="d-flex flex-row">
                     <Field className="form-check" type="checkbox" name="ativo" />
