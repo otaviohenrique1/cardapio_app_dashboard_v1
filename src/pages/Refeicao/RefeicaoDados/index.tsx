@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Col, ListGroup, Row } from "reactstrap";
+import { Col, ListGroup, ListGroupItem, Row } from "reactstrap";
 // import { UncontrolledCarousel } from "reactstrap";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { Titulo } from "../../../components/Titulo";
@@ -8,13 +8,14 @@ import api from "../../../utils/api";
 import { FormataData, FormataValorMonetarioTexto } from "../../../utils/utils";
 import { Link } from "react-router-dom";
 import { ItemListaFichaDados } from "../../../components/Lista";
+import { MdPlayArrow } from "react-icons/md";
 
 interface RefeicaoDadosTypes {
   id: string;
   nome: string;
   preco: number;
   ativo: boolean;
-  ingredientes: string;
+  ingredientes: { nome: string }[];
   data_cadastro: string;
 }
 
@@ -23,7 +24,7 @@ const valoresIniciaisRefeicaoDados: RefeicaoDadosTypes = {
   nome: "",
   preco: 0,
   ativo: false,
-  ingredientes: "",
+  ingredientes: [],
   data_cadastro: ""
 };
 
@@ -72,13 +73,20 @@ export function RefeicaoDados() {
               valor={(data.ativo) ? 'Ativo' : 'Inativo'}
             />
             <ItemListaFichaDados
-              titulo="Ingredientes"
-              valor={data.ingredientes}
-            />
-            <ItemListaFichaDados
               titulo="Data de cadastro"
               valor={data.data_cadastro}
             />
+            <ListGroupItem className="d-flex flex-column">
+              <Titulo tag="h5" className="w-100">Ingredientes</Titulo>
+              {data.ingredientes.map((item, index) => {
+                return (
+                  <div className="d-flex flex-row justify-content-between" key={index}>
+                    <MdPlayArrow size={25} className="me-1" />
+                    <Titulo tag="h6" className="w-100">{item.nome}</Titulo>
+                  </div>
+                );
+              })}
+            </ListGroupItem>
           </ListGroup>
         </Col>
         {/* <Col md={12} className="d-flex flex-column justify-content-center align-content-center mt-5">
