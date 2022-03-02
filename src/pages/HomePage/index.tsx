@@ -127,7 +127,7 @@ export function HomePage() {
             <Col md={6} className="d-flex justify-content-start">
               <Link to="/refeicao/cadastro" className="btn btn-primary">Nova Refeição</Link>
             </Col>
-            {(page.length === 0) ? (null) : (
+            {/* {(page.length === 0) ? (null) : ( */}
               <Col md={6} className="d-flex justify-content-between align-items-center flex-row">
                 <FormReactstrap className="d-flex flex-row align-items-center"
                   onSubmit={event => event.preventDefault()}>
@@ -147,7 +147,7 @@ export function HomePage() {
                   setGlobalFilter={setGlobalFilter}
                 />
               </Col>
-            )}
+            {/* )} */}
           </Row>
         </Col>
         <Col md={12}>
@@ -190,7 +190,7 @@ export function HomePage() {
             </tbody>
           </Table>
         </Col>
-        {(page.length === 0) ? (null) : (
+        {/* {(page.length === 0) ? (null) : ( */}
           <Col md={12} className="d-flex justify-content-end align-items-center flex-row mb-5">
             <p className="me-3 mb-0">
               Pagina {pageIndex + 1} de {pageOptions.length}
@@ -237,7 +237,7 @@ export function HomePage() {
               />
             </div>
           </Col>
-        )}
+        {/* )} */}
       </Row>
     </ContainerApp>
   );
