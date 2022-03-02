@@ -24,7 +24,7 @@ export function RoutesApp() {
         <Route path="/usuario/:id/edicao" element={<UsuarioEdicao />} />
         <Route path="/home" element={<HomePage/>} />
         <Route path="/refeicao/cadastro" element={<RefeicaoCadastro/>} />
-        <Route path="/refeicao/cadastro2" element={<RefeicaoCadastro2/>} /> {/* Pagina de teste, Retirar */}
+        <Route path="/refeicao/cadastro2" element={<RefeicaoCadastro2/>} />
         <Route path="/refeicao/:id" element={<RefeicaoDados />} />
         <Route path="/refeicao/:id/edicao" element={<RefeicaoEdicao />} />
         <Route path="/teste-formulario-lista-string" element={<TesteFormularioListaString />} /> {/* Pagina de teste, Retirar */}
