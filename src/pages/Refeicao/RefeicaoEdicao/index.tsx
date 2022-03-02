@@ -1,5 +1,5 @@
-import { Field, Form, Formik } from "formik";
-import { Button, ButtonGroup, Col, Label, Row } from "reactstrap";
+import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
+import { Button, ButtonGroup, Col, InputGroup, Label, Row } from "reactstrap";
 import { CampoFormularioCadastro } from "../../../components/Campos";
 import { Titulo } from "../../../components/Titulo";
 import api from "../../../utils/api";
@@ -8,25 +8,33 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ContainerApp } from "../../../components/ContainerApp";
+import { AiOutlineClose } from "react-icons/ai";
+import { GrAddCircle } from "react-icons/gr";
 
 const validacaoSchema = Yup.object().shape({
-  nome: Yup.string().required(),
-  preco: Yup.number().required(),
-  ingredientes: Yup.string().required(),
+  nome: Yup.string().required("Campo nome vazio"),
+  preco: Yup.number().moreThan(0, "Campo preco vazio").required("Campo preco vazio"),
+  ingredientes: Yup.array().of(
+    Yup.object().shape({
+      nome: Yup.string().required("Campo nome do ingrediente vazio")
+    })
+  )
+    .min(1, 'Minimo 1 ingrediente')
+    .required("Campo ingredientes vazio")
 });
 
 interface FormularioTypes {
-  nome: string,
-  preco: number,
-  ativo: boolean,
-  ingredientes: string,
+  nome: string;
+  preco: number;
+  ativo: boolean;
+  ingredientes: { nome: string }[];
 }
 
 const valoresIniciaisUseState: FormularioTypes = {
   nome: '',
   preco: 0,
   ativo: false,
-  ingredientes: ''
+  ingredientes: []
 };
 
 export function RefeicaoEdicao() {
@@ -38,12 +46,12 @@ export function RefeicaoEdicao() {
   useEffect(() => {
     api.get(`refeicao/${id}`)
       .then((item) => {
-        setData({
-          nome: item.data.nome,
-          preco: item.data.preco,
-          ativo: item.data.ativo,
-          ingredientes: item.data.ingredientes
-        });
+        const nome = item.data.nome;
+        const preco = item.data.preco;
+        const ativo = item.data.ativo;
+        const ingredientes = JSON.parse(String(item.data.ingredientes));
+
+        setData({ nome, preco, ativo, ingredientes });
       })
       .catch((erro) => {
         console.error(erro);
@@ -58,12 +66,17 @@ export function RefeicaoEdicao() {
   };
 
   async function handleSubmit(values: FormularioTypes) {
+    const nome = values.nome;
+    const preco = values.preco;
+    const ingredientes = JSON.stringify(values.ingredientes);
+    const ativo = values.ativo;
+
     await api.put(`refeicao/${id}`, {
       'id': id,
-      'nome': values.nome,
-      'preco': (values.preco).toString(),
-      'ingredientes': values.ingredientes,
-      'ativo': values.ativo,
+      'nome': nome,
+      'preco': preco,
+      'ingredientes': ingredientes,
+      'ativo': ativo,
     }).then(() => {
       alert('Cadastro alterado com sucesso!');
       navigation(`/refeicao/${id}`);
@@ -110,17 +123,58 @@ export function RefeicaoEdicao() {
                     error={errors.preco}
                     touched={touched.preco}
                   />
-                  <CampoFormularioCadastro
-                    md={12}
-                    id="ingredientes"
-                    label="Ingredientes da refeição"
-                    name="ingredientes"
-                    type="text"
-                    placeholder="Digite o ingredientes da refeição"
-                    value={values.ingredientes}
-                    error={errors.ingredientes}
-                    touched={touched.ingredientes}
-                  />
+                  <Col md={12} className="d-flex flex-column pt-3 pb-3 mt-3 mb-3 border-dark border-top border-bottom">
+                    <FieldArray name="ingredientes">
+                      {({ insert, remove, push }) => (
+                        <Row>
+                          <Col md={12} className="d-flex flex-row justify-content-between pb-1">
+                            <Titulo tag="h6" className="fw-normal">Lista de ingredientes</Titulo>
+                            <Button
+                              type="button"
+                              color="info"
+                              onClick={() => push({ nome: '' })}
+                              className="d-flex flex-row justify-content-center align-items-center"
+                            >
+                              <span className="me-2">Adicionar ingrediente</span>
+                              <GrAddCircle size={25} className="m-0 p-0" />
+                            </Button>
+                          </Col>
+                          {values.ingredientes.length > 0 &&
+                            values.ingredientes.map((ingrediente, index) => (
+                              <Col md={6} key={index} className="p-2">
+                                <Row>
+                                  <Col md={12}>
+                                    <InputGroup>
+                                      <Field
+                                        name={`ingredientes.${index}.nome`}
+                                        placeholder="Ingrediente"
+                                        type="text"
+                                        className="form-control"
+                                      />
+                                      <Button
+                                        type="button"
+                                        color="danger"
+                                        className="d-flex justify-content-center align-items-center"
+                                        onClick={() => remove(index)}
+                                      >
+                                        <AiOutlineClose size={20} />
+                                      </Button>
+                                    </InputGroup>
+                                  </Col>
+                                  <Col md={12}>
+                                    <ErrorMessage
+                                      name={`ingredientes.${index}.nome`}
+                                      component="div"
+                                      className="field-error"
+                                    />
+                                  </Col>
+                                </Row>
+                              </Col>
+                            ))}
+                        </Row>
+                      )}
+                    </FieldArray>
+                  </Col>
                   <Col md={12} className="d-flex flex-row pt-3">
                     <Field
                       className="form-check"
