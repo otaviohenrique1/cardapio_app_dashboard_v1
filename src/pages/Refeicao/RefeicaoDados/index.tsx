@@ -38,14 +38,13 @@ export function RefeicaoDados() {
           return;
         }
 
-        setData({ 
-          id,
-          nome: item.data.nome,
-          preco: item.data.preco,
-          ativo: item.data.ativo,
-          ingredientes: item.data.ingredientes,
-          data_cadastro: FormataData(item.data.data_cadastro)
-        });
+        const nome = item.data.nome;
+        const preco = item.data.preco;
+        const ativo = item.data.ativo;
+        const ingredientes = JSON.parse(String(item.data.ingredientes));
+        const data_cadastro = FormataData(item.data.data_cadastro);
+
+        setData({ id, nome, preco, ativo, ingredientes, data_cadastro });
       })
       .catch((erro) => {
         console.error(erro);
