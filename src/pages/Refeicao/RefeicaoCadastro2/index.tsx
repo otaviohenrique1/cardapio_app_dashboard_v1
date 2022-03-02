@@ -21,11 +21,7 @@ interface FormTypes {
 const valoresIniciais: FormTypes = {
   nome: "",
   preco: 0,
-  ingredientes: [
-    {
-      nome: ''
-    }
-  ],
+  ingredientes: [{ nome: '' }],
   ativo: false
 };
 
@@ -48,7 +44,8 @@ export function RefeicaoCadastro2() {
   async function handleSubmit(values: FormTypes, helpers: FormikHelpers<FormTypes>) {
     const nome = values.nome;
     const preco = values.preco;
-    const ingredientes = values.ingredientes;
+    // const ingredientes = values.ingredientes;
+    const ingredientes = JSON.parse(String(values.ingredientes));
     const ativo = values.ativo;
     const idUsuario = (sessionStorage.getItem('id')) ? sessionStorage.getItem('id') : '1';
     const data_cadastro = format(new Date(), 'yyyy-MM-dd');
@@ -58,11 +55,12 @@ export function RefeicaoCadastro2() {
     console.log(`ativo: ${ativo}`);
     console.log(`id_usuario: ${idUsuario}`);
     console.log(`data_cadastro: ${data_cadastro}`);
-    console.log(`ingredientes1: ${ingredientes.join(';')}`);
-    console.log('ingredientes2:');
-    for (let i = 0; i < ingredientes.length; i++) {
-      console.log(`ingrediente[${i}]: ${ingredientes[i].nome}`);
-    }
+    console.log(`ingredientes: ${ingredientes}`);
+    // console.log(`ingredientes1: ${ingredientes.map((item) => item.nome).join(';')}`);
+    // console.log('ingredientes2:');
+    // for (let i = 0; i < ingredientes.length; i++) {
+    //   console.log(`ingrediente[${i}]: ${ingredientes[i].nome}`);
+    // }
 
     // await api.post('refeicao', {
     //   'nome': nome,
