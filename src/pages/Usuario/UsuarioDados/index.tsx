@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Col, ListGroup, Row } from "reactstrap";
+import { BotaoLink } from "../../../components/Botoes";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { ItemListaFichaDados } from "../../../components/Lista";
 import { Titulo } from "../../../components/Titulo";
@@ -23,7 +23,6 @@ const valoresIniciais: DataTypes = {
   senha: "",
   data_cadastro: "",
 };
-
 
 export function UsuarioDados() {
   const [data, setData] = useState<DataTypes>(valoresIniciais);
@@ -80,7 +79,7 @@ export function UsuarioDados() {
           </ListGroup>
         </Col>
         <Col md={12} className="d-flex justify-content-end mt-5">
-          <Link to={`/usuario/${id}/edicao`} className="btn btn-primary">Editar</Link>
+          <BotaoLink to={`/usuario/${id}/edicao`} color="primary">Editar</BotaoLink>
         </Col>
       </Row>
     </ContainerApp>
