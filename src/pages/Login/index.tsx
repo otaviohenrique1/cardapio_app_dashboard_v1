@@ -1,76 +1,58 @@
-import { Col, Container, Row, ButtonGroup, Card, CardBody, CardHeader, CardFooter, Button } from "reactstrap";
+import { Col, Container, Row, ButtonGroup, Card, CardBody, CardHeader, CardFooter } from "reactstrap";
 import { Titulo } from "../../components/Titulo";
-import * as Yup from "yup";
 import { Form, Formik, FormikHelpers } from "formik";
-import { CampoFormularioCadastro } from "../../components/Campos";
+import { CampoInput } from "../../components/Campos";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import api from "../../utils/api";
 import { adicionaLogin } from "../../features/login/LoginSlice";
 import { useDispatch } from "react-redux";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { Botao, BotaoLink } from "../../components/Botoes";
+import { dadosIniciaisFormularioLogin, schemaValidacaoFormularioLogin } from "../../utils/constantes";
 const SwalModal = withReactContent(Swal);
-
-interface FormTypes {
-  email: string;
-  senha: string;
-}
-
-const dadosIniciais: FormTypes = {
-  email: "",
-  senha: ""
-};
-
-const schemaValidacao = Yup.object().shape({
-  email: Yup.string().required('Campo vazio'),
-  senha: Yup.string().required('Campo vazio'),
-});
 
 export function Login() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
-  async function onSubmit(values: FormTypes, formikHelpers: FormikHelpers<FormTypes>) {
-    await api.post('usuario/login', {
-      email: values.email,
-      senha: values.senha,
-    }, {
+  async function onSubmit(values: FormularioLoginTypes, formikHelpers: FormikHelpers<FormularioLoginTypes>) {
+    const email = values.email;
+    const senha = values.senha;
+    await api.post('usuario/login', { email, senha }, {
       auth: {
-        username: values.email,
+        username: email,
         password: values.senha,
       }
     })
       .then((data) => {
         const id = data.data.data_user.id;
         const nome = data.data.data_user.nome;
-        dispatch(adicionaLogin({
-          id: id,
-          nome: nome,
-        }));
+        dispatch(adicionaLogin({ id, nome }));
         sessionStorage.setItem('id', `${id}`);
         sessionStorage.setItem('nome', `${nome}`);
         navigate('/home');
       })
-      .catch((error) => {
-        // alert('Usuario ou senha invalidos');
+      .catch((erro) => {
+        console.error(erro);
+
         SwalModal.fire({
-          title: "Erro",
+          title: "Login inválido",
           buttonsStyling: false,
-          html: <p>{`${error}`}</p>,
           confirmButtonText: 'Fechar',
-          customClass: { confirmButton: 'btn btn-primary' },
+          customClass: {
+            confirmButton: 'btn btn-primary'
+          },
         });
-        console.error(error);
       });
   }
 
   return (
     <Container className="d-flex justify-content-center align-content-center m-5">
       <Formik
-        initialValues={dadosIniciais}
+        initialValues={dadosIniciaisFormularioLogin}
         onSubmit={onSubmit}
-        validationSchema={schemaValidacao}
+        validationSchema={schemaValidacaoFormularioLogin}
       >
         {({ errors, touched, values }) => (
           <Form>
@@ -84,7 +66,7 @@ export function Login() {
               </CardHeader>
               <CardBody>
                 <Row>
-                  <CampoFormularioCadastro
+                  <CampoInput
                     md={12}
                     type="text"
                     id="email"
@@ -95,7 +77,7 @@ export function Login() {
                     error={errors.email}
                     touched={touched.email}
                   />
-                  <CampoFormularioCadastro
+                  <CampoInput
                     md={12}
                     type="password"
                     id="senha"
@@ -112,9 +94,9 @@ export function Login() {
                 <Row>
                   <Col md={12} className="w-100 d-flex justify-content-end">
                     <ButtonGroup>
-                      <Button color="primary" type="submit">Entrar</Button>
-                      <Button color="danger" type="reset">Limpar</Button>
-                      <Link to="/usuario/cadastro" className="btn btn-success">Novo usuario</Link>
+                      <Botao color="primary" type="submit">Entrar</Botao>
+                      <Botao color="danger" type="reset">Limpar</Botao>
+                      <BotaoLink to="/usuario/cadastro" color="success">Novo usuario</BotaoLink>
                     </ButtonGroup>
                   </Col>
                 </Row>
