@@ -6,9 +6,9 @@ import { ContainerApp } from "../../../components/ContainerApp";
 import { Titulo } from "../../../components/Titulo";
 import api from "../../../utils/api";
 import { FormataData, FormataValorMonetarioTexto } from "../../../utils/utils";
-import { Link } from "react-router-dom";
 import { ItemListaFichaDados } from "../../../components/Lista";
 import { MdPlayArrow } from "react-icons/md";
+import { BotaoLink } from "../../../components/Botoes";
 
 interface RefeicaoDadosTypes {
   id: string;
@@ -114,7 +114,7 @@ export function RefeicaoDados() {
           />
         </Col> */}
         <Col md={12} className="d-flex justify-content-end mt-5">
-          <Link to={`/refeicao/${id}/edicao`} className="btn btn-primary">Editar</Link>
+          <BotaoLink to={`/refeicao/${id}/edicao`} color="primary">Editar</BotaoLink>
         </Col>
       </Row>
     </ContainerApp>
