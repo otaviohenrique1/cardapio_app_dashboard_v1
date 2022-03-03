@@ -3,7 +3,7 @@ import { Button, ButtonGroup, Col, Label, Row } from "reactstrap";
 // import { Input } from "reactstrap";
 import { Titulo } from "../../../components/Titulo";
 import * as Yup from "yup";
-import { CampoFormularioCadastro } from "../../../components/Campos";
+import { CampoInput } from "../../../components/Campos";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { Link } from "react-router-dom";
 import api from "../../../utils/api";
@@ -62,7 +62,7 @@ export function RefeicaoCadastro2() {
             {({ errors, touched, values }) => (
               <Form>
                 <Row>
-                  <CampoFormularioCadastro
+                  <CampoInput
                     md={12}
                     id="nome"
                     label="Nome da refeição"
@@ -73,7 +73,7 @@ export function RefeicaoCadastro2() {
                     error={errors.nome}
                     touched={touched.nome}
                   />
-                  <CampoFormularioCadastro
+                  <CampoInput
                     md={12}
                     id="preco"
                     label="Preço da refeição"
@@ -84,7 +84,7 @@ export function RefeicaoCadastro2() {
                     error={errors.preco}
                     touched={touched.preco}
                   />
-                  <CampoFormularioCadastro
+                  <CampoInput
                     md={12}
                     id="ingredientes"
                     label="Ingredientes da refeição"
