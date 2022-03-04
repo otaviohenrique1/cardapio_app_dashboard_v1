@@ -9,44 +9,44 @@ export let message = "Hello World";
 export let password = "Secret Password";
 
 
-export function encrypt (msg: string, pass: string) {
-  let salt = lib.WordArray.random(128/8);
-  
-  let key = PBKDF2(pass, salt, {
-      keySize: keySize/32,
-      iterations: iterations
-    });
+export function encrypt(msg: string, pass: string) {
+  let salt = lib.WordArray.random(128 / 8);
 
-  let iv = lib.WordArray.random(128/8);
-  
-  let encrypted = AES.encrypt(msg, key, { 
-    iv: iv, 
+  let key = PBKDF2(pass, salt, {
+    keySize: keySize / 32,
+    iterations: iterations
+  });
+
+  let iv = lib.WordArray.random(128 / 8);
+
+  let encrypted = AES.encrypt(msg, key, {
+    iv: iv,
     padding: pad.Pkcs7,
     mode: mode.CBC
-    
+
   });
-  
+
   // salt, iv will be hex 32 in length
   // append them to the ciphertext for use  in decryption
-  let transitmessage = salt.toString()+ iv.toString() + encrypted.toString();
+  let transitmessage = salt.toString() + iv.toString() + encrypted.toString();
   return transitmessage;
 }
 
-export function decrypt (transitmessage: string, pass: string) {
+export function decrypt(transitmessage: string, pass: string) {
   let salt = enc.Hex.parse(transitmessage.substr(0, 32));
   let iv = enc.Hex.parse(transitmessage.substr(32, 32))
   let encrypted = transitmessage.substring(64);
-  
-  let key = PBKDF2(pass, salt, {
-      keySize: keySize/32,
-      iterations: iterations
-    });
 
-  let decrypted = AES.decrypt(encrypted, key, { 
-    iv: iv, 
+  let key = PBKDF2(pass, salt, {
+    keySize: keySize / 32,
+    iterations: iterations
+  });
+
+  let decrypted = AES.decrypt(encrypted, key, {
+    iv: iv,
     padding: pad.Pkcs7,
     mode: mode.CBC
-    
+
   })
   return decrypted;
 }
