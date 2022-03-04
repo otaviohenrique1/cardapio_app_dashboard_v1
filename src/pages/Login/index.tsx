@@ -1,4 +1,4 @@
-import { Col, Container, Row, ButtonGroup, Card, CardBody, CardHeader, CardFooter } from "reactstrap";
+import { Col, Container, Row, ButtonGroup, Card, CardBody, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Titulo } from "../../components/Titulo";
 import { Form, Formik } from "formik";
 import { CampoInput } from "../../components/Campos";
@@ -10,21 +10,22 @@ import { Botao, BotaoLink } from "../../components/Botoes";
 import { dadosIniciaisFormularioLogin, schemaValidacaoFormularioLogin } from "../../utils/constantes";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { sha512 } from "../../utils/utils";
+import { useState } from "react";
 const SwalModal = withReactContent(Swal);
 
 export function Login() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [erroMensagem, setErroMensagem] = useState<string>('');
+
   async function onSubmit(values: FormularioLoginTypes) {
     const email = values.email;
-    const senha = values.senha;
+    const senha = sha512(values.senha);
 
     await api.post('usuario/login', { email, senha }, {
-      auth: {
-        username: email,
-        password: values.senha,
-      }
+      auth: { username: email, password: senha }
     })
       .then((data) => {
         const id = data.data.data_user.id;
@@ -34,17 +35,24 @@ export function Login() {
         sessionStorage.setItem('nome', `${nome}`);
         navigate('/home');
       })
-      .catch((erro) => {
-        console.error(erro);
-
+      .catch((error) => {
+        setErroMensagem(error.response.data.message);
         SwalModal.fire({
           title: "Login inválido",
+          html: <p>{error.response.data.message}</p>,
           buttonsStyling: false,
           confirmButtonText: 'Fechar',
           customClass: {
             confirmButton: 'btn btn-primary'
           },
         });
+
+        // console.log(error.response.data);
+        // console.log(error.response.status);
+        // console.log(error.response.headers);
+        // console.log(error.request);
+        // console.log(error.message);
+        // console.error(error.toJSON());
       });
   }
 
@@ -67,6 +75,9 @@ export function Login() {
               </CardHeader>
               <CardBody>
                 <Row>
+                  {(erroMensagem.length !== 0) ? (<Alert color="danger">{erroMensagem}</Alert>) : null}
+                  <Col md={12}>
+                  </Col>
                   <CampoInput
                     md={12}
                     type="text"
