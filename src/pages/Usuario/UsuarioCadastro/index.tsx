@@ -8,6 +8,7 @@ import { FormularioUsuario } from "../../../components/Formularios/FormularioUsu
 import { validacaoSchemaFormularioUsuario, valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { sha512 } from "../../../utils/utils";
 
 const SwalModal = withReactContent(Swal);
 
@@ -17,7 +18,7 @@ export function UsuarioCadastro() {
   async function onSubmit(values: FormularioUsuarioTypes, helpers: FormikHelpers<FormularioUsuarioTypes>) {
     let nome = values.nome;
     let email = values.email;
-    let senha = values.senha;
+    let senha = sha512(values.senha);
     let data_cadastro = format(new Date(), 'yyyy-MM-dd');
 
     await api.post('usuario', {

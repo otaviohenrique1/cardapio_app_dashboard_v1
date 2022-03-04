@@ -8,6 +8,7 @@ import { validacaoSchemaFormularioUsuario, valoresIniciaisFormularioUsuario } fr
 import { FormularioUsuario } from "../../../components/Formularios/FormularioUsuario";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { sha512 } from "../../../utils/utils";
 
 const SwalModal = withReactContent(Swal);
 
@@ -38,11 +39,15 @@ export function UsuarioEdicao() {
   };
 
   async function handleSubmit(values: FormularioUsuarioTypes) {
+    let nome = values.nome;
+    let email = values.email;
+    let senha = sha512(values.senha);
+
     await api.put(`usuario/${id}`, {
       'id': id,
-      'nome': values.nome,
-      'email': values.email,
-      'senha': values.senha,
+      'nome': nome,
+      'email': email,
+      'senha': senha,
     }).then(() => {
       SwalModal.fire({
         icon: 'success',
