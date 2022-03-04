@@ -45,7 +45,7 @@ export function HomePage() {
           { Header: 'Codigo', accessor: 'id', id: 'id' },
           { Header: 'Nome', accessor: 'nome', id: 'nome' },
           {
-            Header: 'Preço',
+            Header: 'Preço (R$)',
             accessor: 'preco',
             id: 'preco',
             Cell: (cell) => {
@@ -118,7 +118,7 @@ export function HomePage() {
     <ContainerApp>
       <Row>
         <Col md={12} className="mt-3 mb-3">
-          <Titulo tag="h1">HomePage</Titulo>
+          <Titulo tag="h1">Lista de refeições</Titulo>
         </Col>
         <Col md={12}>
           <Row>
