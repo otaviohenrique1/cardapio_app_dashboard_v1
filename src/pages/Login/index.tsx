@@ -1,24 +1,25 @@
 import { Col, Container, Row, ButtonGroup, Card, CardBody, CardHeader, CardFooter } from "reactstrap";
 import { Titulo } from "../../components/Titulo";
-import { Form, Formik, FormikHelpers } from "formik";
+import { Form, Formik } from "formik";
 import { CampoInput } from "../../components/Campos";
 import { useNavigate } from "react-router-dom";
 import api from "../../utils/api";
 import { adicionaLogin } from "../../features/login/LoginSlice";
 import { useDispatch } from "react-redux";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import { Botao, BotaoLink } from "../../components/Botoes";
 import { dadosIniciaisFormularioLogin, schemaValidacaoFormularioLogin } from "../../utils/constantes";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 const SwalModal = withReactContent(Swal);
 
 export function Login() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
-  async function onSubmit(values: FormularioLoginTypes, formikHelpers: FormikHelpers<FormularioLoginTypes>) {
+  async function onSubmit(values: FormularioLoginTypes) {
     const email = values.email;
     const senha = values.senha;
+
     await api.post('usuario/login', { email, senha }, {
       auth: {
         username: email,
