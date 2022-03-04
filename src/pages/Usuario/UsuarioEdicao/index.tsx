@@ -26,8 +26,8 @@ export function UsuarioEdicao() {
 
         setData({ nome, email, senha });
       })
-      .catch((erro) => {
-        console.error(erro);
+      .catch((error) => {
+        console.error(error);
       });
   }, [id]);
 
@@ -45,6 +45,7 @@ export function UsuarioEdicao() {
       'senha': values.senha,
     }).then(() => {
       SwalModal.fire({
+        icon: 'success',
         title: "Cadastro alterado com sucesso!",
         buttonsStyling: false,
         confirmButtonText: 'Fechar',
@@ -54,6 +55,16 @@ export function UsuarioEdicao() {
       });
       navigation(`/usuario/${id}`);
     }).catch((error) => {
+      SwalModal.fire({
+        icon: 'error',
+        title: 'Erro',
+        html: <p>{`${error}`}</p>,
+        buttonsStyling: false,
+        confirmButtonText: 'Fechar',
+        customClass: {
+          confirmButton: 'btn btn-danger',
+        },
+      });
       console.error(error);
     });
   }

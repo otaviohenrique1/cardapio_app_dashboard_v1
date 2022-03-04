@@ -1,4 +1,42 @@
 import { format } from "date-fns";
+import { SHA512, enc, lib } from "crypto-js";
+
+export function sha512(senha: string) {
+  return SHA512(senha).toString(enc.Hex);
+}
+
+export function gerarSalt() {;
+  let salt = lib.WordArray.random(128 / 8).toString(enc.Hex);
+  var key512Bits1000Iterations = CryptoJS.PBKDF2("Secret Passphrase", salt, {
+    keySize: 512 / 32,
+    iterations: 1000
+  });
+  return key512Bits1000Iterations;
+}
+
+// import { randomBytes, createHmac } from "crypto";
+
+// export function gerarSalt(size: number) {
+//   return randomBytes(size).toString('hex');
+// }
+
+// export function sha512(senha: string, salt: string) {
+//   let hash = createHmac('sha512', salt);
+//   hash.update(senha);
+//   let hash2 = hash.digest('hex');
+//   return { salt, hash2 };
+// }
+
+// export function gerarSenha(senha: string) {
+//   let salt = gerarSalt(16);
+//   let senhaESalt = sha512(senha, salt);
+//   return senhaESalt;
+// }
+
+// export function login(senhaDoLogin: string, saltNoBanco: string, hashNoBanco: string) {
+//   var senhaESalt = sha512(senhaDoLogin, saltNoBanco)
+//   return hashNoBanco === senhaESalt.hash2;
+// }
 
 export function FormataDataHora(valor: Date) {
   let dataFinal = format(valor, 'dd/MM/yyyy');
@@ -21,46 +59,6 @@ export function Mensagem(texto: string) {
 export function MensagemErro(campo: string) {
   return Mensagem(`Campo ${campo} esta vazio`);
 }
-
-/*
-  let users = [{ name: 'jeca' }, { name: 'jaca' }];
-  
-  Exemplo de Array de Objetos para String
-    let result = users.map(x => x.name).join(';');
-
-  Exemplo de String para Array de Objetos
-    let result2 = result.split(';');
-    let result3 = result2.map(x => {
-      return { name: x };
-    });
-*/
-
-/**
- * Converte array de objetos lista de ingredientes para uma string
- */
-export function ConverteArrayObjetosParaString(lista: { nome: string }[]) {
-  let conveteParaArraySimples = lista.map(item => item.nome);
-  let converteParaString = conveteParaArraySimples.join(';');
-  return converteParaString;
-}
-
-/**
- * Converte string lista de ingredientes para uma array de objetos
- */
-export function ConverteStringParaArrayObjetos(texto: string) {
-  let converteParaArraySimples = texto.split(';');
-  let converteParaArrayDeObjetos = converteParaArraySimples.map(item => {
-    return { nome: item };
-  });
-  return converteParaArrayDeObjetos;
-}
-
-/*
-  Exemplo
-    let myArr = [{x1:0,x2:2000,y:300},{x1:50,x2:250,y:500}];
-    let myArrString = JSON.stringify(myArr);
-    let myArrParse = JSON.parse(myArrString);
-*/
 
 /**
  * Converte array de objetos lista de ingredientes para uma string

@@ -15,13 +15,19 @@ export function UsuarioCadastro() {
   const navigate = useNavigate();
 
   async function onSubmit(values: FormularioUsuarioTypes, helpers: FormikHelpers<FormularioUsuarioTypes>) {
+    let nome = values.nome;
+    let email = values.email;
+    let senha = values.senha;
+    let data_cadastro = format(new Date(), 'yyyy-MM-dd');
+
     await api.post('usuario', {
-      'nome': values.nome,
-      'email': values.email,
-      'senha': values.senha,
-      'data_cadastro': format(new Date(), 'yyyy-MM-dd')
+      'nome': nome,
+      'email': email,
+      'senha': senha,
+      'data_cadastro': data_cadastro,
     }).then(() => {
       SwalModal.fire({
+        icon: 'success',
         title: "Cadastro realizado com sucesso!",
         buttonsStyling: false,
         confirmButtonText: 'Fechar',
@@ -31,10 +37,20 @@ export function UsuarioCadastro() {
       });
       navigate('/');
     }).catch((error) => {
+      SwalModal.fire({
+        icon: 'error',
+        title: 'Erro',
+        html: <p>{`${error}`}</p>,
+        buttonsStyling: false,
+        confirmButtonText: 'Fechar',
+        customClass: {
+          confirmButton: 'btn btn-danger',
+        },
+      });
       console.error(error);
     });
   }
-  
+
   return (
     <Container className="pt-5">
       <Row>
