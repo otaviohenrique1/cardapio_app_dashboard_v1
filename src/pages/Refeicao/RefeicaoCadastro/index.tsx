@@ -8,6 +8,7 @@ import { validacaoSchemaFormularioRefeicao, valoresIniciaisFormularioRefeicao } 
 import { FormularioRefeicao } from "../../../components/Formularios/FormularioRefeicao";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { gera_codigo_unico } from "../../../utils/gera_codigo_unico";
 
 const SwalModal = withReactContent(Swal);
 
@@ -19,6 +20,7 @@ export function RefeicaoCadastro() {
     const ativo = values.ativo;
     const idUsuario = (sessionStorage.getItem('id')) ? sessionStorage.getItem('id') : '1';
     const data_cadastro = format(new Date(), 'yyyy-MM-dd');
+    const codigo_unico = gera_codigo_unico();
 
     await api.post('refeicao', {
       'nome': nome,
