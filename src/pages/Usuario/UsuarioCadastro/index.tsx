@@ -9,6 +9,7 @@ import { validacaoSchemaFormularioUsuario, valoresIniciaisFormularioUsuario } fr
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { sha512 } from "../../../utils/utils";
+import { gera_codigo_unico } from "../../../utils/gera_codigo_unico";
 
 const SwalModal = withReactContent(Swal);
 
@@ -20,6 +21,7 @@ export function UsuarioCadastro() {
     let email = values.email;
     let senha = sha512(values.senha);
     let data_cadastro = format(new Date(), 'yyyy-MM-dd');
+    const codigo_unico = gera_codigo_unico();
 
     await api.post('usuario', {
       'nome': nome,
