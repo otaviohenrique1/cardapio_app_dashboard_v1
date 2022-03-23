@@ -25,7 +25,7 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
         enableReinitialize={props.enableReinitialize}
       >
         {({ errors, touched, values }) => (
-          <Form>
+          <Form encType="multipart/form-data">
             <Row>
               <CampoInput
                 md={12}
@@ -102,6 +102,9 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                 </FieldArray>
               </Col>
               <CampoCheckbox name="ativo" checked={(values.ativo) ? true : false}>Ativo</CampoCheckbox>
+              <Col md={12} className="d-flex justify-content-end pt-3">
+                <Field type="file"/>
+              </Col>
               <Col md={12} className="d-flex justify-content-end pt-3">
                 <ButtonGroup>
                   <Botao type="submit" color="primary">Salvar</Botao>
