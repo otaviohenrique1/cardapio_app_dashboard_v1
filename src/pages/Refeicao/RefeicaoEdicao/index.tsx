@@ -8,6 +8,7 @@ import { validacaoSchemaFormularioRefeicao, valoresIniciaisFormularioRefeicao } 
 import { FormularioRefeicao } from "../../../components/Formularios/FormularioRefeicao";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { format } from "date-fns";
 
 const SwalModal = withReactContent(Swal);
 
@@ -24,8 +25,16 @@ export function RefeicaoEdicao() {
         const preco = item.data.preco;
         const ativo = item.data.ativo;
         const ingredientes = JSON.parse(String(item.data.ingredientes));
+        const descricao = item.data.descricao;
+        const imagens = item.data.imagens.map((imagem: any) => ({
+          fileName: imagem.name,
+          type: imagem.type,
+          size: `${imagem.size} bytes`
+        }));
+        
+        const data = { nome, preco, ativo, ingredientes, descricao, imagens };
 
-        setData({ nome, preco, ativo, ingredientes });
+        setData(data);
       })
       .catch((erro) => {
         console.error(erro);
@@ -37,20 +46,26 @@ export function RefeicaoEdicao() {
     preco: data.preco || 0,
     ativo: data.ativo || false,
     ingredientes: data.ingredientes || [],
+    descricao: data.descricao || "",
+    imagens: data.imagens || [],
   };
 
   async function handleSubmit(values: FormularioRefeicaoTypes) {
     const nome = values.nome;
     const preco = values.preco;
     const ingredientes = JSON.stringify(values.ingredientes);
+    const descricao = values.descricao;
     const ativo = values.ativo;
+    let data_modificacao_cadastro = format(new Date(), 'yyyy-MM-dd');
 
     await api.put(`refeicao/${id}`, {
       'id': id,
       'nome': nome,
       'preco': preco,
       'ingredientes': ingredientes,
+      'descricao': descricao,
       'ativo': ativo,
+      'data_modificacao_cadastro': data_modificacao_cadastro,
     }).then(() => {
       SwalModal.fire({
         title: "Cadastro alterado com sucesso!",
