@@ -4,11 +4,12 @@ import api from "../../../utils/api";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ContainerApp } from "../../../components/ContainerApp";
-import { validacaoSchemaFormularioUsuario, valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
 import { FormularioUsuario } from "../../../components/Formularios/FormularioUsuario";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { sha512 } from "../../../utils/utils";
+import { format } from "date-fns";
+import { validacaoSchemaFormularioUsuario, valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
 
 const SwalModal = withReactContent(Swal);
 
@@ -42,12 +43,14 @@ export function UsuarioEdicao() {
     let nome = values.nome;
     let email = values.email;
     let senha = sha512(values.senha);
+    let data_modificacao_cadastro = format(new Date(), 'yyyy-MM-dd');
 
     await api.put(`usuario/${id}`, {
       'id': id,
       'nome': nome,
       'email': email,
       'senha': senha,
+      'data_modificacao_cadastro': data_modificacao_cadastro,
     }).then(() => {
       SwalModal.fire({
         icon: 'success',
