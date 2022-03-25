@@ -27,7 +27,9 @@ export function UsuarioCadastro() {
       'nome': nome,
       'email': email,
       'senha': senha,
+      'codigo': codigo_unico,
       'data_cadastro': data_cadastro,
+      'data_modificacao_cadastro': data_cadastro,
     }).then(() => {
       SwalModal.fire({
         icon: 'success',
