@@ -9,6 +9,8 @@ import { FormataData, FormataValorMonetarioTexto } from "../../../utils/utils";
 import { ItemListaFichaDados } from "../../../components/Lista";
 import { MdPlayArrow } from "react-icons/md";
 import { BotaoLink } from "../../../components/Botoes";
+import { GrImage } from "react-icons/gr";
+import { MdOutlineImageNotSupported } from "react-icons/md";
 
 interface RefeicaoDadosTypes {
   id: string;
@@ -16,7 +18,11 @@ interface RefeicaoDadosTypes {
   preco: number;
   ativo: boolean;
   ingredientes: { nome: string }[];
+  descricao: string;
+  codigo: string;
+  imagem: File[],
   data_cadastro: string;
+  data_modificacao_cadastro: string;
 }
 
 const valoresIniciaisRefeicaoDados: RefeicaoDadosTypes = {
@@ -25,7 +31,11 @@ const valoresIniciaisRefeicaoDados: RefeicaoDadosTypes = {
   preco: 0,
   ativo: false,
   ingredientes: [],
-  data_cadastro: ""
+  descricao: "",
+  codigo: "",
+  imagem: [],
+  data_cadastro: "",
+  data_modificacao_cadastro: "",
 };
 
 export function RefeicaoDados() {
@@ -43,9 +53,15 @@ export function RefeicaoDados() {
         const preco = item.data.preco;
         const ativo = item.data.ativo;
         const ingredientes = JSON.parse(String(item.data.ingredientes));
+        const descricao = item.data.descricao;
+        const codigo = item.data.codigo;
+        const imagem = [...item.data.imagem];
         const data_cadastro = FormataData(item.data.data_cadastro);
+        const data_modificacao_cadastro = FormataData(item.data.data_cadastro);
 
-        setData({ id, nome, preco, ativo, ingredientes, data_cadastro });
+        const data = { id, nome, preco, ativo, ingredientes, descricao, codigo, imagem, data_cadastro, data_modificacao_cadastro };
+
+        setData(data);
       })
       .catch((erro) => {
         console.error(erro);
@@ -60,6 +76,13 @@ export function RefeicaoDados() {
         </Col>
         <Col md={12}>
           <ListGroup>
+            <ListGroupItem className="d-flex justify-content-center">
+              {(data.imagem.length === 0) ? (
+                <MdOutlineImageNotSupported size={100} />
+              ) : (
+                <GrImage size={100} />
+              )}
+            </ListGroupItem>
             <ItemListaFichaDados
               titulo="Código"
               valor={data.id}
@@ -73,8 +96,20 @@ export function RefeicaoDados() {
               valor={(data.ativo) ? 'Ativo' : 'Inativo'}
             />
             <ItemListaFichaDados
+              titulo="Descrição"
+              valor={data.descricao}
+            />
+            <ItemListaFichaDados
+              titulo="Código"
+              valor={data.codigo}
+            />
+            <ItemListaFichaDados
               titulo="Data de cadastro"
               valor={data.data_cadastro}
+            />
+            <ItemListaFichaDados
+              titulo="Data de atualização do cadastro"
+              valor={data.data_modificacao_cadastro}
             />
             <ListGroupItem className="d-flex flex-column">
               <Titulo tag="h5" className="w-100">Ingredientes</Titulo>
