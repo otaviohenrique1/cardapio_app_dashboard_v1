@@ -62,6 +62,10 @@ export function gerarPBKDF2(senha: string, salt: string) {
 //   return;
 // }
 
+export function FormataExibicaoSenha(senha: string): string {
+  return (senha).replaceAll(/[0-9a-zA-Z]/g, '*').slice(0, 20);
+}
+
 export function FormataDataHora(valor: Date) {
   let dataFinal = format(valor, 'dd/MM/yyyy');
   let horaFinal = format(valor, 'HH:mm');
