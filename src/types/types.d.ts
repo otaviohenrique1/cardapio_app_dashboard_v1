@@ -2,7 +2,9 @@ interface FormularioRefeicaoTypes {
   nome: string;
   preco: number;
   ingredientes: { nome: string; }[];
+  descricao: string;
   ativo: boolean;
+  imagens: File[];
 }
 
 interface TabelaTypes {
