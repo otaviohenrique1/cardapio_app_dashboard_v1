@@ -6,7 +6,6 @@ import { Pagina404 } from "./Pagina404";
 import { RefeicaoCadastro } from "./Refeicao/RefeicaoCadastro";
 import { RefeicaoDados } from "./Refeicao/RefeicaoDados";
 import { RefeicaoEdicao } from "./Refeicao/RefeicaoEdicao";
-import { Teste } from "./Teste";
 import { UsuarioCadastro } from "./Usuario/UsuarioCadastro";
 import { UsuarioDados } from "./Usuario/UsuarioDados";
 import { UsuarioEdicao } from "./Usuario/UsuarioEdicao";
@@ -23,8 +22,7 @@ export function RoutesApp() {
         <Route path="/refeicao/cadastro" element={<RefeicaoCadastro/>} />
         <Route path="/refeicao/:id" element={<RefeicaoDados />} />
         <Route path="/refeicao/:id/edicao" element={<RefeicaoEdicao />} />
-        <Route element={<Pagina404 />} path="*" />
-        <Route element={<Teste />} path="/teste" />
+        <Route path="*" element={<Pagina404 />} />
       </Routes>
     </BrowserRouter>
   );
