@@ -1,9 +1,12 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik, FormikHelpers } from "formik";
+import { ChangeEvent } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { GrAddCircle } from "react-icons/gr";
 import { To } from "react-router-dom";
-import { ButtonGroup, Col, InputGroup, Row } from "reactstrap";
+import { ButtonGroup, Col, FormGroup, Input, /*Input,*/ InputGroup, /*ListGroup, ListGroupItem,*/ Row } from "reactstrap";
 import { Botao, BotaoLink } from "../../Botoes";
+import { CampoDropzone } from "../../CampoDropzone";
+import { CampoDropzone2 } from "../../CampoDropzone2";
 import { CampoCheckbox, CampoInput } from "../../Campos";
 import { Titulo } from "../../Titulo";
 
@@ -24,7 +27,7 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
         onSubmit={props.onSubmit}
         enableReinitialize={props.enableReinitialize}
       >
-        {({ errors, touched, values }) => (
+        {({ errors, touched, values, setFieldValue }) => (
           <Form encType="multipart/form-data">
             <Row>
               <CampoInput
@@ -102,9 +105,21 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                 </FieldArray>
               </Col>
               <CampoCheckbox name="ativo" checked={(values.ativo) ? true : false}>Ativo</CampoCheckbox>
-              <Col md={12} className="d-flex justify-content-end pt-3">
-                <Field type="file"/>
+              {/* <Col md={12} className="d-flex justify-content-end pt-3">
+                <Input type="file" name="" id="" />
+              </Col> */}
+              <Col md={12} className="pt-3 pb-3">
+                <CampoDropzone2 setFieldValue={setFieldValue} imagem={values.imagens} />
               </Col>
+              {/* <Col md={12} className="pt-3 pb-3">
+                <FormGroup>
+                  <input id="imagens" name="imagens" type="file" onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                    setFieldValue("imagens", event.currentTarget.files![0]);
+                  }} className="form-control" /> */}
+                  {/* <p>{`${(values.imagens[0].name) ? values.imagens[0].name : 'Vazio'}`}</p> */}
+                {/* </FormGroup> */}
+                {/* <CampoDropzone2 setFieldValue={setFieldValue} imagem={values.imagens[0]} /> */}
+              {/* </Col> */}
               <Col md={12} className="d-flex justify-content-end pt-3">
                 <ButtonGroup>
                   <Botao type="submit" color="primary">Salvar</Botao>
