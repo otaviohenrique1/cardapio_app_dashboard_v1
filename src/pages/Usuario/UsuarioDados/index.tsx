@@ -6,14 +6,16 @@ import { ContainerApp } from "../../../components/ContainerApp";
 import { ItemListaFichaDados } from "../../../components/Lista";
 import { Titulo } from "../../../components/Titulo";
 import api from "../../../utils/api";
-import { FormataData } from "../../../utils/utils";
+import { FormataData, FormataExibicaoSenha } from "../../../utils/utils";
 
 interface DataTypes {
   id: string;
   nome: string;
   email: string;
   senha: string;
+  codigo: string;
   data_cadastro: string;
+  data_modificacao_cadastro: string;
 }
 
 const valoresIniciais: DataTypes = {
@@ -22,6 +24,8 @@ const valoresIniciais: DataTypes = {
   email: "",
   senha: "",
   data_cadastro: "",
+  codigo: "",
+  data_modificacao_cadastro: ""
 };
 
 export function UsuarioDados() {
@@ -39,8 +43,10 @@ export function UsuarioDados() {
           id: id,
           nome: item.data.nome,
           email: item.data.email,
-          senha: (item.data.senha).replaceAll(/[0-9a-zA-Z]/g, '*'),
+          senha: FormataExibicaoSenha(item.data.senha),
+          codigo: (item.data.codigo),
           data_cadastro: FormataData(item.data.data_cadastro),
+          data_modificacao_cadastro: FormataData(item.data.data_cadastro_cadastro),
         });
       })
       .catch((error) => {
@@ -73,8 +79,16 @@ export function UsuarioDados() {
               valor={data.senha}
             />
             <ItemListaFichaDados
+              titulo="Código"
+              valor={data.codigo}
+            />
+            <ItemListaFichaDados
               titulo="Data de cadastro"
               valor={data.data_cadastro}
+            />
+            <ItemListaFichaDados
+              titulo="Data de atualização do cadastro"
+              valor={data.data_modificacao_cadastro}
             />
           </ListGroup>
         </Col>
