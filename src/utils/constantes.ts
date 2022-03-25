@@ -7,6 +7,8 @@ export const valoresIniciaisFormularioRefeicao: FormularioRefeicaoTypes = {
   ingredientes: [
     { nome: '' }
   ],
+  descricao: "",
+  imagens: [],
 };
 
 export const valoresIniciaisFormularioUsuario: FormularioUsuarioTypes = {
