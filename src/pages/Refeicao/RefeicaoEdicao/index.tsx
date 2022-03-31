@@ -14,6 +14,7 @@ const SwalModal = withReactContent(Swal);
 
 export function RefeicaoEdicao() {
   const [data, setData] = useState<FormularioRefeicaoTypes>(valoresIniciaisFormularioRefeicao);
+  const [imagens, setImagens] = useState([]);
   const navigation = useNavigate();
 
   let { id } = useParams();
@@ -93,6 +94,8 @@ export function RefeicaoEdicao() {
           onSubmit={handleSubmit}
           enableReinitialize={true}
           voltarLink={`/refeicao/${id}`}
+          imagens={imagens}
+          setImagens={setImagens}
         />
       </Row>
     </ContainerApp>

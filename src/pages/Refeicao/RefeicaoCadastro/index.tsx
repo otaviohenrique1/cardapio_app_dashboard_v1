@@ -8,12 +8,15 @@ import { validacaoSchemaFormularioRefeicao, valoresIniciaisFormularioRefeicao } 
 import { FormularioRefeicao } from "../../../components/Formularios/FormularioRefeicao";
 import { gera_codigo_unico } from "../../../utils/gera_codigo_unico";
 import { ModalConfirmacaoCadastro, ModalErroCadastro } from "../../../components/Modals";
+import { useState } from "react";
 // import Swal from 'sweetalert2';
 // import withReactContent from 'sweetalert2-react-content';
 
 // const SwalModal = withReactContent(Swal);
 
 export function RefeicaoCadastro() {
+  const [imagens, setImagens] = useState([]);
+
   async function handleSubmit(values: FormularioRefeicaoTypes, helpers: FormikHelpers<FormularioRefeicaoTypes>) {
     const data = new FormData();
 
@@ -28,16 +31,18 @@ export function RefeicaoCadastro() {
     values.imagens.forEach(imagem => {
       data.append('images', imagem);
     });
-    
-    await api.post('refeicao', data).then(() => {
-      ModalConfirmacaoCadastro();
-    }).catch((error) => {
-      console.error(error);
-      ModalErroCadastro(error);
-    });
+
+    await api.post('refeicao', data)
+      .then(() => {
+        ModalConfirmacaoCadastro();
+      }).catch((error) => {
+        console.error(error);
+        ModalErroCadastro(error);
+      });
 
     helpers.resetForm();
   }
+
 
   return (
     <ContainerApp>
@@ -51,6 +56,8 @@ export function RefeicaoCadastro() {
           onSubmit={handleSubmit}
           enableReinitialize={false}
           voltarLink="/home"
+          imagens={imagens}
+          setImagens={setImagens}
         />
       </Row>
     </ContainerApp>
