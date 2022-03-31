@@ -2,7 +2,7 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { To } from "react-router-dom";
 import { ButtonGroup, Col, Row } from "reactstrap";
 import { Botao, BotaoLink } from "../../Botoes";
-import { CampoInput } from "../../Campos";
+import { CampoInput } from "../../Campos/CampoInput";
 
 interface FormularioUsuarioProps {
   initialValues: FormularioUsuarioTypes;

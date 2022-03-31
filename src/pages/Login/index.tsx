@@ -1,7 +1,7 @@
 import { Col, Container, Row, ButtonGroup, Card, CardBody, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Titulo } from "../../components/Titulo";
 import { Form, Formik } from "formik";
-import { CampoInput } from "../../components/Campos";
+import { CampoInput } from "../../components/Campos/CampoInput";
 import { useNavigate } from "react-router-dom";
 import api from "../../utils/api";
 import { adicionaLogin } from "../../features/login/LoginSlice";
@@ -46,13 +46,6 @@ export function Login() {
             confirmButton: 'btn btn-primary'
           },
         });
-
-        // console.log(error.response.data);
-        // console.log(error.response.status);
-        // console.log(error.response.headers);
-        // console.log(error.request);
-        // console.log(error.message);
-        // console.error(error.toJSON());
       });
   }
 
