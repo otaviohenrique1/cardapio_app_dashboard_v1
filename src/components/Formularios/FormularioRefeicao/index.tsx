@@ -1,13 +1,102 @@
+import { Form, Formik, FormikHelpers } from "formik";
+import { ImageListType } from "react-images-uploading";
+import { To } from "react-router-dom";
+import { ButtonGroup, Col, Row } from "reactstrap";
+import { Botao, BotaoLink } from "../../Botoes";
+import { CampoCheckbox } from "../../Campos/CampoCheckbox";
+import { CampoDropzone } from "../../Campos/CampoDropzone";
+import { CampoIngredientes } from "../../Campos/CampoIngredientes";
+import { CampoInput } from "../../Campos/CampoInput";
+
+interface FormularioRefeicaoProps {
+  initialValues: FormularioRefeicaoTypes;
+  validationSchema: any;
+  onSubmit: (values: FormularioRefeicaoTypes, helpers: FormikHelpers<FormularioRefeicaoTypes>) => Promise<void>;
+  voltarLink: To;
+  enableReinitialize: boolean;
+  imagens: never[];
+  setImagens: React.Dispatch<React.SetStateAction<never[]>>;
+}
+export function FormularioRefeicao(props: FormularioRefeicaoProps) {
+  const tamanhoMaximoEmBytesDoArquivo = 3000000;
+  const listaDeTiposDeArquivosAceitos = ['jpg', 'gif', 'png'];
+  const quantidadeMaximaDeArquivosAceitos = 3;
+
+  return (
+    <Col md={12}>
+      <Formik
+        initialValues={props.initialValues}
+        validationSchema={props.validationSchema}
+        onSubmit={props.onSubmit}
+        enableReinitialize={props.enableReinitialize}
+      >
+        {({ errors, touched, values, setFieldValue }) => (
+          <Form encType="multipart/form-data">
+            <Row>
+              <CampoInput
+                md={12}
+                id="nome"
+                label="Nome da refeição"
+                name="nome"
+                type="text"
+                placeholder="Digite o nome da refeição"
+                value={values.nome}
+                error={errors.nome}
+                touched={touched.nome}
+              />
+              <CampoInput
+                md={12}
+                id="preco"
+                label="Preço da refeição"
+                name="preco"
+                type="number"
+                placeholder="Digite o preco da refeição"
+                value={`${values.preco}`}
+                error={errors.preco}
+                touched={touched.preco}
+              />
+              <CampoIngredientes ingredientes={values.ingredientes} />
+              <CampoCheckbox name="ativo" checked={(values.ativo) ? true : false}>Ativo</CampoCheckbox>
+              <Col md={12} className="pt-3 pb-3">
+                <CampoDropzone
+                  multiple
+                  maxNumber={quantidadeMaximaDeArquivosAceitos}
+                  onChange={(imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
+                    props.setImagens(imageList as never[]);
+                    let lista_imagens = imageList.map((item) => {
+                      return item.file;
+                    });
+                    setFieldValue("imagem", lista_imagens);
+                  }}
+                  value={props.imagens}
+                  maxFileSize={tamanhoMaximoEmBytesDoArquivo}
+                  acceptType={listaDeTiposDeArquivosAceitos}
+                />
+              </Col>
+              <Col md={12} className="d-flex justify-content-end pt-3">
+                <ButtonGroup>
+                  <Botao type="submit" color="primary">Salvar</Botao>
+                  <Botao type="reset" color="danger">Limpar</Botao>
+                  <BotaoLink to={props.voltarLink} color="info">Voltar</BotaoLink>
+                </ButtonGroup>
+              </Col>
+            </Row>
+          </Form>
+        )}
+      </Formik>
+    </Col>
+  );
+}
+
+/*
 import { ErrorMessage, Field, FieldArray, Form, Formik, FormikHelpers } from "formik";
-import { ChangeEvent } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { GrAddCircle } from "react-icons/gr";
 import { To } from "react-router-dom";
-import { ButtonGroup, Col, FormGroup, Input, /*Input,*/ InputGroup, /*ListGroup, ListGroupItem,*/ Row } from "reactstrap";
+import { ButtonGroup, Col, InputGroup, Row } from "reactstrap";
 import { Botao, BotaoLink } from "../../Botoes";
-import { CampoDropzone } from "../../CampoDropzone";
-import { CampoDropzone2 } from "../../CampoDropzone2";
-import { CampoCheckbox, CampoInput } from "../../Campos";
+import { CampoCheckbox } from "../../Campos/CampoCheckbox";
+import { CampoInput } from "../../Campos/CampoInput";
 import { Titulo } from "../../Titulo";
 
 interface FormularioRefeicaoProps {
@@ -105,21 +194,8 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                 </FieldArray>
               </Col>
               <CampoCheckbox name="ativo" checked={(values.ativo) ? true : false}>Ativo</CampoCheckbox>
-              {/* <Col md={12} className="d-flex justify-content-end pt-3">
-                <Input type="file" name="" id="" />
-              </Col> */}
               <Col md={12} className="pt-3 pb-3">
-                <CampoDropzone2 setFieldValue={setFieldValue} imagem={values.imagens} />
               </Col>
-              {/* <Col md={12} className="pt-3 pb-3">
-                <FormGroup>
-                  <input id="imagens" name="imagens" type="file" onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                    setFieldValue("imagens", event.currentTarget.files![0]);
-                  }} className="form-control" /> */}
-                  {/* <p>{`${(values.imagens[0].name) ? values.imagens[0].name : 'Vazio'}`}</p> */}
-                {/* </FormGroup> */}
-                {/* <CampoDropzone2 setFieldValue={setFieldValue} imagem={values.imagens[0]} /> */}
-              {/* </Col> */}
               <Col md={12} className="d-flex justify-content-end pt-3">
                 <ButtonGroup>
                   <Botao type="submit" color="primary">Salvar</Botao>
@@ -134,3 +210,4 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
     </Col>
   );
 }
+*/
