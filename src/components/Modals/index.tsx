@@ -18,7 +18,7 @@ export function ModalErroCadastro(erro: any) {
   return SwalModal.fire({
     icon: 'error',
     title: "Erro!",
-    html: <p>{erro}</p>,
+    html: <p>{`${erro}`}</p>,
     buttonsStyling: false,
     confirmButtonText: 'Fechar',
     customClass: {
