@@ -24,29 +24,28 @@ export function Login() {
     const email = values.email;
     const senha = sha512(values.senha);
 
-    await api.post('usuario/login', { email, senha }, {
-      auth: { username: email, password: senha }
-    })
-      .then((data) => {
-        const id = data.data.data_user.id;
-        const nome = data.data.data_user.nome;
-        dispatch(adicionaLogin({ id, nome }));
-        sessionStorage.setItem('id', `${id}`);
-        sessionStorage.setItem('nome', `${nome}`);
-        navigate('/home');
-      })
-      .catch((error) => {
-        setErroMensagem(error.response.data.message);
-        SwalModal.fire({
-          title: "Login inválido",
-          html: <p>{error.response.data.message}</p>,
-          buttonsStyling: false,
-          confirmButtonText: 'Fechar',
-          customClass: {
-            confirmButton: 'btn btn-primary'
-          },
-        });
+    await api.post('usuario/login',
+      { email, senha },
+      { auth: { username: email, password: senha } }
+    ).then((data) => {
+      const id = data.data.data_user.id;
+      const nome = data.data.data_user.nome;
+      dispatch(adicionaLogin({ id, nome }));
+      sessionStorage.setItem('id', `${id}`);
+      sessionStorage.setItem('nome', `${nome}`);
+      navigate('/home');
+    }).catch((error) => {
+      setErroMensagem(error.response.data.message);
+      SwalModal.fire({
+        title: "Login inválido",
+        html: <p>{error.response.data.message}</p>,
+        buttonsStyling: false,
+        confirmButtonText: 'Fechar',
+        customClass: {
+          confirmButton: 'btn btn-primary'
+        },
       });
+    });
   }
 
   return (
