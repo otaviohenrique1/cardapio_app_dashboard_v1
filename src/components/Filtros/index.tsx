@@ -15,8 +15,14 @@ export function CampoFiltroGlobalTabela(props: CampoFiltroGlobalTabelaProps) {
   }, 200)
 
   return (
-    <Form className="d-flex flex-row align-items-center" onSubmit={event => event.preventDefault()}>
-      <Label for="filter_table" className="mb-0 me-3 fw-bold form-label">Pesquisar</Label>
+    <Form
+      className="d-flex flex-row align-items-center"
+      onSubmit={event => event.preventDefault()}
+    >
+      <Label
+        for="filter_table"
+        className="mb-0 me-3 fw-bold form-label"
+      >Pesquisar</Label>
       <InputGroup>
         <InputGroupText className="rounded-start">
           <FaSearch />
