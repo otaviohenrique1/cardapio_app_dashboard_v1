@@ -6,7 +6,6 @@ import { Pagina404 } from "./Pagina404";
 import { RefeicaoCadastro } from "./Refeicao/RefeicaoCadastro";
 import { RefeicaoDados } from "./Refeicao/RefeicaoDados";
 import { RefeicaoEdicao } from "./Refeicao/RefeicaoEdicao";
-import { UsuarioCadastro } from "./Usuario/UsuarioCadastro";
 import { UsuarioDados } from "./Usuario/UsuarioDados";
 import { UsuarioEdicao } from "./Usuario/UsuarioEdicao";
 
@@ -15,7 +14,7 @@ export function RoutesApp() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login/>} />
-        <Route path="/usuario/cadastro" element={<UsuarioCadastro/>} />
+        {/* <Route path="/usuario/cadastro" element={<UsuarioCadastro/>} /> */}
         <Route path="/usuario/:id" element={<UsuarioDados/>} />
         <Route path="/usuario/:id/edicao" element={<UsuarioEdicao />} />
         <Route path="/home" element={<HomePage/>} />
@@ -27,15 +26,3 @@ export function RoutesApp() {
     </BrowserRouter>
   );
 }
-
-// interface AuthProviderProps {
-//   children: ReactNode;
-// }
-
-// export function AuthProvider(props: AuthProviderProps) {
-//   let [user, setUser] = useState<any>(null);
-
-//   return (
-//     <div></div>
-//   );
-// }
