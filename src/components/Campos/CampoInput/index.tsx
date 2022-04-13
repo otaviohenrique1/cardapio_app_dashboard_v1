@@ -7,7 +7,7 @@ interface CampoInputProps {
   label: string;
   id: string;
   name: string;
-  type: "text" | "number" | "email" | "password";
+  type: CampoInputTypes;
   value: string;
   placeholder: string;
   error?: any;
