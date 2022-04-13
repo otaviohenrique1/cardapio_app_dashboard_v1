@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FieldArray } from "formik";
 import { AiOutlineClose } from "react-icons/ai";
 import { GrAddCircle } from "react-icons/gr";
 import { Col, InputGroup, Row } from "reactstrap";
-import { Botao } from "../../Botoes";
+import { Botao } from "../../Botoes/Botao";
 import { Titulo } from "../../Titulo";
 
 interface CampoIngredientesProps {
