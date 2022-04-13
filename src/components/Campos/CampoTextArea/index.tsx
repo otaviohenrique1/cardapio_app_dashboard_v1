@@ -1,6 +1,6 @@
 import { Field } from "formik";
-import { Label, Alert } from "reactstrap";
-import Col, { ColumnProps } from "reactstrap/types/lib/Col";
+import { Label, Alert, Col } from "reactstrap";
+import { ColumnProps } from "reactstrap/types/lib/Col";
 
 interface CampoTextAreaProps {
   md: ColumnProps;
