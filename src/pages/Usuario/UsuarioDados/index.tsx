@@ -1,55 +1,44 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Col, ListGroup, Row } from "reactstrap";
-import { BotaoLink } from "../../../components/Botoes";
+import { BotaoLink } from "../../../components/Botoes/BotaoLink";
 import { ContainerApp } from "../../../components/ContainerApp";
-import { ItemListaFichaDados } from "../../../components/Lista";
+import { ItemListaFichaDados } from "../../../components/Listas/ItemListaFichaDados";
+import { ModalErroCadastro } from "../../../components/Modals";
 import { Titulo } from "../../../components/Titulo";
 import api from "../../../utils/api";
-import { FormataData, FormataExibicaoSenha } from "../../../utils/utils";
-
-interface DataTypes {
-  id: string;
-  nome: string;
-  email: string;
-  senha: string;
-  codigo: string;
-  data_cadastro: string;
-  data_modificacao_cadastro: string;
-}
-
-const valoresIniciais: DataTypes = {
-  id: "",
-  nome: "",
-  email: "",
-  senha: "",
-  data_cadastro: "",
-  codigo: "",
-  data_modificacao_cadastro: ""
-};
+import { valoresIniciaisUsuarioDados } from "../../../utils/constantes";
+import { FormatadorDados } from "../../../utils/FormatadorDados";
 
 export function UsuarioDados() {
-  const [data, setData] = useState<DataTypes>(valoresIniciais);
+  const [data, setData] = useState<UsuarioDadosTypes>(valoresIniciaisUsuarioDados);
   const { id } = useParams();
 
   useEffect(() => {
-    if (!id) {
-      return;
-    }
+    if (!id) { return; }
 
     api.get(`usuario/${id}`)
       .then((item) => {
-        setData({
-          id: id,
-          nome: item.data.nome,
-          email: item.data.email,
-          senha: FormataExibicaoSenha(item.data.senha),
-          codigo: (item.data.codigo),
-          data_cadastro: FormataData(item.data.data_cadastro),
-          data_modificacao_cadastro: FormataData(item.data.data_cadastro_cadastro),
-        });
+        const { nome, email, senha, codigo, data_cadastro, data_modificacao_cadastro } = item.data;
+
+        const senha_formatada = FormatadorDados.FormataExibicaoSenha(String(senha), 12);
+        const data_cadastro_formatada = FormatadorDados.FormatadorDataHora(data_cadastro, "dd/MM/yyyy HH:mm");
+        const data_modificacao_cadastro_formatada = FormatadorDados.FormatadorDataHora(data_modificacao_cadastro, "dd/MM/yyyy HH:mm");
+
+        const data = {
+          id,
+          nome: String(nome),
+          email: String(email),
+          senha: senha_formatada,
+          codigo: String(codigo),
+          data_cadastro: data_cadastro_formatada,
+          data_modificacao_cadastro: data_modificacao_cadastro_formatada,
+        };
+
+        setData(data);
       })
       .catch((error) => {
+        ModalErroCadastro();
         console.error(error);
       });
   }, [id]);
@@ -62,34 +51,13 @@ export function UsuarioDados() {
         </Col>
         <Col md={12}>
           <ListGroup>
-            <ItemListaFichaDados
-              titulo="Código"
-              valor={data.id}
-            />
-            <ItemListaFichaDados
-              titulo="Nome"
-              valor={data.nome}
-            />
-            <ItemListaFichaDados
-              titulo="E-mail"
-              valor={data.email}
-            />
-            <ItemListaFichaDados
-              titulo="Senha"
-              valor={data.senha}
-            />
-            <ItemListaFichaDados
-              titulo="Código"
-              valor={data.codigo}
-            />
-            <ItemListaFichaDados
-              titulo="Data de cadastro"
-              valor={data.data_cadastro}
-            />
-            <ItemListaFichaDados
-              titulo="Data de atualização do cadastro"
-              valor={data.data_modificacao_cadastro}
-            />
+            <ItemListaFichaDados titulo="Código" valor={data.id} />
+            <ItemListaFichaDados titulo="Nome" valor={data.nome} />
+            <ItemListaFichaDados titulo="E-mail" valor={data.email} />
+            <ItemListaFichaDados titulo="Senha" valor={data.senha} />
+            <ItemListaFichaDados titulo="Código" valor={data.codigo} />
+            <ItemListaFichaDados titulo="Data de cadastro" valor={data.data_cadastro} />
+            <ItemListaFichaDados titulo="Data de atualização do cadastro" valor={data.data_modificacao_cadastro} />
           </ListGroup>
         </Col>
         <Col md={12} className="d-flex justify-content-end mt-5">
