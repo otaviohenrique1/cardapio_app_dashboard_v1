@@ -1,51 +1,46 @@
-import { Col, Container, Row, ButtonGroup, Card, CardBody, CardHeader, CardFooter, Alert } from "reactstrap";
-import { Titulo } from "../../components/Titulo";
-import { Form, Formik } from "formik";
-import { CampoInput } from "../../components/Campos/CampoInput";
 import { useNavigate } from "react-router-dom";
+import { Col, Container, Row, ButtonGroup, Card, CardBody, CardHeader, CardFooter } from "reactstrap";
+import { Form, Formik } from "formik";
+import { Titulo } from "../../components/Titulo";
+import { CampoInput } from "../../components/Campos/CampoInput";
+import { Botao } from "../../components/Botoes/Botao";
+import { ModalMensagem } from "../../components/Modals";
 import api from "../../utils/api";
-import { adicionaLogin } from "../../features/login/LoginSlice";
-import { useDispatch } from "react-redux";
-import { Botao, BotaoLink } from "../../components/Botoes";
-import { dadosIniciaisFormularioLogin, schemaValidacaoFormularioLogin } from "../../utils/constantes";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import { sha512 } from "../../utils/utils";
-import { useState } from "react";
-const SwalModal = withReactContent(Swal);
+import { dadosIniciaisFormularioLogin } from "../../utils/constantes";
+import { FormatadorCrypto } from "../../utils/FormatadorCrypto";
+import { schemaValidacaoFormularioLogin } from "../../utils/ValidacaoSchemas";
 
 export function Login() {
   let navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const [erroMensagem, setErroMensagem] = useState<string>('');
+  async function onSubmit(values: LoginTypes) {
+    const { email, senha } = values;
 
-  async function onSubmit(values: FormularioLoginTypes) {
-    const email = values.email;
-    const senha = sha512(values.senha);
+    let senha_formatada = FormatadorCrypto.mensagemSHA512(senha);
 
-    await api.post('usuario/login',
-      { email, senha },
-      { auth: { username: email, password: senha } }
-    ).then((data) => {
-      const id = data.data.data_user.id;
-      const nome = data.data.data_user.nome;
-      dispatch(adicionaLogin({ id, nome }));
-      sessionStorage.setItem('id', `${id}`);
-      sessionStorage.setItem('nome', `${nome}`);
-      navigate('/home');
-    }).catch((error) => {
-      setErroMensagem(error.response.data.message);
-      SwalModal.fire({
-        title: "Login inválido",
-        html: <p>{error.response.data.message}</p>,
-        buttonsStyling: false,
-        confirmButtonText: 'Fechar',
-        customClass: {
-          confirmButton: 'btn btn-primary'
-        },
+    const data = {
+      email,
+      senha: senha_formatada
+    };
+
+    const auth = {
+      auth: {
+        username: email,
+        password: senha_formatada
+      }
+    };
+
+    await api.post('usuario/login', data, auth)
+      .then((data) => {
+        const { id, nome } = data.data.data_user;
+        sessionStorage.setItem('id', String(id));
+        sessionStorage.setItem('nome', String(nome));
+        navigate('/home');
+      })
+      .catch((error) => {
+        ModalMensagem("error", "Erro", "Login inválido");
+        console.error(error);
       });
-    });
   }
 
   return (
@@ -67,9 +62,6 @@ export function Login() {
               </CardHeader>
               <CardBody>
                 <Row>
-                  {(erroMensagem.length !== 0) ? (<Alert color="danger">{erroMensagem}</Alert>) : null}
-                  <Col md={12}>
-                  </Col>
                   <CampoInput
                     md={12}
                     type="text"
@@ -100,7 +92,6 @@ export function Login() {
                     <ButtonGroup>
                       <Botao color="primary" type="submit">Entrar</Botao>
                       <Botao color="danger" type="reset">Limpar</Botao>
-                      <BotaoLink to="/usuario/cadastro" color="success">Novo usuario</BotaoLink>
                     </ButtonGroup>
                   </Col>
                 </Row>
