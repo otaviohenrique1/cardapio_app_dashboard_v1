@@ -1,20 +1,18 @@
-import { Col, Row } from "reactstrap";
-import { Titulo } from "../../../components/Titulo";
-import api from "../../../utils/api";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Col, Row } from "reactstrap";
+import { Titulo } from "../../../components/Titulo";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { FormularioUsuario } from "../../../components/Formularios/FormularioUsuario";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import { sha512 } from "../../../utils/utils";
-import { format } from "date-fns";
-import { validacaoSchemaFormularioUsuario, valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
-
-const SwalModal = withReactContent(Swal);
+import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
+import api from "../../../utils/api";
+import { valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
+import { FormatadorDados } from "../../../utils/FormatadorDados";
+import { FormatadorCrypto } from "../../../utils/FormatadorCrypto";
+import { validacaoSchemaFormularioUsuario } from "../../../utils/ValidacaoSchemas";
 
 export function UsuarioEdicao() {
-  const [data, setData] = useState<FormularioUsuarioTypes>(valoresIniciaisFormularioUsuario);
+  const [data, setData] = useState<UsuarioTypes>(valoresIniciaisFormularioUsuario);
   const navigation = useNavigate();
 
   let { id } = useParams();
@@ -22,59 +20,45 @@ export function UsuarioEdicao() {
   useEffect(() => {
     api.get(`usuario/${id}`)
       .then((item) => {
-        let nome = item.data.nome;
-        let email = item.data.email;
-        let senha = item.data.senha;
+        let { nome, email, senha } = item.data;
+        let data = { nome, email, senha };
 
-        setData({ nome, email, senha });
+        setData(data);
       })
       .catch((error) => {
+        ModalErroCadastro();
         console.error(error);
       });
   }, [id]);
 
-  const dadosDoUsuario: FormularioUsuarioTypes = {
+  const dadosDoUsuario: UsuarioTypes = {
     nome: data.nome || "",
     email: data.email || "",
     senha: data.senha || "",
   };
 
-  async function handleSubmit(values: FormularioUsuarioTypes) {
-    let nome = values.nome;
-    let email = values.email;
-    let senha = sha512(values.senha);
-    let data_modificacao_cadastro = format(new Date(), 'yyyy-MM-dd');
+  async function handleSubmit(values: UsuarioTypes) {
+    const { nome, email, senha } = values;
 
-    await api.put(`usuario/${id}`, {
+    let senha_formatada = FormatadorCrypto.mensagemSHA512(senha);
+    let data_modificacao_cadastro = FormatadorDados.GeradorDataHoraFormatada("yyyy-MM-dd HH:mm:ss");
+
+    const data = {
       'id': id,
       'nome': nome,
       'email': email,
-      'senha': senha,
+      'senha': senha_formatada,
       'data_modificacao_cadastro': data_modificacao_cadastro,
-    }).then(() => {
-      SwalModal.fire({
-        icon: 'success',
-        title: "Cadastro alterado com sucesso!",
-        buttonsStyling: false,
-        confirmButtonText: 'Fechar',
-        customClass: {
-          confirmButton: 'btn btn-primary',
-        },
+    };
+
+    await api.put(`usuario/${id}`, data)
+      .then(() => {
+        ModalSucessoCadastro();
+        navigation(`/usuario/${id}`);
+      }).catch((error) => {
+        ModalErroCadastro();
+        console.error(error);
       });
-      navigation(`/usuario/${id}`);
-    }).catch((error) => {
-      SwalModal.fire({
-        icon: 'error',
-        title: 'Erro',
-        html: <p>{`${error}`}</p>,
-        buttonsStyling: false,
-        confirmButtonText: 'Fechar',
-        customClass: {
-          confirmButton: 'btn btn-danger',
-        },
-      });
-      console.error(error);
-    });
   }
 
   return (
