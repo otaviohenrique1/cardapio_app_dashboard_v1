@@ -2,16 +2,18 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { ImageListType } from "react-images-uploading";
 import { To } from "react-router-dom";
 import { ButtonGroup, Col, Row } from "reactstrap";
-import { Botao, BotaoLink } from "../../Botoes";
+import { Botao } from "../../Botoes/Botao";
+import { BotaoLink } from "../../Botoes/BotaoLink";
 import { CampoCheckbox } from "../../Campos/CampoCheckbox";
 import { CampoDropzone } from "../../Campos/CampoDropzone";
 import { CampoIngredientes } from "../../Campos/CampoIngredientes";
 import { CampoInput } from "../../Campos/CampoInput";
+import { CampoTextArea } from "../../Campos/CampoTextArea";
 
 interface FormularioRefeicaoProps {
-  initialValues: FormularioRefeicaoTypes;
+  initialValues: RefeicaoTypes;
   validationSchema: any;
-  onSubmit: (values: FormularioRefeicaoTypes, helpers: FormikHelpers<FormularioRefeicaoTypes>) => Promise<void>;
+  onSubmit: (values: RefeicaoTypes, helpers: FormikHelpers<RefeicaoTypes>) => Promise<void>;
   voltarLink: To;
   enableReinitialize: boolean;
   imagens: never[];
@@ -54,6 +56,16 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                 value={`${values.preco}`}
                 error={errors.preco}
                 touched={touched.preco}
+              />
+              <CampoTextArea
+                md={12}
+                id="descricao"
+                label="Descrição da refeição"
+                name="descricao"
+                placeholder="Digite a descrição da refeição"
+                value={`${values.descricao}`}
+                error={errors.descricao}
+                touched={touched.descricao}
               />
               <CampoIngredientes ingredientes={values.ingredientes} />
               <CampoCheckbox name="ativo" checked={(values.ativo) ? true : false}>Ativo</CampoCheckbox>
