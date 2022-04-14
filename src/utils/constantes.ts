@@ -1,6 +1,21 @@
-import * as Yup from "yup";
+export const EMAIL_INVALIDO = "Email invalido";
+export const valor_minimo_carateres = 8;
+export const MINIMO_CARACTERES = `Minimo ${valor_minimo_carateres} carateres`;
+export const valor_maximo_carateres = 64;
+export const MAXIMO_CARACTERES = `Maximo ${valor_maximo_carateres} carateres`;
+export const valor_minimo_ingredientes = 1;
+export const MINIMO_INGREDIENTES = `Minimo ${valor_minimo_ingredientes} carateres`;
 
-export const valoresIniciaisFormularioRefeicao: FormularioRefeicaoTypes = {
+export const FORMATO_HORA_1 = 'HH:mm';
+export const FORMATO_HORA_2 = 'HH:mm:ss';
+export const FORMATO_DATA_1 = 'dd/MM/yyyy';
+export const FORMATO_DATA_2 = 'yyyy-MM-dd';
+export const FORMATO_DATA_COM_HORA_1 = 'yyyy-MM-dd HH:mm';
+export const FORMATO_DATA_COM_HORA_2 = 'dd/MM/yyyy HH:mm';
+export const FORMATO_DATA_COM_HORA_3 = 'yyyy-MM-dd HH:mm:ss';
+export const FORMATO_DATA_COM_HORA_4 = 'dd/MM/yyyy HH:mm:ss';
+
+export const valoresIniciaisFormularioRefeicao: RefeicaoTypes = {
   nome: "",
   preco: 0,
   ativo: false,
@@ -11,43 +26,41 @@ export const valoresIniciaisFormularioRefeicao: FormularioRefeicaoTypes = {
   imagens: [],
 };
 
-export const valoresIniciaisFormularioUsuario: FormularioUsuarioTypes = {
+export const valoresIniciaisFormularioUsuario: UsuarioTypes = {
   nome: "",
   email: "",
   senha: "",
 };
 
-export const dadosIniciaisFormularioLogin: FormularioLoginTypes = {
+export const dadosIniciaisFormularioLogin: LoginTypes = {
   email: "",
   senha: ""
 };
 
-export const validacaoSchemaFormularioRefeicao = Yup.object().shape({
-  nome: Yup
-    .string()
-    .required("Campo nome vazio"),
-  preco: Yup
-    .number()
-    .moreThan(0, "Campo preco vazio")
-    .required("Campo preco vazio"),
-  ingredientes: Yup.array().of(
-    Yup.object().shape({
-      nome: Yup
-        .string()
-        .required("Campo nome do ingrediente vazio")
-    })
-  )
-    .min(1, 'Minimo 1 ingrediente')
-    .required("Campo ingredientes vazio")
-});
+export const valoresIniciaisUsuarioDados: UsuarioDadosTypes = {
+  id: "",
+  nome: "",
+  email: "",
+  senha: "",
+  data_cadastro: "",
+  codigo: "",
+  data_modificacao_cadastro: ""
+};
 
-export const validacaoSchemaFormularioUsuario = Yup.object().shape({
-  nome: Yup.string().required("Campo vazio"),
-  email: Yup.string().email("E-mail invalido").required("Campo vazio"),
-  senha: Yup.string().min(8, "Minimo 8 carateres").max(64, 'Maximo 64 carateres').required("Campo vazio"),
-});
+export const valoresIniciaisRefeicaoDados: RefeicaoDadosTypes = {
+  id: "",
+  nome: "",
+  preco: "",
+  ativo: "",
+  ingredientes: [],
+  descricao: "",
+  codigo: "",
+  imagens: [],
+  data_cadastro: "",
+  data_modificacao_cadastro: "",
+};
 
-export const schemaValidacaoFormularioLogin = Yup.object().shape({
-  email: Yup.string().required('Campo vazio'),
-  senha: Yup.string().required('Campo vazio'),
-});
+export const dadosIniciaisUsuarioLogado: UsuarioLogadoTypes = {
+  id: '',
+  nome: ''
+};
