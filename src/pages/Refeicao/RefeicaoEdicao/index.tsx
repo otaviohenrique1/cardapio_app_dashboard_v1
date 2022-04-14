@@ -1,19 +1,18 @@
-import { Col, Row } from "reactstrap";
-import { Titulo } from "../../../components/Titulo";
-import api from "../../../utils/api";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Col, Row } from "reactstrap";
+import { Titulo } from "../../../components/Titulo";
 import { ContainerApp } from "../../../components/ContainerApp";
-import { validacaoSchemaFormularioRefeicao, valoresIniciaisFormularioRefeicao } from "../../../utils/constantes";
 import { FormularioRefeicao } from "../../../components/Formularios/FormularioRefeicao";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import { format } from "date-fns";
-
-const SwalModal = withReactContent(Swal);
+import { ModalErroCadastro, ModalErroDadosNaoCarregados, ModalSucessoCadastro } from "../../../components/Modals";
+import { valoresIniciaisFormularioRefeicao } from "../../../utils/constantes";
+import api from "../../../utils/api";
+import { FormatadorDados } from "../../../utils/FormatadorDados";
+import { ConversorListas } from "../../../utils/ConversorListas";
+import { validacaoSchemaFormularioRefeicao } from "../../../utils/ValidacaoSchemas";
 
 export function RefeicaoEdicao() {
-  const [data, setData] = useState<FormularioRefeicaoTypes>(valoresIniciaisFormularioRefeicao);
+  const [data, setData] = useState<RefeicaoTypes>(valoresIniciaisFormularioRefeicao);
   const [imagens, setImagens] = useState([]);
   const navigation = useNavigate();
 
@@ -22,27 +21,36 @@ export function RefeicaoEdicao() {
   useEffect(() => {
     api.get(`refeicao/${id}`)
       .then((item) => {
-        const nome = item.data.nome;
-        const preco = item.data.preco;
-        const ativo = item.data.ativo;
-        const ingredientes = JSON.parse(String(item.data.ingredientes));
-        const descricao = item.data.descricao;
-        const imagens = item.data.imagens.map((imagem: any) => ({
-          fileName: imagem.name,
-          type: imagem.type,
-          size: `${imagem.size} bytes`
-        }));
-        
-        const data = { nome, preco, ativo, ingredientes, descricao, imagens };
+        const { nome, preco, ingredientes, descricao, ativo, imagens } = item.data;
+        const ingredientes_lista = ConversorListas.ConverteStringParaArrayObjetos(ingredientes);
+
+        /* Arrumar */
+        /* Pegar imagem do servidor e colocar na lista */
+        // const imagens_lista = imagens.map((imagem: any) => ({
+        //   fileName: imagem.name,
+        //   type: imagem.type,
+        //   size: `${imagem.size} bytes`
+        // }));
+        const imagens_lista = imagens.map((imagem: any) => imagem);
+
+        const data = {
+          nome,
+          preco,
+          ativo,
+          ingredientes: ingredientes_lista,
+          descricao,
+          imagens: imagens_lista
+        };
 
         setData(data);
       })
-      .catch((erro) => {
-        console.error(erro);
+      .catch((error) => {
+        ModalErroDadosNaoCarregados();
+        console.error(error);
       });
   }, [id]);
 
-  const dadosDaRefeicao: FormularioRefeicaoTypes = {
+  const dadosDaRefeicao: RefeicaoTypes = {
     nome: data.nome || "",
     preco: data.preco || 0,
     ativo: data.ativo || false,
@@ -51,35 +59,35 @@ export function RefeicaoEdicao() {
     imagens: data.imagens || [],
   };
 
-  async function handleSubmit(values: FormularioRefeicaoTypes) {
-    const nome = values.nome;
-    const preco = values.preco;
-    const ingredientes = JSON.stringify(values.ingredientes);
-    const descricao = values.descricao;
-    const ativo = values.ativo;
-    let data_modificacao_cadastro = format(new Date(), 'yyyy-MM-dd');
+  async function handleSubmit(values: RefeicaoTypes) {
+    const data = new FormData();
 
-    await api.put(`refeicao/${id}`, {
-      'id': id,
-      'nome': nome,
-      'preco': preco,
-      'ingredientes': ingredientes,
-      'descricao': descricao,
-      'ativo': ativo,
-      'data_modificacao_cadastro': data_modificacao_cadastro,
-    }).then(() => {
-      SwalModal.fire({
-        title: "Cadastro alterado com sucesso!",
-        buttonsStyling: false,
-        confirmButtonText: 'Fechar',
-        customClass: {
-          confirmButton: 'btn btn-primary',
-        },
-      });
-      navigation(`/refeicao/${id}`);
-    }).catch((error) => {
-      console.error(error);
+    const { nome, preco, ingredientes, descricao, ativo } = values;
+
+    let ingredientes_lista = ConversorListas.ConverteArrayObjetosParaString(ingredientes);
+    let data_modificacao_cadastro = FormatadorDados.GeradorDataHoraFormatada("yyyy-MM-dd HH:mm:ss");
+
+    data.append('nome', nome);
+    data.append('preco', String(preco));
+    data.append('ingredientes', ingredientes_lista);
+    data.append('ativo', String(ativo));
+    data.append('descricao', descricao);
+    data.append('data_modificacao_cadastro', data_modificacao_cadastro);
+
+    /* Arrumar logica do upload de imagem. Substituir imagem no servidor. */
+    values.imagens.forEach(imagem => {
+      data.append('images', imagem);
     });
+
+    await api.put(`refeicao/${id}`, data)
+      .then(() => {
+        ModalSucessoCadastro();
+        navigation(`/refeicao/${id}`);
+      })
+      .catch((error) => {
+        ModalErroCadastro();
+        console.error(error);
+      });
   }
 
   return (
