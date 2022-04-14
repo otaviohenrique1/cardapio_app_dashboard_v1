@@ -1,13 +1,14 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import { To } from "react-router-dom";
 import { ButtonGroup, Col, Row } from "reactstrap";
-import { Botao, BotaoLink } from "../../Botoes";
+import { Botao } from "../../Botoes/Botao";
+import { BotaoLink } from "../../Botoes/BotaoLink";
 import { CampoInput } from "../../Campos/CampoInput";
 
 interface FormularioUsuarioProps {
-  initialValues: FormularioUsuarioTypes;
+  initialValues: UsuarioTypes;
   validationSchema: any;
-  onSubmit: (values: FormularioUsuarioTypes, helpers: FormikHelpers<FormularioUsuarioTypes>) => Promise<void>;
+  onSubmit: (values: UsuarioTypes, helpers: FormikHelpers<UsuarioTypes>) => Promise<void>;
   voltarLink: To;
   enableReinitialize: boolean;
 }
