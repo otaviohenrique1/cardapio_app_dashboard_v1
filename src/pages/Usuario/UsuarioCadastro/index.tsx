@@ -1,59 +1,41 @@
-import { FormikHelpers } from "formik";
-import { Col, Container, Row } from "reactstrap";
-import { Titulo } from "../../../components/Titulo";
 import { useNavigate } from "react-router-dom";
-import api from "../../../utils/api";
-import { format } from "date-fns";
+import { Col, Container, Row } from "reactstrap";
+import { FormikHelpers } from "formik";
+import { Titulo } from "../../../components/Titulo";
 import { FormularioUsuario } from "../../../components/Formularios/FormularioUsuario";
-import { validacaoSchemaFormularioUsuario, valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import { sha512 } from "../../../utils/utils";
-import { gera_codigo_unico } from "../../../utils/gera_codigo_unico";
-
-const SwalModal = withReactContent(Swal);
+import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
+import api from "../../../utils/api";
+import { valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
+import { FormatadorDados } from "../../../utils/FormatadorDados";
+import { FormatadorCrypto } from "../../../utils/FormatadorCrypto";
+import { validacaoSchemaFormularioUsuario } from "../../../utils/ValidacaoSchemas";
 
 export function UsuarioCadastro() {
   const navigate = useNavigate();
 
-  async function onSubmit(values: FormularioUsuarioTypes, helpers: FormikHelpers<FormularioUsuarioTypes>) {
-    let nome = values.nome;
-    let email = values.email;
-    let senha = sha512(values.senha);
-    let data_cadastro = format(new Date(), 'yyyy-MM-dd');
-    const codigo_unico = gera_codigo_unico();
+  async function onSubmit(values: UsuarioTypes, helpers: FormikHelpers<UsuarioTypes>) {
+    const { nome, email, senha } = values;
 
-    await api.post('usuario', {
+    let senha_formatada = FormatadorCrypto.mensagemSHA512(senha);
+    let data_hora_formatada = FormatadorDados.GeradorDataHoraFormatada("yyyy-MM-dd HH:mm:ss");
+
+    const data = {
       'nome': nome,
       'email': email,
-      'senha': senha,
-      'codigo': codigo_unico,
-      'data_cadastro': data_cadastro,
-      'data_modificacao_cadastro': data_cadastro,
-    }).then(() => {
-      SwalModal.fire({
-        icon: 'success',
-        title: "Cadastro realizado com sucesso!",
-        buttonsStyling: false,
-        confirmButtonText: 'Fechar',
-        customClass: {
-          confirmButton: 'btn btn-primary',
-        },
+      'senha': senha_formatada,
+      'data_cadastro': data_hora_formatada,
+      'data_modificacao_cadastro': data_hora_formatada,
+    };
+
+    await api.post('usuario', data)
+      .then(() => {
+        ModalSucessoCadastro();
+        helpers.resetForm();
+        navigate('/');
+      }).catch((error) => {
+        ModalErroCadastro();
+        console.error(error);
       });
-      navigate('/');
-    }).catch((error) => {
-      SwalModal.fire({
-        icon: 'error',
-        title: 'Erro',
-        html: <p>{`${error}`}</p>,
-        buttonsStyling: false,
-        confirmButtonText: 'Fechar',
-        customClass: {
-          confirmButton: 'btn btn-danger',
-        },
-      });
-      console.error(error);
-    });
   }
 
   return (
