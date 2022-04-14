@@ -1,26 +1,14 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Nav, Navbar, NavItem, Collapse, DropdownItem, DropdownMenu, DropdownToggle, NavbarBrand, NavbarToggler, Dropdown } from "reactstrap";
 import { BiUserCircle } from "react-icons/bi";
 import { MdMenuBook } from "react-icons/md";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-
-const SwalModal = withReactContent(Swal);
-
-export interface UsuarioLogadoDataTypes {
-  id: string;
-  nome: string;
-}
+import { ModalConfirmacao } from "../Modals";
+import { Titulo } from "../Titulo";
 
 interface HeaderAppProps {
-  data_usuario_logado: UsuarioLogadoDataTypes;
+  data_usuario_logado: UsuarioLogadoTypes;
 }
-
-export const dadosIniciaisUsuarioLogado: UsuarioLogadoDataTypes = {
-  id: '',
-  nome: ''
-};
 
 export function HeaderApp(props: HeaderAppProps) {
   const navigate = useNavigate();
@@ -36,28 +24,22 @@ export function HeaderApp(props: HeaderAppProps) {
   };
 
   function logout() {
-    SwalModal.fire({
-      title: "Deseja sair?",
-      buttonsStyling: false,
-      confirmButtonText: 'Sim',
-      showCancelButton: true,
-      cancelButtonText: 'Não',
-      customClass: {
-        confirmButton: 'btn btn-primary me-1',
-        cancelButton: 'btn btn-danger',
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        sessionStorage.clear();
-        navigate("/");
-      }
-    });
+    ModalConfirmacao("warning", "Aviso", "Deseja sair?")
+      .then((result) => {
+        if (result.isConfirmed) {
+          sessionStorage.clear();
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   return (
     <Navbar color="dark" dark expand="sm" light>
       <NavbarBrand>
-        <Link to="/" className="nav-link d-flex flex-row">
+        <Link to="/home" className="nav-link d-flex flex-row">
           <MdMenuBook size={30} color="white" />
           <span className="fw-bold ms-2 text-white">Cardapio</span>
         </Link>
@@ -70,7 +52,7 @@ export function HeaderApp(props: HeaderAppProps) {
           </NavItem>
           <Dropdown toggle={toggleDropdown} isOpen={dropdownAberto}>
             <DropdownToggle caret className="d-flex flex-row justify-content-center align-items-center">
-              <h6 className="m-0">{props.data_usuario_logado.nome}</h6>
+              <Titulo tag="h6" className="m-0">{props.data_usuario_logado.nome}</Titulo>
               <BiUserCircle size={30} className="ms-2" />
             </DropdownToggle>
             <DropdownMenu dark>
