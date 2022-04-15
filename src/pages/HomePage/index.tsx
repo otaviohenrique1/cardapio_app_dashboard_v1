@@ -12,7 +12,7 @@ import { Paginacao } from "../../components/Paginacao/Paginacao";
 import { QuantidadeItemsPorPagina } from "../../components/Paginacao/QuantidadeItemsPorPagina";
 import { BotaoLink } from "../../components/Botoes/BotaoLink";
 import { Tabela } from "../../components/Tabela";
-import { ModalConfirmacao } from "../../components/Modals";
+import { ModalConfirmacao, ModalErroDadosNaoCarregados } from "../../components/Modals";
 import api from "../../utils/api";
 import { FormatadorDados } from "../../utils/FormatadorDados";
 
@@ -23,11 +23,12 @@ export function HomePage() {
     let id = sessionStorage.getItem('id');
     let valida_id = (id) ? id : 'id';
 
-    api.get(`refeicao/${valida_id}`)
+    api.get(`refeicao/cardapio/${valida_id}`)
       .then((item) => {
         setData(item.data)
       })
       .catch((erro) => {
+        ModalErroDadosNaoCarregados();
         console.error(erro);
       });
   }, []);
