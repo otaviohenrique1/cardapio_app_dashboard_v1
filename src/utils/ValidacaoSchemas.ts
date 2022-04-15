@@ -10,48 +10,47 @@ import {
   MAXIMO_CARACTERES
 } from "./constantes";
 
-export const validacaoSchemaFormularioRefeicao = Yup.object().shape({
-  nome: Yup
-    .string()
-    .required(Mensagem.MensagemErro("nome")),
-  preco: Yup
-    .number()
-    .moreThan(0, Mensagem.MensagemErro("preco"))
-    .required(Mensagem.MensagemErro("preco")),
-  ingredientes: Yup.array().of(
+const nome = Yup
+  .string()
+  .required(Mensagem.MensagemErro("nome"));
+
+const email = Yup
+  .string()
+  .email(Mensagem.MensagemSimples(EMAIL_INVALIDO))
+  .required(Mensagem.MensagemErro("email"));
+
+const senha = Yup
+  .string()
+  .min(valor_minimo_carateres, MINIMO_CARACTERES)
+  .max(valor_maximo_carateres, MAXIMO_CARACTERES)
+  .required(Mensagem.MensagemErro("senha"));
+
+
+const preco = Yup
+  .number()
+  .moreThan(0, Mensagem.MensagemErro("preco"))
+  .required(Mensagem.MensagemErro("preco"));
+
+const ingredientes = Yup
+  .array()
+  .of(
     Yup.object().shape({
       nome: Yup
         .string()
         .required(Mensagem.MensagemErro("nome do ingrediente"))
     })
   )
-    .min(valor_minimo_ingredientes, MINIMO_INGREDIENTES)
-    .required(Mensagem.MensagemErro("ingredientes"))
+  .min(valor_minimo_ingredientes, MINIMO_INGREDIENTES)
+  .required(Mensagem.MensagemErro("ingredientes"));
+
+export const validacaoSchemaFormularioRefeicao = Yup.object().shape({
+  nome, preco, ingredientes
 });
 
 export const validacaoSchemaFormularioUsuario = Yup.object().shape({
-  nome: Yup
-    .string()
-    .required(Mensagem.MensagemErro("nome")),
-  email: Yup
-    .string()
-    .email(Mensagem.MensagemSimples(EMAIL_INVALIDO))
-    .required(Mensagem.MensagemErro("email")),
-  senha: Yup
-    .string()
-    .min(valor_minimo_carateres, MINIMO_CARACTERES)
-    .max(valor_maximo_carateres, MAXIMO_CARACTERES)
-    .required(Mensagem.MensagemErro("email")),
+  nome, email, senha,
 });
 
 export const schemaValidacaoFormularioLogin = Yup.object().shape({
-  email: Yup
-    .string()
-    .email(Mensagem.MensagemSimples(EMAIL_INVALIDO))
-    .required(Mensagem.MensagemErro("email")),
-  senha: Yup
-    .string()
-    .min(valor_minimo_carateres, MINIMO_CARACTERES)
-    .max(valor_maximo_carateres, MAXIMO_CARACTERES)
-    .required(Mensagem.MensagemErro("email")),
+  email, senha,
 });
