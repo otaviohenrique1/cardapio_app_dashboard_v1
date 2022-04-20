@@ -11,7 +11,7 @@ import { IrParaPagina } from "../../components/Paginacao/IrParaPagina";
 import { Paginacao } from "../../components/Paginacao/Paginacao";
 import { QuantidadeItemsPorPagina } from "../../components/Paginacao/QuantidadeItemsPorPagina";
 import { BotaoLink } from "../../components/Botoes/BotaoLink";
-import { Tabela } from "../../components/Tabela";
+import { Tabela } from "../../components/Tabela/Tabela";
 import { ModalConfirmacao, ModalErroDadosNaoCarregados } from "../../components/Modals";
 import api from "../../utils/api";
 import { FormatadorDados } from "../../utils/FormatadorDados";
@@ -60,7 +60,8 @@ export function HomePage() {
               id: 'preco',
               Cell: (cell) => {
                 let preco = cell.row.values['preco'];
-                let valorFormatado = FormatadorDados.FormataValorMonetarioTexto(preco);
+                // let valorFormatado = FormatadorDados.FormataValorMonetarioTexto(preco);
+                let valorFormatado = preco;
                 return valorFormatado;
               }
             },
