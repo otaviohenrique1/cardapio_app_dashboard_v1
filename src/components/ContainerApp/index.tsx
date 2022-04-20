@@ -9,6 +9,7 @@ interface ContainerAppProps {
 
 export function ContainerApp(props: ContainerAppProps) {
   const [data, setData] = useState<UsuarioLogadoTypes>(dadosIniciaisUsuarioLogado);
+  const { children } = props;
 
   useEffect(() => {
     let id = sessionStorage.getItem('id');
@@ -28,7 +29,7 @@ export function ContainerApp(props: ContainerAppProps) {
   return (
     <>
       <HeaderApp data_usuario_logado={data} />
-      <Container className="mt-2">{props.children}</Container>
+      <Container className="mt-2">{children}</Container>
     </>
   );
 }

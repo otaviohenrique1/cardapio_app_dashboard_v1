@@ -6,9 +6,7 @@ import { Botao } from "../../Botoes/Botao";
 import { Titulo } from "../../Titulo";
 
 interface CampoListaProps {
-  ingredientes: {
-    nome: string;
-  }[];
+  ingredientes: IngredientesTypes[];
   field_array_name: string;
   titulo: string;
   botao_adicionar_label: string;

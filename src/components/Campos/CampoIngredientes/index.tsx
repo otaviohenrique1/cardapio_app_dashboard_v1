@@ -6,12 +6,12 @@ import { Botao } from "../../Botoes/Botao";
 import { Titulo } from "../../Titulo";
 
 interface CampoIngredientesProps {
-  ingredientes: {
-    nome: string;
-  }[];
+  ingredientes: IngredientesTypes[];
 }
 
 export function CampoIngredientes(props: CampoIngredientesProps) {
+  const { ingredientes } = props;
+
   return (
     <Col md={12} className="d-flex flex-column pt-3 pb-3 mt-3 mb-3 border-dark border-top border-bottom">
       <FieldArray name="ingredientes">
@@ -29,38 +29,55 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
                 <GrAddCircle size={25} className="m-0 p-0" />
               </Botao>
             </Col>
-            {props.ingredientes.length > 0 &&
-              props.ingredientes.map((ingrediente, index) => (
-                <Col md={6} key={index} className="p-2">
-                  <Row>
-                    <Col md={12}>
-                      <InputGroup>
-                        <Field
+            {ingredientes.length > 0 &&
+              ingredientes.map((ingrediente, index) => {
+                const { nome, quantidade } = ingrediente;
+
+                return (
+                  <Col md={6} key={index} className="p-2">
+                    <Row>
+                      <Col md={12}>
+                        <InputGroup>
+                          <Field
+                            name={`ingredientes.${index}.nome`}
+                            placeholder="Nome"
+                            type="text"
+                            value={nome}
+                            className="form-control"
+                          />
+                          <Field
+                            name={`ingredientes.${index}.quantidade`}
+                            placeholder="Quantidade"
+                            type="number"
+                            value={quantidade}
+                            className="form-control"
+                          />
+                          <Botao
+                            type="button"
+                            color="danger"
+                            className="d-flex justify-content-center align-items-center"
+                            onClick={() => remove(index)}
+                          >
+                            <AiOutlineClose size={20} />
+                          </Botao>
+                        </InputGroup>
+                      </Col>
+                      <Col md={12} className="d-flex flex-column">
+                        <ErrorMessage
                           name={`ingredientes.${index}.nome`}
-                          placeholder="Ingrediente"
-                          type="text"
-                          className="form-control"
+                          component="div"
+                          className="field-error"
                         />
-                        <Botao
-                          type="button"
-                          color="danger"
-                          className="d-flex justify-content-center align-items-center"
-                          onClick={() => remove(index)}
-                        >
-                          <AiOutlineClose size={20} />
-                        </Botao>
-                      </InputGroup>
-                    </Col>
-                    <Col md={12}>
-                      <ErrorMessage
-                        name={`ingredientes.${index}.nome`}
-                        component="div"
-                        className="field-error"
-                      />
-                    </Col>
-                  </Row>
-                </Col>
-              ))}
+                        <ErrorMessage
+                          name={`ingredientes.${index}.quantidade`}
+                          component="div"
+                          className="field-error"
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                );
+              })}
           </Row>
         )}
       </FieldArray>

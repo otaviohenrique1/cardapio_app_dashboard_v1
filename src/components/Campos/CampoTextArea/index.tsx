@@ -14,12 +14,14 @@ interface CampoTextAreaProps {
 }
 
 export function CampoTextArea(props: CampoTextAreaProps) {
+  const { md, id, label, name, placeholder, value, error, touched } = props;
+
   return (
-    <Col md={props.md} className="d-flex flex-column mt-3">
-      <Label className="form-label" htmlFor={props.id}>{props.label}</Label>
-      <Field id={props.id} name={props.name} as="textarea"
-        className="form-control" placeholder={props.placeholder} value={props.value} />
-      {props.error && props.touched ? (<Alert color="danger">{props.error}</Alert>) : null}
+    <Col md={md} className="d-flex flex-column mt-3">
+      <Label className="form-label" htmlFor={id}>{label}</Label>
+      <Field id={id} name={name} as="textarea"
+        className="form-control" placeholder={placeholder} value={value} />
+      {error && touched ? (<Alert color="danger">{error}</Alert>) : null}
     </Col>
   );
 }
