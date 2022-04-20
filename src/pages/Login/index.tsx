@@ -18,10 +18,7 @@ export function Login() {
 
     let senha_formatada = FormatadorCrypto.mensagemSHA512(senha);
 
-    const data = {
-      email,
-      senha: senha_formatada
-    };
+    const data = { email, senha: senha_formatada };
 
     const auth = {
       auth: {
