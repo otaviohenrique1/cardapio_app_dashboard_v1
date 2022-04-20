@@ -7,6 +7,7 @@ interface QuantidadeItemsPorPaginaProps {
 
 export function QuantidadeItemsPorPagina(props: QuantidadeItemsPorPaginaProps) {
   const listaValoresQuantidadePagina = [10, 20, 30, 40, 50];
+  const { pageSize, setPageSize } = props;
 
   return (
     <Form className="d-flex flex-row align-items-center"
@@ -16,8 +17,8 @@ export function QuantidadeItemsPorPagina(props: QuantidadeItemsPorPaginaProps) {
         className="mb-0 me-3 fw-bold form-label"
       >Exibir</Label>
       <Select
-        pageSize={props.pageSize}
-        setPageSize={props.setPageSize}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
         data={listaValoresQuantidadePagina}
       />
     </Form>
@@ -29,15 +30,17 @@ interface SelectProps extends QuantidadeItemsPorPaginaProps {
 }
 
 function Select(props: SelectProps) {
+  const { pageSize, setPageSize, data } = props;
+
   return (
     <select
       className="form-select"
-      value={props.pageSize}
+      value={pageSize}
       onChange={event => {
         const numero_pagina = event.target.value;
-        props.setPageSize(Number(numero_pagina))
+        setPageSize(Number(numero_pagina))
       }}>
-      {props.data.map((pageSize) => (
+      {data.map((pageSize) => (
         <Item value={pageSize} key={pageSize} />
       ))}
     </select>
@@ -49,7 +52,8 @@ interface ItemProps {
 }
 
 function Item(props: ItemProps) {
+  const { value } = props;
   return (
-    <option value={props.value}>{props.value}</option>
+    <option value={value}>{value}</option>
   );
 }
