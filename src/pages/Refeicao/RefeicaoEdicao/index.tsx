@@ -5,7 +5,7 @@ import { Titulo } from "../../../components/Titulo";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { FormularioRefeicao } from "../../../components/Formularios/FormularioRefeicao";
 import { ModalErroCadastro, ModalErroDadosNaoCarregados, ModalSucessoCadastro } from "../../../components/Modals";
-import { valoresIniciaisFormularioRefeicao } from "../../../utils/constantes";
+import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioRefeicao } from "../../../utils/constantes";
 import api from "../../../utils/api";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { ConversorListas } from "../../../utils/ConversorListas";
@@ -13,7 +13,7 @@ import { validacaoSchemaFormularioRefeicao } from "../../../utils/ValidacaoSchem
 
 export function RefeicaoEdicao() {
   const [data, setData] = useState<RefeicaoTypes>(valoresIniciaisFormularioRefeicao);
-  const [imagens, setImagens] = useState([]);
+  const [imagensVisualizacao, setImagensVisualizacao] = useState([]);
   const navigation = useNavigate();
 
   let { id } = useParams();
@@ -31,7 +31,7 @@ export function RefeicaoEdicao() {
         //   type: imagem.type,
         //   size: `${imagem.size} bytes`
         // }));
-        const imagens_lista = imagens.map((imagem: any) => imagem);
+        const imagens_lista = imagens.map((imagem: any) => setImagensVisualizacao(imagem));
 
         const data = {
           nome,
@@ -50,13 +50,15 @@ export function RefeicaoEdicao() {
       });
   }, [id]);
 
+  const { nome, preco, ingredientes, descricao, ativo, imagens } = data;
+
   const dadosDaRefeicao: RefeicaoTypes = {
-    nome: data.nome || "",
-    preco: data.preco || 0,
-    ativo: data.ativo || false,
-    ingredientes: data.ingredientes || [],
-    descricao: data.descricao || "",
-    imagens: data.imagens || [],
+    nome: nome || "",
+    preco: preco || 0,
+    ativo: ativo || false,
+    ingredientes: ingredientes || [],
+    descricao: descricao || "",
+    imagens: imagens || [],
   };
 
   async function handleSubmit(values: RefeicaoTypes) {
@@ -65,7 +67,7 @@ export function RefeicaoEdicao() {
     const { nome, preco, ingredientes, descricao, ativo } = values;
 
     let ingredientes_lista = ConversorListas.ConverteArrayObjetosParaString(ingredientes);
-    let data_modificacao_cadastro = FormatadorDados.GeradorDataHoraFormatada("yyyy-MM-dd HH:mm:ss");
+    let data_modificacao_cadastro = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
 
     data.append('nome', nome);
     data.append('preco', String(preco));
@@ -102,8 +104,8 @@ export function RefeicaoEdicao() {
           onSubmit={handleSubmit}
           enableReinitialize={true}
           voltarLink={`/refeicao/${id}`}
-          imagens={imagens}
-          setImagens={setImagens}
+          imagens={imagensVisualizacao}
+          setImagens={setImagensVisualizacao}
         />
       </Row>
     </ContainerApp>

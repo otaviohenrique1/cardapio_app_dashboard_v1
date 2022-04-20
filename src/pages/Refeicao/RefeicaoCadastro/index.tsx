@@ -6,31 +6,34 @@ import { ContainerApp } from "../../../components/ContainerApp";
 import { FormularioRefeicao } from "../../../components/Formularios/FormularioRefeicao";
 import { ModalSucessoCadastro, ModalErroCadastro } from "../../../components/Modals";
 import api from "../../../utils/api";
-import { valoresIniciaisFormularioRefeicao } from "../../../utils/constantes";
+import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioRefeicao } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
-import { ConversorListas } from "../../../utils/ConversorListas";
 import { validacaoSchemaFormularioRefeicao } from "../../../utils/ValidacaoSchemas";
 
 export function RefeicaoCadastro() {
-  const [imagens, setImagens] = useState([]);
+  const [imagensVisualizacao, setImagensVisualizacao] = useState([]);
 
   async function handleSubmit(values: RefeicaoTypes, helpers: FormikHelpers<RefeicaoTypes>) {
-    const { nome, preco, ingredientes, ativo, descricao } = values;
+    const { nome, preco, ingredientes, ativo, descricao, imagens } = values;
 
     const data = new FormData();
 
-    const ingredientes_lista_formatada = ConversorListas.ConverteArrayObjetosParaString(ingredientes);
-    const data_hora_formata = FormatadorDados.GeradorDataHoraFormatada("yyyy-MM-dd HH:mm:ss");
+    const data_hora_formata = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
 
     data.append('nome', nome);
     data.append('preco', String(preco));
-    data.append('ingredientes', ingredientes_lista_formatada);
     data.append('ativo', String(ativo));
     data.append('descricao', descricao);
     data.append('data_cadastro', data_hora_formata);
     data.append('data_modificacao_cadastro', data_hora_formata);
-    values.imagens.forEach(imagem => {
-      data.append('images', imagem);
+    
+    // data.append('ingredientes', JSON.stringify(ingredientes));
+    ingredientes.forEach(ingrediente => {
+      data.append('ingredientes', JSON.stringify(ingrediente));
+    });
+
+    imagens.forEach(imagem => {
+      data.append('imagens', imagem);
     });
 
     await api.post('refeicao', data)
@@ -57,8 +60,8 @@ export function RefeicaoCadastro() {
           onSubmit={handleSubmit}
           enableReinitialize={false}
           voltarLink="/home"
-          imagens={imagens}
-          setImagens={setImagens}
+          imagens={imagensVisualizacao}
+          setImagens={setImagensVisualizacao}
         />
       </Row>
     </ContainerApp>

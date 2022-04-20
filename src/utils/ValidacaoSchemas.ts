@@ -31,26 +31,34 @@ const preco = Yup
   .moreThan(0, Mensagem.MensagemErro("preco"))
   .required(Mensagem.MensagemErro("preco"));
 
+const quantidade = Yup
+  .number()
+  .required(Mensagem.MensagemErro("nome"));
+
 const ingredientes = Yup
   .array()
   .of(
     Yup.object().shape({
-      nome: Yup
-        .string()
-        .required(Mensagem.MensagemErro("nome do ingrediente"))
+      nome, quantidade
     })
   )
   .min(valor_minimo_ingredientes, MINIMO_INGREDIENTES)
   .required(Mensagem.MensagemErro("ingredientes"));
 
-export const validacaoSchemaFormularioRefeicao = Yup.object().shape({
-  nome, preco, ingredientes
-});
+export const validacaoSchemaFormularioRefeicao = Yup
+  .object()
+  .shape({
+    nome, preco, ingredientes
+  });
 
-export const validacaoSchemaFormularioUsuario = Yup.object().shape({
-  nome, email, senha,
-});
+export const validacaoSchemaFormularioUsuario = Yup
+  .object()
+  .shape({
+    nome, email, senha,
+  });
 
-export const schemaValidacaoFormularioLogin = Yup.object().shape({
-  email, senha,
-});
+export const schemaValidacaoFormularioLogin = Yup
+  .object()
+  .shape({
+    email, senha,
+  });

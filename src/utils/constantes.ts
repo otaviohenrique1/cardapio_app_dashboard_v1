@@ -20,7 +20,7 @@ export const valoresIniciaisFormularioRefeicao: RefeicaoTypes = {
   preco: 0,
   ativo: false,
   ingredientes: [
-    { nome: '' }
+    { nome: '', quantidade: 0 }
   ],
   descricao: "",
   imagens: [],
@@ -52,7 +52,9 @@ export const valoresIniciaisRefeicaoDados: RefeicaoDadosTypes = {
   nome: "",
   preco: "",
   ativo: "",
-  ingredientes: [],
+  ingredientes: [
+    { nome: '', quantidade: 0 }
+  ],
   descricao: "",
   codigo: "",
   imagens: [],

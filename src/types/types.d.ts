@@ -60,17 +60,23 @@ interface UsuarioDadosTypes extends UsuarioTypes {
 }
 
 /* Parte da Refeicao */
-interface Ingredientes {
+interface IngredientesTypes {
   nome: string;
+  quantidade: number;
 }
 
 interface RefeicaoTypes {
   nome: string;
   preco: string | number;
-  ingredientes: Ingredientes[];
+  ingredientes: IngredientesTypes[];
   descricao: string;
   ativo: string | boolean;
   imagens: File[];
+}
+
+interface ImagemTypes {
+  id: string;
+  path: string;
 }
 
 interface RefeicaoDadosTypes extends RefeicaoTypes {
@@ -78,6 +84,7 @@ interface RefeicaoDadosTypes extends RefeicaoTypes {
   codigo: string;
   data_cadastro: string;
   data_modificacao_cadastro: string;
+  imagens: ImagemTypes[];
 }
 
 /*

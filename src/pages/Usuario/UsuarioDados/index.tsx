@@ -7,7 +7,7 @@ import { ItemListaFichaDados } from "../../../components/Listas/ItemListaFichaDa
 import { ModalErroCadastro } from "../../../components/Modals";
 import { Titulo } from "../../../components/Titulo";
 import api from "../../../utils/api";
-import { valoresIniciaisUsuarioDados } from "../../../utils/constantes";
+import { FORMATO_DATA_COM_HORA_4, valoresIniciaisUsuarioDados } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 
 export function UsuarioDados() {
@@ -22,8 +22,8 @@ export function UsuarioDados() {
         const { nome, email, senha, codigo, data_cadastro, data_modificacao_cadastro } = item.data;
 
         const senha_formatada = FormatadorDados.FormataExibicaoSenha(String(senha), 12);
-        const data_cadastro_formatada = FormatadorDados.FormatadorDataHora(data_cadastro, "dd/MM/yyyy HH:mm");
-        const data_modificacao_cadastro_formatada = FormatadorDados.FormatadorDataHora(data_modificacao_cadastro, "dd/MM/yyyy HH:mm");
+        const data_cadastro_formatada = FormatadorDados.FormatadorDataHora(data_cadastro, FORMATO_DATA_COM_HORA_4);
+        const data_modificacao_cadastro_formatada = FormatadorDados.FormatadorDataHora(data_modificacao_cadastro, FORMATO_DATA_COM_HORA_4);
 
         const data = {
           id,
@@ -43,6 +43,8 @@ export function UsuarioDados() {
       });
   }, [id]);
 
+  const { nome, email, senha, codigo, data_cadastro, data_modificacao_cadastro } = data;
+
   return (
     <ContainerApp>
       <Row>
@@ -51,13 +53,13 @@ export function UsuarioDados() {
         </Col>
         <Col md={12}>
           <ListGroup>
-            <ItemListaFichaDados titulo="Código" valor={data.id} />
-            <ItemListaFichaDados titulo="Nome" valor={data.nome} />
-            <ItemListaFichaDados titulo="E-mail" valor={data.email} />
-            <ItemListaFichaDados titulo="Senha" valor={data.senha} />
-            <ItemListaFichaDados titulo="Código" valor={data.codigo} />
-            <ItemListaFichaDados titulo="Data de cadastro" valor={data.data_cadastro} />
-            <ItemListaFichaDados titulo="Data de atualização do cadastro" valor={data.data_modificacao_cadastro} />
+            <ItemListaFichaDados titulo="Id" valor={id} />
+            <ItemListaFichaDados titulo="Nome" valor={nome} />
+            <ItemListaFichaDados titulo="E-mail" valor={email} />
+            <ItemListaFichaDados titulo="Senha" valor={senha} />
+            <ItemListaFichaDados titulo="Código" valor={codigo} />
+            <ItemListaFichaDados titulo="Data de cadastro" valor={data_cadastro} />
+            <ItemListaFichaDados titulo="Data de atualização do cadastro" valor={data_modificacao_cadastro} />
           </ListGroup>
         </Col>
         <Col md={12} className="d-flex justify-content-end mt-5">

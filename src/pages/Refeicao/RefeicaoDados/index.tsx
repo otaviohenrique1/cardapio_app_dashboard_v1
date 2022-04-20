@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Col, ListGroup, ListGroupItem, Row } from "reactstrap";
 // import { UncontrolledCarousel } from "reactstrap";
 // import { GrImage } from "react-icons/gr";
-// import { MdOutlineImageNotSupported } from "react-icons/md";
+import { MdOutlineImageNotSupported } from "react-icons/md";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { Titulo } from "../../../components/Titulo";
 import { ItemListaFichaDados } from "../../../components/Listas/ItemListaFichaDados";
@@ -13,7 +13,8 @@ import api from "../../../utils/api";
 import { ModalErroCadastro } from "../../../components/Modals";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { ConversorListas } from "../../../utils/ConversorListas";
-import { valoresIniciaisRefeicaoDados } from "../../../utils/constantes";
+import { FORMATO_DATA_COM_HORA_4, valoresIniciaisRefeicaoDados } from "../../../utils/constantes";
+import { CarouselListaFichaDados } from "../../../components/Listas/CarouselListaFichaDados";
 
 export function RefeicaoDados() {
   const [data, setData] = useState<RefeicaoDadosTypes>(valoresIniciaisRefeicaoDados);
@@ -28,19 +29,25 @@ export function RefeicaoDados() {
 
         const preco_formatado = FormatadorDados.FormataValorMonetarioTexto(preco);
         const status_refeicao = FormatadorDados.ValidaStatusRefeicao(ativo);
+
+        const data_cadastro_formatada = FormatadorDados
+          .FormatadorDataHora(data_cadastro, FORMATO_DATA_COM_HORA_4);
+        const data_modificacao_cadastro_formatada = FormatadorDados
+          .FormatadorDataHora(data_modificacao_cadastro, FORMATO_DATA_COM_HORA_4);
+
         const ingredientes_lista = ConversorListas.ConverteStringParaArrayObjetos(ingredientes);
-        const data_cadastro_formatada = FormatadorDados.FormatadorDataHora(data_cadastro, "dd/MM/yyyy HH:mm");
-        const data_modificacao_cadastro_formatada = FormatadorDados.FormatadorDataHora(data_modificacao_cadastro, "dd/MM/yyyy HH:mm");
+        const ingredientes_lista_formatada = [...ingredientes_lista] as IngredientesTypes[];
+        const imagens_lista = [...imagem] as ImagemTypes[];
 
         const data = {
           id,
           nome: String(nome),
           preco: preco_formatado,
           ativo: status_refeicao,
-          ingredientes: ingredientes_lista,
+          ingredientes: ingredientes_lista_formatada,
           descricao: String(descricao),
           codigo: String(codigo),
-          imagens: [...imagem],
+          imagens: imagens_lista,
           data_cadastro: data_cadastro_formatada,
           data_modificacao_cadastro: data_modificacao_cadastro_formatada
         };
@@ -53,30 +60,32 @@ export function RefeicaoDados() {
       });
   }, [id]);
 
+  const { nome, codigo, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens } = data;
+
   return (
     <ContainerApp>
       <Row>
         <Col md={12}>
-          <Titulo tag="h1" className="w-100 text-center mb-5">{data.nome}</Titulo>
+          <Titulo tag="h1" className="w-100 text-center mb-5">{nome}</Titulo>
         </Col>
         <Col md={12}>
           <ListGroup>
-            {/* <ListGroupItem className="d-flex justify-content-center">
-              {(data.imagem.length === 0) ? (
+            <ListGroupItem className="d-flex justify-content-center">
+              {(imagens.length === 0) ? (
                 <MdOutlineImageNotSupported size={100} />
               ) : (
-                <GrImage size={100} />
+                <CarouselListaFichaDados data={imagens} />
               )}
-            </ListGroupItem> */}
-            <ItemListaFichaDados titulo="Código" valor={data.id} />
-            <ItemListaFichaDados titulo="Preço (R$)" valor={data.preco} />
-            <ItemListaFichaDados titulo="Status" valor={data.ativo} />
-            <ItemListaFichaDados titulo="Descrição" valor={data.descricao} />
-            <ItemListaFichaDados titulo="Código" valor={data.codigo} />
-            <ItemListaFichaDados titulo="Data de cadastro" valor={data.data_cadastro} />
-            <ItemListaFichaDados titulo="Data de atualização do cadastro" valor={data.data_modificacao_cadastro} />
+            </ListGroupItem>
+            <ItemListaFichaDados titulo="Id" valor={id} />
+            <ItemListaFichaDados titulo="Preço (R$)" valor={preco} />
+            <ItemListaFichaDados titulo="Status" valor={ativo} />
+            <ItemListaFichaDados titulo="Descrição" valor={descricao} />
+            <ItemListaFichaDados titulo="Código" valor={codigo} />
+            <ItemListaFichaDados titulo="Data de cadastro" valor={data_cadastro} />
+            <ItemListaFichaDados titulo="Data de atualização do cadastro" valor={data_modificacao_cadastro} />
             <ListGroupItem>
-              <ListaIngredientes data={data.ingredientes} />
+              <ListaIngredientes data={ingredientes} />
             </ListGroupItem>
           </ListGroup>
         </Col>
