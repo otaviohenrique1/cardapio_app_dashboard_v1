@@ -58,7 +58,7 @@ export function HeaderApp(props: HeaderAppProps) {
             <DropdownMenu dark>
               <DropdownItem>
                 <Link
-                  to={`/usuario/${props.data_usuario_logado.id}`}
+                  to={`/empresa/${props.data_usuario_logado.id}`}
                   className="nav-link"
                 >Perfil</Link>
               </DropdownItem>

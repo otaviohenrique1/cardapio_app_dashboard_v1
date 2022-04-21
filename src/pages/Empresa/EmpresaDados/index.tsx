@@ -63,7 +63,7 @@ export function EmpresaDados() {
           </ListGroup>
         </Col>
         <Col md={12} className="d-flex justify-content-end mt-5">
-          <BotaoLink to={`/usuario/${id}/edicao`} color="primary">Editar</BotaoLink>
+          <BotaoLink to={`/empresa/${id}/edicao`} color="primary">Editar</BotaoLink>
         </Col>
       </Row>
     </ContainerApp>
