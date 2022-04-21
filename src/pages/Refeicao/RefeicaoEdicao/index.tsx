@@ -22,7 +22,9 @@ export function RefeicaoEdicao() {
     api.get(`refeicao/${id}`)
       .then((item) => {
         const { nome, preco, ingredientes, descricao, ativo, imagens } = item.data;
-        const ingredientes_lista = ConversorListas.ConverteStringParaArrayObjetos(ingredientes);
+        const ingredientes_lista_formatada = [...ingredientes] as IngredientesTypes[];
+
+        console.log(imagens);
 
         /* Arrumar */
         /* Pegar imagem do servidor e colocar na lista */
@@ -31,15 +33,14 @@ export function RefeicaoEdicao() {
         //   type: imagem.type,
         //   size: `${imagem.size} bytes`
         // }));
-        const imagens_lista = imagens.map((imagem: any) => setImagensVisualizacao(imagem));
 
         const data = {
           nome,
           preco,
           ativo,
-          ingredientes: ingredientes_lista,
+          ingredientes: ingredientes_lista_formatada,
           descricao,
-          imagens: imagens_lista
+          imagens: []
         };
 
         setData(data);
