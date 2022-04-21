@@ -74,9 +74,8 @@ export class FormatadorDados {
    *  10.0 => 10,0
    */
   static FormataValorMonetarioTexto(valor: number) {
-    let resultado = valor
+    let resultado = Number(valor)
       .toFixed(2)
-      .toString()
       .replace('.', ',');
     return resultado;
   }
