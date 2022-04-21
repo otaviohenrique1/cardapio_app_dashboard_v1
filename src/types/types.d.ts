@@ -79,12 +79,18 @@ interface ImagemTypes {
   path: string;
 }
 
+interface FotoTypes {
+  id: number;
+  url: string;
+}
+
 interface RefeicaoDadosTypes extends RefeicaoTypes {
   id: string;
   codigo: string;
   data_cadastro: string;
   data_modificacao_cadastro: string;
-  imagens: ImagemTypes[];
+  imagens: FotoTypes[]; // Arrumar
+  // imagens?: ImagemTypes[] | FotoTypes[]; // Arrumar
 }
 
 /*
