@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Col, ListGroup, Row } from "reactstrap";
 import { BotaoLink } from "../../../components/Botoes/BotaoLink";
 import { ContainerApp } from "../../../components/ContainerApp";
-import { ItemListaFichaDados } from "../../../components/Listas/ItemListaFichaDados";
+import { ItemFichaDados } from "../../../components/Listas/ListaFichaDados/ItemFichaDados";
 import { ModalErroCadastro } from "../../../components/Modals";
 import { Titulo } from "../../../components/Titulo";
 import api from "../../../utils/api";
@@ -53,13 +53,13 @@ export function EmpresaDados() {
         </Col>
         <Col md={12}>
           <ListGroup>
-            <ItemListaFichaDados titulo="Id" valor={id} />
-            <ItemListaFichaDados titulo="Nome" valor={nome} />
-            <ItemListaFichaDados titulo="E-mail" valor={email} />
-            <ItemListaFichaDados titulo="Senha" valor={senha} />
-            <ItemListaFichaDados titulo="Código" valor={codigo} />
-            <ItemListaFichaDados titulo="Data de cadastro" valor={data_cadastro} />
-            <ItemListaFichaDados titulo="Data de atualização do cadastro" valor={data_modificacao_cadastro} />
+            <ItemFichaDados titulo="Id" valor={id || "id"} />
+            <ItemFichaDados titulo="Nome" valor={nome} />
+            <ItemFichaDados titulo="E-mail" valor={email} />
+            <ItemFichaDados titulo="Senha" valor={senha} />
+            <ItemFichaDados titulo="Código" valor={codigo} />
+            <ItemFichaDados titulo="Data de cadastro" valor={data_cadastro} />
+            <ItemFichaDados titulo="Data de atualização do cadastro" valor={data_modificacao_cadastro} />
           </ListGroup>
         </Col>
         <Col md={12} className="d-flex justify-content-end mt-5">
