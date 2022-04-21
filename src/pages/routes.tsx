@@ -14,9 +14,8 @@ export function RoutesApp() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login/>} />
-        {/* <Route path="/usuario/cadastro" element={<UsuarioCadastro/>} /> */}
-        <Route path="/usuario/:id" element={<EmpresaDados/>} />
-        <Route path="/usuario/:id/edicao" element={<EmpresaEdicao />} />
+        <Route path="/empresa/:id" element={<EmpresaDados/>} />
+        <Route path="/empresa/:id/edicao" element={<EmpresaEdicao />} />
         <Route path="/home" element={<HomePage/>} />
         <Route path="/refeicao/cadastro" element={<RefeicaoCadastro/>} />
         <Route path="/refeicao/:id" element={<RefeicaoDados />} />
