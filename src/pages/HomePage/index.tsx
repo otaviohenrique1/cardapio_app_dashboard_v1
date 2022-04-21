@@ -60,8 +60,7 @@ export function HomePage() {
               id: 'preco',
               Cell: (cell) => {
                 let preco = cell.row.values['preco'];
-                // let valorFormatado = FormatadorDados.FormataValorMonetarioTexto(preco);
-                let valorFormatado = preco;
+                let valorFormatado = FormatadorDados.FormataValorMonetarioTexto(preco);
                 return valorFormatado;
               }
             },
