@@ -29,7 +29,7 @@ export function ContainerApp(props: ContainerAppProps) {
   return (
     <>
       <HeaderApp data_usuario_logado={data} />
-      <Container className="mt-2">{children}</Container>
+      <Container className="mt-2 mb-5">{children}</Container>
     </>
   );
 }
