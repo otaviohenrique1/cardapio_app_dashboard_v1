@@ -36,32 +36,59 @@ export function EmpresaEdicao() {
   const dadosDoUsuario: UsuarioTypes = {
     nome: nome || "",
     email: email || "",
-    senha: senha || "",
+    senha: "",
   };
 
   async function handleSubmit(values: UsuarioTypes) {
     const { nome, email, senha } = values;
 
+    if (id === undefined) { return; }
+
     let senha_formatada = FormatadorCrypto.mensagemSHA512(senha);
     let data_modificacao_cadastro = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
 
-    const data = {
+    // const data = {
+    //   'id': id,
+    //   'nome': nome,
+    //   'email': email,
+    //   'senha': senha_formatada,
+    //   'data_modificacao_cadastro': data_modificacao_cadastro,
+    // };
+
+    // console.log(`
+    //   id => ${id},
+    //   nome => ${nome},
+    //   email => ${email},
+    //   senha => ${senha_formatada},
+    //   data_modificacao_cadastro => ${data_modificacao_cadastro},
+    // `);
+
+    // const data = new FormData();
+    // data.append('id', id);
+    // data.append('nome', nome);
+    // data.append('email', email);
+    // data.append('senha_formatada', senha_formatada);
+    // data.append('data_modificacao_cadastro', data_modificacao_cadastro);
+
+    // console.log(data);
+
+    await api.put(`usuario/${id}`, {
       'id': id,
       'nome': nome,
       'email': email,
       'senha': senha_formatada,
       'data_modificacao_cadastro': data_modificacao_cadastro,
-    };
-
-    await api.put(`usuario/${id}`, data)
+    })
       .then(() => {
         ModalSucessoCadastro();
-        navigation(`/usuario/${id}`);
+        navigation(`/empresa/${id}`);
       }).catch((error) => {
-        ModalErroCadastro();
+        // ModalErroCadastro();
         console.error(error);
       });
   }
+
+  const senha_antiga = FormatadorDados.FormataExibicaoSenha(senha.slice(0, 12));
 
   return (
     <ContainerApp>
@@ -74,7 +101,8 @@ export function EmpresaEdicao() {
           validationSchema={validacaoSchemaFormularioUsuario}
           onSubmit={handleSubmit}
           enableReinitialize
-          voltarLink={`/usuario/${id}`}
+          voltarLink={`/empresa/${id}`}
+          senha_antiga={senha_antiga}
         />
       </Row>
     </ContainerApp>
