@@ -5,7 +5,6 @@ interface IngredientesItemProps {
   data: IngredientesTypes;
 }
 
-
 export function IngredientesItem(props: IngredientesItemProps) {
   const { nome, quantidade } = props.data;
   const valida_se_quantidade_maior_que_1 = (quantidade > 1) ? "(s)" : "";
