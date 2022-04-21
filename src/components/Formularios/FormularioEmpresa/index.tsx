@@ -1,6 +1,6 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import { To } from "react-router-dom";
-import { ButtonGroup, Col, Row } from "reactstrap";
+import { ButtonGroup, Col, Input, Label, Row } from "reactstrap";
 import { Botao } from "../../Botoes/Botao";
 import { BotaoLink } from "../../Botoes/BotaoLink";
 import { CampoInput } from "../../Campos/CampoInput";
@@ -11,10 +11,11 @@ interface FormularioEmpresaProps {
   onSubmit: (values: UsuarioTypes, helpers: FormikHelpers<UsuarioTypes>) => Promise<void>;
   voltarLink: To;
   enableReinitialize: boolean;
+  senha_antiga?: string;
 }
 
 export function FormularioEmpresa(props: FormularioEmpresaProps) {
-  const { initialValues, validationSchema, onSubmit, enableReinitialize, voltarLink } = props;
+  const { initialValues, validationSchema, onSubmit, enableReinitialize, voltarLink, senha_antiga } = props;
 
   return (
     <Col md={12}>
@@ -50,6 +51,12 @@ export function FormularioEmpresa(props: FormularioEmpresaProps) {
                   error={errors.email}
                   touched={touched.email}
                 />
+                {(senha_antiga) ? (
+                  <Col md={12} className="d-flex flex-column mt-3">
+                    <Label className="form-label" htmlFor="senha_antiga">Senha antiga</Label>
+                    <Input disabled={true} value={senha_antiga} id="senha_antiga" />
+                  </Col>
+                ) : null}
                 <CampoInput
                   md={12}
                   id="senha"
