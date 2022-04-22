@@ -28,6 +28,8 @@ export function RefeicaoEdicao() {
 
         /* Arrumar */
         /* Pegar imagem do servidor e colocar na lista */
+        /* Alterar imagem no servidor */
+        /* Remover imagem antiga e colocar imagem nova no servidor */
         // const imagens_lista = imagens.map((imagem: any) => ({
         //   fileName: imagem.name,
         //   type: imagem.type,
@@ -55,7 +57,7 @@ export function RefeicaoEdicao() {
 
   const dadosDaRefeicao: RefeicaoTypes = {
     nome: nome || "",
-    preco: preco || 0,
+    preco: preco || "",
     ativo: ativo || false,
     ingredientes: ingredientes || [],
     descricao: descricao || "",
