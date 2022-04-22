@@ -8,6 +8,7 @@ import { CampoCheckbox } from "../../Campos/CampoCheckbox";
 import { CampoDropzone } from "../../Campos/CampoDropzone";
 import { CampoIngredientes } from "../../Campos/CampoIngredientes";
 import { CampoInput } from "../../Campos/CampoInput";
+import { CampoListaImagens } from "../../Campos/CampoListaImagens";
 import { CampoTextArea } from "../../Campos/CampoTextArea";
 
 interface FormularioRefeicaoProps {
@@ -18,12 +19,16 @@ interface FormularioRefeicaoProps {
   enableReinitialize: boolean;
   imagens: never[];
   setImagens: React.Dispatch<React.SetStateAction<never[]>>;
+  imagens_antigas?: FotoTypes[];
 }
 export function FormularioRefeicao(props: FormularioRefeicaoProps) {
+  const { initialValues, validationSchema, onSubmit, enableReinitialize, voltarLink, imagens, setImagens, imagens_antigas } = props;
+  
   const tamanhoMaximoEmBytesDoArquivo = 3000000; // 3000000 bytes => 3 megabytes
   const listaDeTiposDeArquivosAceitos = ['jpg', 'gif', 'png'];
   const quantidadeMaximaDeArquivosAceitos = 3;
-  const { initialValues, validationSchema, onSubmit, enableReinitialize, voltarLink, imagens, setImagens } = props;
+  const resolucao_Largura = 1200;
+  const resolucao_Altura = 1200;
 
   return (
     <Col md={12}>
@@ -73,6 +78,7 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                 />
                 <CampoIngredientes ingredientes={values.ingredientes} />
                 <CampoCheckbox name="ativo" checked={validaAtivo}>Ativo</CampoCheckbox>
+                {(imagens_antigas) ? <CampoListaImagens data={imagens_antigas} /> : null}
                 <Col md={12} className="pt-3 pb-3">
                   <CampoDropzone
                     multiple
@@ -88,6 +94,8 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                     value={imagens}
                     maxFileSize={tamanhoMaximoEmBytesDoArquivo}
                     acceptType={listaDeTiposDeArquivosAceitos}
+                    resolutionWidth={resolucao_Largura}
+                    resolutionHeight={resolucao_Altura}
                   />
                 </Col>
                 <Col md={12} className="d-flex justify-content-end pt-3">
