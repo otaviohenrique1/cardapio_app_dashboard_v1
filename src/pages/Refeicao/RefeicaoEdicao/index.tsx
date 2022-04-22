@@ -24,7 +24,9 @@ export function RefeicaoEdicao() {
         const { nome, preco, ingredientes, descricao, ativo, imagens } = item.data;
         const ingredientes_lista_formatada = [...ingredientes] as IngredientesTypes[];
 
-        console.log(imagens);
+        // console.log(imagens);
+
+        let imagens_antigas = [...imagens] as FotoTypes[];
 
         /* Arrumar */
         /* Pegar imagem do servidor e colocar na lista */
@@ -42,7 +44,8 @@ export function RefeicaoEdicao() {
           ativo,
           ingredientes: ingredientes_lista_formatada,
           descricao,
-          imagens: []
+          imagens: [],
+          imagens_antigas
         };
 
         setData(data);
@@ -53,7 +56,7 @@ export function RefeicaoEdicao() {
       });
   }, [id]);
 
-  const { nome, preco, ingredientes, descricao, ativo, imagens } = data;
+  const { nome, preco, ingredientes, descricao, ativo, imagens, imagens_antigas } = data;
 
   const dadosDaRefeicao: RefeicaoTypes = {
     nome: nome || "",
@@ -62,6 +65,7 @@ export function RefeicaoEdicao() {
     ingredientes: ingredientes || [],
     descricao: descricao || "",
     imagens: imagens || [],
+    imagens_antigas
   };
 
   async function handleSubmit(values: RefeicaoTypes) {
@@ -109,6 +113,7 @@ export function RefeicaoEdicao() {
           voltarLink={`/refeicao/${id}`}
           imagens={imagensVisualizacao}
           setImagens={setImagensVisualizacao}
+          imagens_antigas={imagens_antigas}
         />
       </Row>
     </ContainerApp>
