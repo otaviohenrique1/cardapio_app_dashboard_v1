@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, FieldArray } from "formik";
 import { AiOutlineClose } from "react-icons/ai";
 import { GrAddCircle } from "react-icons/gr";
-import { Col, InputGroup, Row } from "reactstrap";
+import { Col, Row } from "reactstrap";
 import { Botao } from "../../Botoes/Botao";
 import { Titulo } from "../../Titulo";
 
@@ -36,43 +36,59 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
                 return (
                   <Col md={6} key={index} className="p-2">
                     <Row>
-                      <Col md={12}>
-                        <InputGroup>
+                      <Col md={9} className="me-0 pe-0">
+                        <div className="d-flex flex-column">
                           <Field
                             name={`ingredientes.${index}.nome`}
                             placeholder="Nome"
                             type="text"
                             value={nome}
                             className="form-control"
+                            style={{
+                              borderTopRightRadius: 0,
+                              borderBottomRightRadius: 0,
+                              borderBottomLeftRadius: 0,
+                            }}
                           />
+                          <ErrorMessage
+                            name={`ingredientes.${index}.nome`}
+                            component="span"
+                            className="text-danger"
+                          />
+                        </div>
+                        <div className="d-flex flex-column">
                           <Field
                             name={`ingredientes.${index}.quantidade`}
                             placeholder="Quantidade"
                             type="number"
                             value={quantidade}
                             className="form-control"
+                            style={{
+                              borderTopRightRadius: 0,
+                              borderBottomRightRadius: 0,
+                              borderTopLeftRadius: 0,
+                            }}
                           />
-                          <Botao
-                            type="button"
-                            color="danger"
-                            className="d-flex justify-content-center align-items-center"
-                            onClick={() => remove(index)}
-                          >
-                            <AiOutlineClose size={20} />
-                          </Botao>
-                        </InputGroup>
+                          <ErrorMessage
+                            name={`ingredientes.${index}.quantidade`}
+                            component="span"
+                            className="text-danger"
+                          />
+                        </div>
                       </Col>
-                      <Col md={12} className="d-flex flex-column">
-                        <ErrorMessage
-                          name={`ingredientes.${index}.nome`}
-                          component="div"
-                          className="field-error"
-                        />
-                        <ErrorMessage
-                          name={`ingredientes.${index}.quantidade`}
-                          component="div"
-                          className="field-error"
-                        />
+                      <Col md={3} className="ms-0 ps-0">
+                        <Botao
+                          type="button"
+                          color="danger"
+                          className="d-flex justify-content-center align-items-center h-100"
+                          onClick={() => remove(index)}
+                          style={{
+                            borderTopLeftRadius: 0,
+                            borderBottomLeftRadius: 0
+                          }}
+                        >
+                          <AiOutlineClose size={20} />
+                        </Botao>
                       </Col>
                     </Row>
                   </Col>
