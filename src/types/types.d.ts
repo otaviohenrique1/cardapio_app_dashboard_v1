@@ -62,7 +62,7 @@ interface UsuarioDadosTypes extends UsuarioTypes {
 /* Parte da Refeicao */
 interface IngredientesTypes {
   nome: string;
-  quantidade: number;
+  quantidade: number | string;
 }
 
 interface RefeicaoTypes {
