@@ -33,7 +33,7 @@ const preco = Yup
 
 const quantidade = Yup
   .number()
-  .required(Mensagem.MensagemErro("nome"));
+  .required(Mensagem.MensagemErro("quantidade"));
 
 const ingredientes = Yup
   .array()
