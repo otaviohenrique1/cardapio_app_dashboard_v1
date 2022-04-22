@@ -3,6 +3,32 @@ import withReactContent from 'sweetalert2-react-content';
 
 const SwalModal = withReactContent(Swal);
 
+interface ModalImagemProps {
+  image_url: string;
+  image_height: string | number;
+  image_alt: string;
+}
+
+/**
+ * Modal de exibição de imagem
+ * @param data Valor no tipo ModalImagemProps
+ * @returns Modal SwalModal: typeof Swal & ReactSweetAlert
+ */
+export function ModalImagem(data: ModalImagemProps) {
+  const { image_url, image_height, image_alt } = data;
+  return SwalModal.fire({
+    imageUrl: image_url,
+    imageHeight: image_height,
+    imageAlt: image_alt,
+    buttonsStyling: false,
+    confirmButtonText: 'Fechar',
+    customClass: {
+      confirmButton: 'btn btn-primary',
+      image: 'img-fluid'
+    }
+  })
+}
+
 /**
  * Modal de confirmação com botões 'Sim' e 'Não'
  * @param icone Valor no tipo SweetAlertIcon
