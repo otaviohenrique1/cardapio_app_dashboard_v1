@@ -45,7 +45,7 @@ export function HomePage() {
           hideHeader: false,
           columns: [
             {
-              Header: 'Codigo',
+              Header: 'Id',
               accessor: 'id',
               id: 'id'
             },
