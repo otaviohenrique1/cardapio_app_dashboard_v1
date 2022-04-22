@@ -1,25 +1,25 @@
 import { Card, CardBody, CardHeader, CardImg, CardText, Col } from "reactstrap";
 import styled from "styled-components";
 import { Botao } from "../../Botoes/Botao";
-import { ModalConfirmacao, ModalImagem } from "../../Modals";
+import { ModalImagem } from "../../Modals";
+import { ModalConfirmacao } from "../../Modals";
 
 interface CampoListaImagensProps {
-  data: FotoTypes[];
+  imagens_antigas: FotoTypes[];
+  imagens_removidas: FotoTypes[]
 }
 
+/* Transformar em FieldArray do formik */
 export function CampoListaImagens(props: CampoListaImagensProps) {
-  const { data } = props;
+  const { imagens_antigas, imagens_removidas } = props;
 
   return (
     <Col md={12} className="d-flex flex-row justify-content-center">
-      {data.map((item, index) => {
+      {imagens_antigas.map((item, index) => {
         const { id, url } = item;
 
         return (
-          <CardEstilizado
-            key={index}
-            className="ms-2 me-2"
-          >
+          <CardEstilizado key={index} className="ms-2 me-2">
             <CardHeader className="d-flex flex-row justify-content-between">
               <CardText className="fw-bold mb-0">ID:</CardText>
               <CardText className="mb-0">{id}</CardText>
@@ -43,8 +43,20 @@ export function CampoListaImagens(props: CampoListaImagensProps) {
                 className="w-100"
                 onClick={() => {
                   ModalConfirmacao("warning", "Aviso", "Deseja remover imagem?")
-                    .then(() => {
+                    .then(({ isConfirmed }) => {
                       // logica do remover imagem do servidor
+                      // quando uma imagem é removida, a lista (imagens_antigas) diminui de tamanho
+                      // Recebe array como prop
+                      if (isConfirmed) {
+                        imagens_removidas.push({ id, url });
+                        let nova_lista = imagens_antigas.filter((item) => {
+                          return item.id !== id;
+                        })
+                        console.log(nova_lista);
+                        // console.log(imagens_antigas[index]);
+                        // console.log({ id, url });
+                        // console.log(imagens_removidas);
+                      }
                     })
                     .catch((error) => {
                       console.error(error);

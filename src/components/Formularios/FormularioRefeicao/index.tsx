@@ -20,9 +20,11 @@ interface FormularioRefeicaoProps {
   imagens: never[];
   setImagens: React.Dispatch<React.SetStateAction<never[]>>;
   imagens_antigas?: FotoTypes[];
+  imagens_removidas?: FotoTypes[];
 }
 export function FormularioRefeicao(props: FormularioRefeicaoProps) {
-  const { initialValues, validationSchema, onSubmit, enableReinitialize, voltarLink, imagens, setImagens, imagens_antigas } = props;
+  const { initialValues, validationSchema, onSubmit, enableReinitialize, voltarLink,
+    imagens, setImagens, imagens_antigas, imagens_removidas } = props;
   
   const tamanhoMaximoEmBytesDoArquivo = 3000000; // 3000000 bytes => 3 megabytes
   const listaDeTiposDeArquivosAceitos = ['jpg', 'gif', 'png'];
@@ -78,7 +80,12 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                 />
                 <CampoIngredientes ingredientes={values.ingredientes} />
                 <CampoCheckbox name="ativo" checked={validaAtivo}>Ativo</CampoCheckbox>
-                {(imagens_antigas) ? <CampoListaImagens data={imagens_antigas} /> : null}
+                {(imagens_antigas) ? (
+                  <CampoListaImagens
+                    imagens_antigas={imagens_antigas}
+                    imagens_removidas={(imagens_removidas) ? imagens_removidas : []}
+                  />
+                ) : null}
                 <Col md={12} className="pt-3 pb-3">
                   <CampoDropzone
                     multiple

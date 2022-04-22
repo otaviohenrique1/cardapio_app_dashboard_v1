@@ -25,8 +25,9 @@ export function HeaderApp(props: HeaderAppProps) {
 
   function logout() {
     ModalConfirmacao("warning", "Aviso", "Deseja sair?")
-      .then((result) => {
-        if (result.isConfirmed) {
+      .then((data) => {
+        const { isConfirmed } = data;
+        if (isConfirmed) {
           sessionStorage.clear();
           navigate("/");
         }
@@ -49,6 +50,9 @@ export function HeaderApp(props: HeaderAppProps) {
         <Nav className="me-auto d-flex justify-content-between w-100" navbar>
           <NavItem>
             <Link to="/home" className="nav-link">Inicio</Link>
+          </NavItem>
+          <NavItem>
+            <Link to="/teste_upload_imagem" className="nav-link">Teste Upload Imagem</Link>
           </NavItem>
           <Dropdown toggle={toggleDropdown} isOpen={dropdownAberto}>
             <DropdownToggle caret className="d-flex flex-row justify-content-center align-items-center">

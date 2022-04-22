@@ -4,7 +4,7 @@ import { MdSystemUpdateAlt } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
 import { Button, ButtonGroup, Card, CardBody, CardFooter, /*CardGroup,*/ CardImg } from "reactstrap";
 import styled from "styled-components";
-import { AlertErro } from "../../AlertMensagem/AlertErro";
+import { AlertErro } from "../../AlertErro";
 
 interface CampoDropzoneProps {
   value: ImageListType;
