@@ -1,9 +1,10 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import { To } from "react-router-dom";
-import { ButtonGroup, Col, Input, Label, Row } from "reactstrap";
+import { ButtonGroup, Col, Row } from "reactstrap";
 import { Botao } from "../../Botoes/Botao";
 import { BotaoLink } from "../../Botoes/BotaoLink";
 import { CampoInput } from "../../Campos/CampoInput";
+import { CampoSenhaAntiga } from "../../Campos/CampoSenhaAntiga";
 
 interface FormularioEmpresaProps {
   initialValues: UsuarioTypes;
@@ -51,12 +52,7 @@ export function FormularioEmpresa(props: FormularioEmpresaProps) {
                   error={errors.email}
                   touched={touched.email}
                 />
-                {(senha_antiga) ? (
-                  <Col md={12} className="d-flex flex-column mt-3">
-                    <Label className="form-label" htmlFor="senha_antiga">Senha antiga</Label>
-                    <Input disabled={true} value={senha_antiga} id="senha_antiga" />
-                  </Col>
-                ) : null}
+                {(senha_antiga) ? <CampoSenhaAntiga senha_antiga={senha_antiga} /> : null}
                 <CampoInput
                   md={12}
                   id="senha"
