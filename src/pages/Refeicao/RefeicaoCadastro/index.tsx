@@ -9,9 +9,11 @@ import api from "../../../utils/api";
 import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioRefeicao } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { validacaoSchemaFormularioRefeicao } from "../../../utils/ValidacaoSchemas";
+import { useNavigate } from "react-router-dom";
 
 export function RefeicaoCadastro() {
   const [imagensVisualizacao, setImagensVisualizacao] = useState([]);
+  const navigation = useNavigate();
 
   async function handleSubmit(values: RefeicaoTypes, helpers: FormikHelpers<RefeicaoTypes>) {
     const { nome, preco, ingredientes, ativo, descricao, imagens } = values;
@@ -26,27 +28,28 @@ export function RefeicaoCadastro() {
     data.append('descricao', descricao);
     data.append('data_cadastro', data_hora_formata);
     data.append('data_modificacao_cadastro', data_hora_formata);
-    
-    // data.append('ingredientes', JSON.stringify(ingredientes));
-    ingredientes.forEach(ingrediente => {
-      data.append('ingredientes', JSON.stringify(ingrediente));
-    });
+
+    data.append('ingredientes', JSON.stringify(ingredientes));
 
     imagens.forEach(imagem => {
       data.append('imagens', imagem);
     });
 
+    const id = sessionStorage.getItem('id');
+    const valida_id = (id) ? id : 'id';
+
+    data.append('usuario_id', valida_id);
+
     await api.post('refeicao', data)
       .then(() => {
         ModalSucessoCadastro();
+        helpers.resetForm();
+        navigation(`/home`);
       }).catch((error) => {
         ModalErroCadastro();
         console.error(error);
       });
-
-    helpers.resetForm();
   }
-
 
   return (
     <ContainerApp>
