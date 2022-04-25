@@ -73,6 +73,7 @@ interface RefeicaoTypes {
   ativo: string | boolean;
   imagens: File[];
   imagens_antigas?: FotoTypes[];
+  imagens_removidas?: FotoTypes[];
 }
 
 interface ImagemTypes {
