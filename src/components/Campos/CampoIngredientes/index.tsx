@@ -1,7 +1,8 @@
 import { ErrorMessage, Field, FieldArray } from "formik";
 import { AiOutlineClose } from "react-icons/ai";
 import { GrAddCircle } from "react-icons/gr";
-import { Col, Row } from "reactstrap";
+import { Card, CardBody, Col, Row } from "reactstrap";
+import styled from "styled-components";
 import { Botao } from "../../Botoes/Botao";
 import { Titulo } from "../../Titulo";
 
@@ -15,7 +16,7 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
   return (
     <Col md={12} className="d-flex flex-column pt-3 pb-3 mt-3 mb-3 border-dark border-top border-bottom">
       <FieldArray name="ingredientes">
-        {({ insert, remove, push }) => (
+        {({ remove, push }) => (
           <Row>
             <Col md={12} className="d-flex flex-row justify-content-between pb-1">
               <Titulo tag="h6" className="fw-normal">Lista de ingredientes</Titulo>
@@ -34,21 +35,16 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
                 const { nome, quantidade } = ingrediente;
 
                 return (
-                  <Col md={6} key={index} className="p-2">
-                    <Row>
-                      <Col md={9} className="me-0 pe-0">
-                        <div className="d-flex flex-column">
+                  <Col md={3} key={index} className="p-2">
+                    <Card>
+                      <CardBody className="p-1">
+                        <div className="d-flex flex-column mb-1">
                           <Field
                             name={`ingredientes.${index}.nome`}
                             placeholder="Nome"
                             type="text"
                             value={nome}
                             className="form-control"
-                            style={{
-                              borderTopRightRadius: 0,
-                              borderBottomRightRadius: 0,
-                              borderBottomLeftRadius: 0,
-                            }}
                           />
                           <ErrorMessage
                             name={`ingredientes.${index}.nome`}
@@ -63,11 +59,6 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
                             type="number"
                             value={quantidade}
                             className="form-control"
-                            style={{
-                              borderTopRightRadius: 0,
-                              borderBottomRightRadius: 0,
-                              borderTopLeftRadius: 0,
-                            }}
                           />
                           <ErrorMessage
                             name={`ingredientes.${index}.quantidade`}
@@ -75,22 +66,16 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
                             className="text-danger"
                           />
                         </div>
-                      </Col>
-                      <Col md={3} className="ms-0 ps-0">
-                        <Botao
-                          type="button"
-                          color="danger"
-                          className="d-flex justify-content-center align-items-center h-100"
-                          onClick={() => remove(index)}
-                          style={{
-                            borderTopLeftRadius: 0,
-                            borderBottomLeftRadius: 0
-                          }}
-                        >
-                          <AiOutlineClose size={20} />
-                        </Botao>
-                      </Col>
-                    </Row>
+                      </CardBody>
+                      <CardBotaoRemoverEstilizado
+                        type="button"
+                        color="danger"
+                        className="d-flex justify-content-center align-items-center w-100"
+                        onClick={() => remove(index)}
+                      >
+                        <AiOutlineClose size={20} />
+                      </CardBotaoRemoverEstilizado>
+                    </Card>
                   </Col>
                 );
               })}
@@ -100,3 +85,8 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
     </Col>
   );
 }
+
+const CardBotaoRemoverEstilizado = styled(Botao)`
+  border-Top-right-radius: 0 !important;
+  border-Top-left-radius: 0 !important;
+`;
