@@ -34,7 +34,7 @@ export function TesteUploadImagem() {
     <ContainerApp>
       <Row>
         <Col md={12}>
-          <Titulo tag="h1" className="w-100 text-center mb-5">Edição de dados</Titulo>
+          <Titulo tag="h1" className="w-100 text-center mb-5">Teste Upload Imagem</Titulo>
         </Col>
         <Col md={12}>
           <Formik
