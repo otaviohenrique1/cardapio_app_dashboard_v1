@@ -8,7 +8,7 @@ import { ModalErroCadastro, ModalErroDadosNaoCarregados, ModalSucessoCadastro } 
 import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioRefeicao } from "../../../utils/constantes";
 import api from "../../../utils/api";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
-import { ConversorListas } from "../../../utils/ConversorListas";
+// import { ConversorListas } from "../../../utils/ConversorListas";
 import { validacaoSchemaFormularioRefeicao } from "../../../utils/ValidacaoSchemas";
 
 export function RefeicaoEdicao() {
@@ -28,10 +28,14 @@ export function RefeicaoEdicao() {
 
         let imagens_antigas = [...imagens] as FotoTypes[];
 
+        let imagens_removidas = [] as FotoTypes[];
+
         /* Arrumar */
-        /* Pegar imagem do servidor e colocar na lista */
-        /* Alterar imagem no servidor */
-        /* Remover imagem antiga e colocar imagem nova no servidor */
+        /*
+          Pegar imagem do servidor e colocar na lista 
+          Alterar imagem no servidor
+          Remover imagem antiga e colocar imagem nova no servidor
+        */
         // const imagens_lista = imagens.map((imagem: any) => ({
         //   fileName: imagem.name,
         //   type: imagem.type,
@@ -45,7 +49,8 @@ export function RefeicaoEdicao() {
           ingredientes: ingredientes_lista_formatada,
           descricao,
           imagens: [],
-          imagens_antigas
+          imagens_antigas,
+          imagens_removidas
         };
 
         setData(data);
@@ -56,7 +61,7 @@ export function RefeicaoEdicao() {
       });
   }, [id]);
 
-  const { nome, preco, ingredientes, descricao, ativo, imagens, imagens_antigas } = data;
+  const { nome, preco, ingredientes, descricao, ativo, imagens, imagens_antigas, imagens_removidas } = data;
 
   const dadosDaRefeicao: RefeicaoTypes = {
     nome: nome || "",
@@ -65,26 +70,31 @@ export function RefeicaoEdicao() {
     ingredientes: ingredientes || [],
     descricao: descricao || "",
     imagens: imagens || [],
-    imagens_antigas
+    imagens_antigas,
+    imagens_removidas
   };
 
   async function handleSubmit(values: RefeicaoTypes) {
     const data = new FormData();
 
-    const { nome, preco, ingredientes, descricao, ativo } = values;
+    const { nome, preco, ingredientes, descricao, ativo, imagens, imagens_removidas } = values;
 
-    let ingredientes_lista = ConversorListas.ConverteArrayObjetosParaString(ingredientes);
+    // console.log(JSON.stringify((imagens_removidas) ? imagens_removidas : []));
+
+    // let ingredientes_lista = ConversorListas.ConverteArrayObjetosParaString(ingredientes);
     let data_modificacao_cadastro = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
 
     data.append('nome', nome);
     data.append('preco', String(preco));
-    data.append('ingredientes', ingredientes_lista);
+    // data.append('ingredientes', ingredientes_lista);
+    data.append('ingredientes', JSON.stringify(ingredientes));
     data.append('ativo', String(ativo));
     data.append('descricao', descricao);
     data.append('data_modificacao_cadastro', data_modificacao_cadastro);
+    data.append('imagens_removidas', JSON.stringify((imagens_removidas) ? imagens_removidas : []));
 
     /* Arrumar logica do upload de imagem. Substituir imagem no servidor. */
-    values.imagens.forEach(imagem => {
+    imagens.forEach(imagem => {
       data.append('images', imagem);
     });
 
