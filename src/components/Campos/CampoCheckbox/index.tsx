@@ -14,7 +14,7 @@ export function CampoCheckbox(props: CampoCheckboxProps) {
   const { name, checked, md, children } = props;
 
   return (
-    <Col md={md || 12} className="d-flex flex-row">
+    <Col md={md || 12} className="d-flex flex-row pb-3 mb-3 border-dark border-bottom">
       <Field
         className="form-check"
         type="checkbox"
