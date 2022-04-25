@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader, CardImg, CardText, Col } from "reactstrap";
 import styled from "styled-components";
 import { Botao } from "../../Botoes/Botao";
@@ -12,10 +13,15 @@ interface CampoListaImagensProps {
 /* Transformar em FieldArray do formik */
 export function CampoListaImagens(props: CampoListaImagensProps) {
   const { imagens_antigas, imagens_removidas } = props;
+  const [dataImagensAntigas, setDataImagensAntigas] = useState<FotoTypes[]>([]);
+
+  useEffect(() => {
+    setDataImagensAntigas(imagens_antigas);
+  }, [imagens_antigas]);
 
   return (
     <Col md={12} className="d-flex flex-row justify-content-center">
-      {imagens_antigas.map((item, index) => {
+      {dataImagensAntigas.map((item, index) => {
         const { id, url } = item;
 
         return (
@@ -49,10 +55,13 @@ export function CampoListaImagens(props: CampoListaImagensProps) {
                       // Recebe array como prop
                       if (isConfirmed) {
                         imagens_removidas.push({ id, url });
-                        let nova_lista = imagens_antigas.filter((item) => {
-                          return item.id !== id;
-                        })
-                        console.log(nova_lista);
+                        let nova_lista = imagens_antigas.filter((item) => item.id !== id);
+                        setDataImagensAntigas(nova_lista);
+                        console.log(dataImagensAntigas);
+                        console.log(imagens_removidas);
+                        // let nova_lista = imagens_antigas.splice(index, 1);
+                        // setDataImagensAntigas([]);
+                        // console.log(nova_lista);
                         // console.log(imagens_antigas[index]);
                         // console.log({ id, url });
                         // console.log(imagens_removidas);
