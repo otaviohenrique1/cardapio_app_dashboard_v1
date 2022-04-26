@@ -50,6 +50,8 @@ export function EmpresaCadastro() {
           onSubmit={onSubmit}
           enableReinitialize={false}
           voltarLink="/"
+          exibe_senha_antiga={false}
+          senha_antiga={""}
         />
       </Row>
     </Container>
