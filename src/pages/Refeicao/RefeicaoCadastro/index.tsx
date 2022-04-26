@@ -66,6 +66,7 @@ export function RefeicaoCadastro() {
           imagens={imagensVisualizacao}
           setImagens={setImagensVisualizacao}
           exibe_imagens_antigas={false}
+          arquivos_aceitos_quantidade={3}
         />
       </Row>
     </ContainerApp>
