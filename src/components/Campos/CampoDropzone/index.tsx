@@ -195,7 +195,7 @@ interface CampoDropzoneContainerColProps {
 }
 
 export function CampoDropzoneContainerCol(props: CampoDropzoneContainerColProps) {
-  const { children, md, xs, sm, lg, xl, xxl, titulo } = props;
+  const { md, xs, sm, lg, xl, xxl, titulo, children } = props;
 
   return (
     <Col md={md} xs={xs} sm={sm} lg={lg} xl={xl} xxl={xxl} className="pt-3 pb-3 border-bottom border-dark">
