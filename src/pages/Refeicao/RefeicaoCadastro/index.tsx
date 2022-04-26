@@ -65,6 +65,7 @@ export function RefeicaoCadastro() {
           voltarLink="/home"
           imagens={imagensVisualizacao}
           setImagens={setImagensVisualizacao}
+          exibe_imagens_antigas={false}
         />
       </Row>
     </ContainerApp>
