@@ -22,7 +22,7 @@ export function CampoListaImagens(props: CampoListaImagensProps) {
   return (
     <Col md={12} className="d-flex flex-row justify-content-center">
       {dataImagensAntigas.map((item, index) => {
-        const { id, url } = item;
+        const { id, url, nome } = item;
 
         return (
           <CardEstilizado key={index} className="ms-2 me-2">
@@ -37,7 +37,7 @@ export function CampoListaImagens(props: CampoListaImagensProps) {
                 style={{ height: '100px', width: '100px' }}
                 onClick={() => {
                   ModalImagem({
-                    image_url: url,
+                    image_url: `${url}${nome}`,
                     image_alt: `Imagem-${id}-${index}`,
                     image_height: '300px'
                   });
@@ -54,7 +54,7 @@ export function CampoListaImagens(props: CampoListaImagensProps) {
                       // quando uma imagem é removida, a lista (imagens_antigas) diminui de tamanho
                       // Recebe array como prop
                       if (isConfirmed) {
-                        imagens_removidas.push({ id, url });
+                        imagens_removidas.push({ id, url, nome });
                         let nova_lista = imagens_antigas.filter((item) => item.id !== id);
                         setDataImagensAntigas(nova_lista);
                         console.log(dataImagensAntigas);
