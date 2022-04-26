@@ -31,11 +31,11 @@ interface ImagemProps {
 }
 
 function Imagem(props: ImagemProps) {
-  const { id, url } = props.data;
+  const { id, url, nome } = props.data;
   const alt = `Slide-${id}-1`;
 
   return (
-    <Img alt={alt} src={url} />
+    <Img alt={alt} src={`${url}${nome}`} />
   );
 }
 
