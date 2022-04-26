@@ -31,14 +31,6 @@ export function EmpresaEdicao() {
       });
   }, [id]);
 
-  let { nome, email, senha } = data;
-
-  const dadosDoUsuario: UsuarioTypes = {
-    nome: nome || "",
-    email: email || "",
-    senha: "",
-  };
-
   async function handleSubmit(values: UsuarioTypes) {
     const { nome, email, senha } = values;
 
@@ -88,6 +80,14 @@ export function EmpresaEdicao() {
       });
   }
 
+  let { nome, email, senha } = data;
+
+  const dadosDoUsuario: UsuarioTypes = {
+    nome: nome || "",
+    email: email || "",
+    senha: "",
+  };
+
   const senha_antiga = FormatadorDados.FormataExibicaoSenha(senha.slice(0, 12));
 
   return (
@@ -102,6 +102,7 @@ export function EmpresaEdicao() {
           onSubmit={handleSubmit}
           enableReinitialize
           voltarLink={`/empresa/${id}`}
+          exibe_senha_antiga={true}
           senha_antiga={senha_antiga}
         />
       </Row>
