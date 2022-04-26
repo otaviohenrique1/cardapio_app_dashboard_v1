@@ -8,7 +8,7 @@ import { CampoCheckbox } from "../../Campos/CampoCheckbox";
 import { CampoDropzone } from "../../Campos/CampoDropzone";
 import { CampoIngredientes } from "../../Campos/CampoIngredientes";
 import { CampoInput } from "../../Campos/CampoInput";
-import { CampoListaImagens } from "../../Campos/CampoListaImagens";
+import { CampoListaFotos } from "../../Campos/CampoListaFotos";
 import { CampoTextArea } from "../../Campos/CampoTextArea";
 
 interface FormularioRefeicaoProps {
@@ -19,13 +19,12 @@ interface FormularioRefeicaoProps {
   enableReinitialize: boolean;
   imagens: never[];
   setImagens: React.Dispatch<React.SetStateAction<never[]>>;
-  imagens_antigas?: FotoTypes[];
-  imagens_removidas?: FotoTypes[];
+  exibe_imagens_antigas: boolean;
 }
 export function FormularioRefeicao(props: FormularioRefeicaoProps) {
   const { initialValues, validationSchema, onSubmit, enableReinitialize, voltarLink,
-    imagens, setImagens, imagens_antigas, imagens_removidas } = props;
-  
+    imagens, setImagens, exibe_imagens_antigas } = props;
+
   const tamanhoMaximoEmBytesDoArquivo = 3000000; // 3000000 bytes => 3 megabytes
   const listaDeTiposDeArquivosAceitos = ['jpg', 'gif', 'png'];
   const quantidadeMaximaDeArquivosAceitos = 3;
@@ -41,7 +40,8 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
         enableReinitialize={enableReinitialize}
       >
         {({ errors, touched, values, setFieldValue }) => {
-          const validaAtivo = (values.ativo) ? true : false;
+          const { nome, preco, descricao, ingredientes, ativo, imagens_antigas } = values;
+          // const validaAtivo = (ativo) ? true : false;
 
           return (
             <Form encType="multipart/form-data">
@@ -53,7 +53,7 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                   name="nome"
                   type="text"
                   placeholder="Digite o nome da refeição"
-                  value={values.nome}
+                  value={nome}
                   error={errors.nome}
                   touched={touched.nome}
                 />
@@ -64,7 +64,7 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                   name="preco"
                   type="number"
                   placeholder="Digite o preco da refeição"
-                  value={String(values.preco)}
+                  value={String(preco)}
                   error={errors.preco}
                   touched={touched.preco}
                 />
@@ -74,17 +74,15 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                   label="Descrição da refeição"
                   name="descricao"
                   placeholder="Digite a descrição da refeição"
-                  value={values.descricao}
+                  value={descricao}
                   error={errors.descricao}
                   touched={touched.descricao}
                 />
-                <CampoIngredientes ingredientes={values.ingredientes} />
-                <CampoCheckbox name="ativo" checked={validaAtivo}>Ativo</CampoCheckbox>
-                {(imagens_antigas) ? (
-                  <CampoListaImagens
-                    imagens_antigas={imagens_antigas}
-                    imagens_removidas={(imagens_removidas) ? imagens_removidas : []}
-                  />
+                <CampoIngredientes ingredientes={ingredientes} />
+                <CampoCheckbox name="ativo" checked={(ativo) ? true : false}
+                >Ativo</CampoCheckbox>
+                {(exibe_imagens_antigas) ? (
+                  <CampoListaFotos imagens_antigas={imagens_antigas} />
                 ) : null}
                 <Col md={12} className="pt-3 pb-3">
                   <CampoDropzone
