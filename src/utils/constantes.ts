@@ -24,6 +24,7 @@ export const valoresIniciaisFormularioRefeicao: RefeicaoTypes = {
   ],
   descricao: "",
   imagens: [],
+  imagens_antigas: []
 };
 
 export const valoresIniciaisFormularioUsuario: UsuarioTypes = {
@@ -60,6 +61,7 @@ export const valoresIniciaisRefeicaoDados: RefeicaoDadosTypes = {
   imagens: [],
   data_cadastro: "",
   data_modificacao_cadastro: "",
+  imagens_antigas: []
 };
 
 export const dadosIniciaisUsuarioLogado: UsuarioLogadoTypes = {
