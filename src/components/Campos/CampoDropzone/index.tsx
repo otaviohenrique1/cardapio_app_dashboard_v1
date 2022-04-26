@@ -2,9 +2,16 @@ import ImageUploading, { ErrorsType, ImageListType } from "react-images-uploadin
 import { GrUpdate } from "react-icons/gr";
 import { MdSystemUpdateAlt } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
-import { Button, ButtonGroup, Card, CardBody, CardFooter, /*CardGroup,*/ CardImg } from "reactstrap";
+import { Button, ButtonGroup, Card, CardBody, CardFooter, /*CardGroup,*/ CardImg, Col } from "reactstrap";
 import styled from "styled-components";
 import { AlertErro } from "../../AlertErro";
+import { ReactNode } from "react";
+import { ColumnProps } from "reactstrap/types/lib/Col";
+import { Titulo } from "../../Titulo";
+
+function validaTamanhoListaImagem(image_list: ImageListType, tamanho: number) {
+  return (image_list.length === tamanho) ? true : false;
+}
 
 interface CampoDropzoneProps {
   value: ImageListType;
@@ -32,9 +39,10 @@ export function CampoDropzone(props: CampoDropzoneProps) {
       resolutionWidth={resolutionWidth}
       resolutionHeight={resolutionHeight}
     >
-      {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps, errors }) => {
+      {(dropzone_props) => {
+        const { imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps, errors } = dropzone_props;
         const valida_is_dragging = isDragging ? { color: "red" } : undefined;
-      
+
         return (
           <div className="upload__image-wrapper">
             <BotaoUploadEstilizado
@@ -64,37 +72,43 @@ export function CampoDropzone(props: CampoDropzoneProps) {
               resolutionWidth={resolutionWidth}
               resolutionHeight={resolutionHeight}
             />
-            {/* <CardGroup> */}
             <div className="d-flex flex-row justify-content-center">
-              {imageList.map((image, index) => (
-                <CardEstilizado key={index}>
-                  <CardBody className="p-0 m-0 d-flex justify-content-center">
-                    <CardImgEstilizado src={image.dataURL} alt={`imagem-${index}`} />
-                  </CardBody>
-                  <CardFooter className="p-0 m-0">
-                    <ButtonGroup className="w-100">
-                      <Button
-                        className="ps-3 pe-3 pt-2 pb-2 d-flex justify-content-center align-items-center"
-                        color="primary"
-                        type="button"
-                        onClick={() => onImageUpdate(index)}
-                      >
-                        <GrUpdate size={20} className="p-0 m-0" />
-                      </Button>
-                      <Button
-                        className="ps-3 pe-3 pt-2 pb-2 d-flex justify-content-center align-items-center"
-                        color="danger"
-                        type="button"
-                        onClick={() => onImageRemove(index)}
-                      >
-                        <AiOutlineDelete size={20} className="p-0 m-0" />
-                      </Button>
-                    </ButtonGroup>
-                  </CardFooter>
-                </CardEstilizado>
-              ))}
+              {imageList.map((image, index) => {
+                const { dataURL } = image;
+                const alt_imagem = `imagem-${index}`;
+
+                return (
+                  <CardEstilizado key={index}>
+                    <CardBody className="p-0 m-0 d-flex justify-content-center">
+                      <CardImgEstilizado
+                        src={dataURL}
+                        alt={alt_imagem}
+                      />
+                    </CardBody>
+                    <CardFooter className="p-0 m-0">
+                      <ButtonGroup className="w-100">
+                        <Button
+                          className="ps-3 pe-3 pt-2 pb-2 d-flex justify-content-center align-items-center"
+                          color="primary"
+                          type="button"
+                          onClick={() => onImageUpdate(index)}
+                        >
+                          <GrUpdate size={20} className="p-0 m-0" />
+                        </Button>
+                        <Button
+                          className="ps-3 pe-3 pt-2 pb-2 d-flex justify-content-center align-items-center"
+                          color="danger"
+                          type="button"
+                          onClick={() => onImageRemove(index)}
+                        >
+                          <AiOutlineDelete size={20} className="p-0 m-0" />
+                        </Button>
+                      </ButtonGroup>
+                    </CardFooter>
+                  </CardEstilizado>
+                );
+              })}
             </div>
-            {/* </CardGroup> */}
           </div>
         );
       }}
@@ -116,10 +130,6 @@ const CardImgEstilizado = styled(CardImg)`
   width: 170px !important;
   height: 170px !important;
 `;
-
-function validaTamanhoListaImagem(image_list: ImageListType, tamanho: number) {
-  return (image_list.length === tamanho) ? true : false;
-}
 
 interface CampoDropzoneErroProps {
   errors: boolean | undefined;
@@ -149,28 +159,49 @@ function CampoDropzoneErroLista(props: CampoDropzoneErroListaProps) {
   const { errors, maxFileSize, acceptType, maxNumber, resolutionWidth, resolutionHeight } = props;
 
   const numero_maximo_imagems = `Numero maximo de imagems atingido. Maximo: ${maxNumber}`;
-  
-  const valida_tamanho_imagem = (maxFileSize) ? maxFileSize / 1000000 : 0; // 1000000 bytes => 1 megabytes
+
+  const valida_tamanho_imagem = (maxFileSize) ? maxFileSize / 1048576 : 0; // 1048576 bytes => 1 megabytes
   const tamanho_maximo = `Tamanho maximo: ${valida_tamanho_imagem} mb`;
-  const tamanho_maximo_arquivo = `Tamanho maximo de arquivo exedido. ${tamanho_maximo}`;
+  const mensagem_valida_tamanho_maximo_arquivo = `Tamanho maximo de arquivo exedido. ${tamanho_maximo}`;
 
-  const valida_tipos_nao_aceitos = acceptType?.join(',');
-  const tipos_aceitos = `Aceitos: ${valida_tipos_nao_aceitos}`;
-  const tipo_nao_aceito_imagem = `Tipo não aceito de imagem. ${tipos_aceitos}`;
+  const tipos_aceitos_imagem = (acceptType) ? acceptType.join(',') : [].join(',');
+  const mensagem_tipo_nao_aceito_imagem = `Tipo não aceito de imagem. Aceitos: ${tipos_aceitos_imagem}`;
 
-  const largura_maxima = `Largura maxima: ${resolutionWidth}.`;
-  const altura_maxima = `Altura maxima: ${resolutionHeight}.`;
-  const resolucao_maxima_imagem = `Resolução maxima da imagem exedida. ${largura_maxima} ${altura_maxima}`;
+  const largura_maxima = `Largura maxima: ${(resolutionWidth) ? resolutionWidth : 0}.`;
+  const altura_maxima = `Altura maxima: ${(resolutionHeight) ? resolutionHeight : 0}.`;
+  const mensagem_resolucao_maxima_imagem = `Resolução maxima da imagem exedida. ${largura_maxima} ${altura_maxima}`;
 
   return (
     <>
       {errors && <div className="d-flex flex-column">
         <CampoDropzoneErro errors={errors.maxNumber} mensagem={numero_maximo_imagems} />
-        <CampoDropzoneErro errors={errors.acceptType} mensagem={tipo_nao_aceito_imagem} />
-        <CampoDropzoneErro errors={errors.maxFileSize} mensagem={tamanho_maximo_arquivo} />
-        <CampoDropzoneErro errors={errors.resolution} mensagem={resolucao_maxima_imagem} />
+        <CampoDropzoneErro errors={errors.acceptType} mensagem={mensagem_tipo_nao_aceito_imagem} />
+        <CampoDropzoneErro errors={errors.maxFileSize} mensagem={mensagem_valida_tamanho_maximo_arquivo} />
+        <CampoDropzoneErro errors={errors.resolution} mensagem={mensagem_resolucao_maxima_imagem} />
       </div>}
     </>
+  );
+}
+
+interface CampoDropzoneContainerColProps {
+  titulo: string;
+  children: ReactNode;
+  md?: ColumnProps;
+  xs?: ColumnProps;
+  sm?: ColumnProps;
+  lg?: ColumnProps;
+  xl?: ColumnProps;
+  xxl?: ColumnProps;
+}
+
+export function CampoDropzoneContainerCol(props: CampoDropzoneContainerColProps) {
+  const { children, md, xs, sm, lg, xl, xxl, titulo } = props;
+
+  return (
+    <Col md={md} xs={xs} sm={sm} lg={lg} xl={xl} xxl={xxl} className="pt-3 pb-3 border-bottom border-dark">
+      <Titulo tag="h5" className="w-100 text-start">{titulo}</Titulo>
+      {children}
+    </Col>
   );
 }
 
