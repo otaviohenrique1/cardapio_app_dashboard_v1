@@ -101,6 +101,7 @@ export function RefeicaoEdicao() {
           imagens={imagensVisualizacao}
           setImagens={setImagensVisualizacao}
           exibe_imagens_antigas={true}
+          arquivos_aceitos_quantidade={3}
         />
       </Row>
     </ContainerApp>
