@@ -45,7 +45,8 @@ export function RefeicaoDados() {
           codigo: String(codigo),
           imagens: imagens_lista,
           data_cadastro: data_cadastro_formatada,
-          data_modificacao_cadastro: data_modificacao_cadastro_formatada
+          data_modificacao_cadastro: data_modificacao_cadastro_formatada,
+          imagens_antigas: []
         };
 
         setData(data);
