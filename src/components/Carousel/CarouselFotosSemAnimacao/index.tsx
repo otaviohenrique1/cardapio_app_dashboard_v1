@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Carousel, CarouselControl, CarouselIndicators, CarouselItem } from "reactstrap";
 import styled from "styled-components";
+import { ModalImagem } from "../../Modals";
 
 interface CarouselFotosSemAnimacaoProps {
   data: FotoTypes[];
@@ -43,11 +44,21 @@ export function CarouselFotosSemAnimacao(props: CarouselFotosSemAnimacaoProps) {
         }} />
       {data.map((item, index) => {
         const { id, url, nome } = item;
-        const alt = `Slide-${id}-${index}`;
+        const alt_slide = `Slide-${id}-${index}`;
+        const image_alt = `Imagem-${id}-${index}`;
+        const image_url = `${url}${nome}`;
+        const image_height = '300px';
 
         return (
           <CarouselItem key={index}>
-            <CarouselItemImg key={index} alt={alt} src={`${url}${nome}`} />
+            <CarouselItemImg
+              alt={alt_slide}
+              src={image_url}
+              onClick={() => {
+                const data_modal = { image_url, image_alt, image_height };
+                ModalImagem(data_modal);
+              }}
+            />
           </CarouselItem>
         );
       })}
