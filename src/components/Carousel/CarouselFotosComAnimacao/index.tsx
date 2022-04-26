@@ -37,12 +37,12 @@ export function CarouselFotosComAnimacao(props: CarouselFotosComAnimacaoProps) {
       <CarouselIndicators
         activeIndex={activeIndex}
         items={data.map((item, index) => {
-          const { id, url } = item;
+          const { id, url, nome } = item;
           return {
             // altText: `Slide-${id}-${index}`,
             // caption: `Slide-${id}-${index}`,
             key: `${id}-${index}`,
-            src: url
+            src: `${url}${nome}`
           };
         })}
         onClickHandler={(newIndex) => {
@@ -50,7 +50,7 @@ export function CarouselFotosComAnimacao(props: CarouselFotosComAnimacaoProps) {
           setActiveIndex(newIndex);
         }} />
       {data.map((item, index) => {
-        const { id, url } = item;
+        const { id, url, nome } = item;
         return (
           <CarouselItem
             key={index}
@@ -60,7 +60,7 @@ export function CarouselFotosComAnimacao(props: CarouselFotosComAnimacaoProps) {
             <CarouselItemImg
               key={index}
               alt={`Slide-${id}-${index}`}
-              src={url} />
+              src={`${url}${nome}`} />
             {/* <CarouselCaption
               captionHeader={`Slide-${id}-${index}`}
               captionText={`Slide-${id}-${index}`} /> */}
