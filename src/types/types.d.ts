@@ -72,18 +72,13 @@ interface RefeicaoTypes {
   descricao: string;
   ativo: string | boolean;
   imagens: File[];
-  imagens_antigas?: FotoTypes[];
-  imagens_removidas?: FotoTypes[];
-}
-
-interface ImagemTypes {
-  id: string;
-  path: string;
+  imagens_antigas: FotoTypes[];
 }
 
 interface FotoTypes {
   id: number;
   url: string;
+  nome: string;
 }
 
 interface RefeicaoDadosTypes extends RefeicaoTypes {
