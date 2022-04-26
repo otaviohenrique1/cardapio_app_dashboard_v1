@@ -21,7 +21,9 @@ export function CampoTextArea(props: CampoTextAreaProps) {
       <Label className="form-label" htmlFor={id}>{label}</Label>
       <Field id={id} name={name} as="textarea"
         className="form-control" placeholder={placeholder} value={value} />
-      {error && touched ? (<Alert color="danger">{error}</Alert>) : null}
+      {error && touched ? (
+        <Alert color="danger">{error}</Alert>
+      ) : null}
     </Col>
   );
 }
