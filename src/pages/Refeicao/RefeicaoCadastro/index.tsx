@@ -5,7 +5,7 @@ import { Titulo } from "../../../components/Titulo";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { FormularioRefeicao } from "../../../components/Formularios/FormularioRefeicao";
 import { ModalSucessoCadastro, ModalErroCadastro } from "../../../components/Modals";
-import api from "../../../utils/api";
+import { ApiCadastroRefeicao } from "../../../utils/api";
 import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioRefeicao } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { validacaoSchemaFormularioRefeicao } from "../../../utils/ValidacaoSchemas";
@@ -19,28 +19,26 @@ export function RefeicaoCadastro() {
     const { nome, preco, ingredientes, ativo, descricao, imagens } = values;
 
     const data = new FormData();
-
-    const data_hora_formata = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
-
     data.append('nome', nome);
     data.append('preco', String(preco));
-    data.append('ativo', String(ativo));
     data.append('descricao', descricao);
+    data.append('ativo', String(ativo));
+    data.append('ingredientes', JSON.stringify(ingredientes));
+    
+    const data_hora_formata = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
     data.append('data_cadastro', data_hora_formata);
     data.append('data_modificacao_cadastro', data_hora_formata);
-
-    data.append('ingredientes', JSON.stringify(ingredientes));
-
+    
     imagens.forEach(imagem => {
       data.append('imagens', imagem);
     });
 
     const id = sessionStorage.getItem('id');
     const valida_id = (id) ? id : 'id';
-
     data.append('usuario_id', valida_id);
 
-    await api.post('refeicao', data)
+    // await api.post('refeicao', data)
+    await ApiCadastroRefeicao(data)
       .then(() => {
         ModalSucessoCadastro();
         helpers.resetForm();

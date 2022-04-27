@@ -5,7 +5,7 @@ import { Titulo } from "../../../components/Titulo";
 import { ContainerApp } from "../../../components/ContainerApp";
 import { FormularioEmpresa } from "../../../components/Formularios/FormularioEmpresa";
 import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
-import api from "../../../utils/api";
+import { ApiBuscaDadosUmaEmpresa, ApiEdicaoEmpresa, ApiEdicaoEmpresaTypes } from "../../../utils/api";
 import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { FormatadorCrypto } from "../../../utils/FormatadorCrypto";
@@ -18,11 +18,12 @@ export function EmpresaEdicao() {
   let { id } = useParams();
 
   useEffect(() => {
-    api.get(`usuario/${id}`)
+    if (!id) { return; }
+    // api.get(`usuario/${id}`)
+    ApiBuscaDadosUmaEmpresa(id)
       .then((item) => {
         let { nome, email, senha } = item.data;
         let data = { nome, email, senha };
-
         setData(data);
       })
       .catch((error) => {
@@ -39,43 +40,21 @@ export function EmpresaEdicao() {
     let senha_formatada = FormatadorCrypto.mensagemSHA512(senha);
     let data_modificacao_cadastro = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
 
-    // const data = {
-    //   'id': id,
-    //   'nome': nome,
-    //   'email': email,
-    //   'senha': senha_formatada,
-    //   'data_modificacao_cadastro': data_modificacao_cadastro,
-    // };
-
-    // console.log(`
-    //   id => ${id},
-    //   nome => ${nome},
-    //   email => ${email},
-    //   senha => ${senha_formatada},
-    //   data_modificacao_cadastro => ${data_modificacao_cadastro},
-    // `);
-
-    // const data = new FormData();
-    // data.append('id', id);
-    // data.append('nome', nome);
-    // data.append('email', email);
-    // data.append('senha_formatada', senha_formatada);
-    // data.append('data_modificacao_cadastro', data_modificacao_cadastro);
-
-    // console.log(data);
-
-    await api.put(`usuario/${id}`, {
+    const data: ApiEdicaoEmpresaTypes = {
       'id': id,
       'nome': nome,
       'email': email,
       'senha': senha_formatada,
       'data_modificacao_cadastro': data_modificacao_cadastro,
-    })
+    };
+
+    // await api.put(`usuario/${id}`, data)
+    await ApiEdicaoEmpresa(data)
       .then(() => {
         ModalSucessoCadastro();
         navigation(`/empresa/${id}`);
       }).catch((error) => {
-        // ModalErroCadastro();
+        ModalErroCadastro();
         console.error(error);
       });
   }
