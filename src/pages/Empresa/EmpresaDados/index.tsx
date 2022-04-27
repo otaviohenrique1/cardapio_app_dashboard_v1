@@ -6,7 +6,7 @@ import { ContainerApp } from "../../../components/ContainerApp";
 import { ItemFichaDados } from "../../../components/Listas/ListaFichaDados/ItemFichaDados";
 import { ModalErroCadastro } from "../../../components/Modals";
 import { Titulo } from "../../../components/Titulo";
-import api from "../../../utils/api";
+import { ApiBuscaDadosUmaEmpresa } from "../../../utils/api";
 import { FORMATO_DATA_COM_HORA_4, valoresIniciaisUsuarioDados } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 
@@ -17,7 +17,8 @@ export function EmpresaDados() {
   useEffect(() => {
     if (!id) { return; }
 
-    api.get(`usuario/${id}`)
+    // api.get(`usuario/${id}`)
+    ApiBuscaDadosUmaEmpresa(id)
       .then((item) => {
         const { nome, email, senha, codigo, data_cadastro, data_modificacao_cadastro } = item.data;
 
