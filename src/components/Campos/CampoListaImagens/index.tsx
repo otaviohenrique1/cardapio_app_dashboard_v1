@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader, CardImg, CardText, Col } from "reactstrap";
 import styled from "styled-components";
 import { Botao } from "../../Botoes/Botao";
-import { ModalImagem } from "../../Modals";
+import { ModalConfirmacaoProps, ModalImagem } from "../../Modals";
 import { ModalConfirmacao } from "../../Modals";
 
 interface CampoListaImagensProps {
@@ -44,34 +44,40 @@ export function CampoListaImagens(props: CampoListaImagensProps) {
                 }}
               />
             </CardBody>
-              <CardBotaoRemoverEstilizado
-                color="danger"
-                className="w-100"
-                onClick={() => {
-                  ModalConfirmacao("warning", "Aviso", "Deseja remover imagem?")
-                    .then(({ isConfirmed }) => {
-                      // logica do remover imagem do servidor
-                      // quando uma imagem é removida, a lista (imagens_antigas) diminui de tamanho
-                      // Recebe array como prop
-                      if (isConfirmed) {
-                        imagens_removidas.push({ id, url, nome });
-                        let nova_lista = imagens_antigas.filter((item) => item.id !== id);
-                        setDataImagensAntigas(nova_lista);
-                        console.log(dataImagensAntigas);
-                        console.log(imagens_removidas);
-                        // let nova_lista = imagens_antigas.splice(index, 1);
-                        // setDataImagensAntigas([]);
-                        // console.log(nova_lista);
-                        // console.log(imagens_antigas[index]);
-                        // console.log({ id, url });
-                        // console.log(imagens_removidas);
-                      }
-                    })
-                    .catch((error) => {
-                      console.error(error);
-                    });
-                }}
-              >Remover</CardBotaoRemoverEstilizado>
+            <CardBotaoRemoverEstilizado
+              color="danger"
+              className="w-100"
+              onClick={() => {
+                const data_modal: ModalConfirmacaoProps = {
+                  icone: "warning",
+                  titulo: "Aviso",
+                  mensagem: "Deseja remover imagem?"
+                };
+
+                ModalConfirmacao(data_modal)
+                  .then(({ isConfirmed }) => {
+                    // logica do remover imagem do servidor
+                    // quando uma imagem é removida, a lista (imagens_antigas) diminui de tamanho
+                    // Recebe array como prop
+                    if (isConfirmed) {
+                      imagens_removidas.push({ id, url, nome });
+                      let nova_lista = imagens_antigas.filter((item) => item.id !== id);
+                      setDataImagensAntigas(nova_lista);
+                      console.log(dataImagensAntigas);
+                      console.log(imagens_removidas);
+                      // let nova_lista = imagens_antigas.splice(index, 1);
+                      // setDataImagensAntigas([]);
+                      // console.log(nova_lista);
+                      // console.log(imagens_antigas[index]);
+                      // console.log({ id, url });
+                      // console.log(imagens_removidas);
+                    }
+                  })
+                  .catch((error) => {
+                    console.error(error);
+                  });
+              }}
+            >Remover</CardBotaoRemoverEstilizado>
           </CardEstilizado>
         );
       })}

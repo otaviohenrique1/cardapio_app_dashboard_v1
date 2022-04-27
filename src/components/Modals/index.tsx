@@ -3,7 +3,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 const SwalModal = withReactContent(Swal);
 
-interface ModalImagemProps {
+export interface ModalImagemProps {
   image_url: string;
   image_height: string | number;
   image_alt: string;
@@ -29,14 +29,20 @@ export function ModalImagem(data: ModalImagemProps) {
   })
 }
 
+export interface ModalConfirmacaoProps {
+  icone: SweetAlertIcon;
+  titulo: string;
+  mensagem: string;
+}
+
 /**
  * Modal de confirmação com botões 'Sim' e 'Não'
- * @param icone Valor no tipo SweetAlertIcon
- * @param titulo Valor no tipo string
- * @param mensagem Valor no tipo string
+ * @param data Valor no tipo ModalConfirmacaoProps
  * @returns Modal SwalModal: typeof Swal & ReactSweetAlert
  */
-export function ModalConfirmacao(icone: SweetAlertIcon, titulo: string, mensagem: string) {
+export function ModalConfirmacao(data: ModalConfirmacaoProps) {
+  const { icone, titulo, mensagem } = data;
+
   return SwalModal.fire({
     icon: icone,
     title: titulo,
@@ -52,14 +58,20 @@ export function ModalConfirmacao(icone: SweetAlertIcon, titulo: string, mensagem
   });
 }
 
+export interface ModalMensagemProps {
+  icone: SweetAlertIcon;
+  titulo: string;
+  mensagem: string;
+}
+
 /**
  * Modal de mensagem
- * @param icone Valor no tipo SweetAlertIcon
- * @param titulo Valor no tipo string
- * @param mensagem Valor no tipo string
+ * @param data Valor no tipo ModalMensagemProps
  * @returns Modal SwalModal: typeof Swal & ReactSweetAlert
  */
-export function ModalMensagem(icone: SweetAlertIcon, titulo: string, mensagem: string) {
+export function ModalMensagem(data: ModalMensagemProps) {
+  const { icone, titulo, mensagem } = data;
+
   return SwalModal.fire({
     icon: icone,
     title: titulo,
@@ -75,7 +87,13 @@ export function ModalMensagem(icone: SweetAlertIcon, titulo: string, mensagem: s
  * @returns Modal SwalModal: typeof Swal & ReactSweetAlert
  */
  export function ModalErroDadosNaoCarregados() {
-  return ModalMensagem("error", "Erro", "Dados não foram carregados!");;
+  const data_modal: ModalMensagemProps = {
+    icone: "error",
+    titulo: "Erro",
+    mensagem: "Dados não foram carregados!"
+  };
+
+  return ModalMensagem(data_modal);
 }
 
 /**
@@ -83,7 +101,13 @@ export function ModalMensagem(icone: SweetAlertIcon, titulo: string, mensagem: s
  * @returns Modal SwalModal: typeof Swal & ReactSweetAlert
  */
 export function ModalSucessoCadastro() {
-  return ModalMensagem("success", "Salvo", "Cadastro realizado com sucesso!");
+  const data_modal: ModalMensagemProps = {
+    icone: "success",
+    titulo: "Salvo",
+    mensagem: "Cadastro realizado com sucesso!"
+  };
+
+  return ModalMensagem(data_modal);
 }
 
 /**
@@ -91,5 +115,11 @@ export function ModalSucessoCadastro() {
  * @returns Modal SwalModal: typeof Swal & ReactSweetAlert
  */
 export function ModalErroCadastro() {
-  return ModalMensagem("error", "Erro", "Cadastro não pode ser realizado!");
+  const data_modal: ModalMensagemProps = {
+    icone: "error",
+    titulo: "Erro",
+    mensagem: "Cadastro não pode ser realizado!"
+  };
+
+  return ModalMensagem(data_modal);
 }
