@@ -1,6 +1,6 @@
 import { ListGroupItem } from "reactstrap";
 import { MdOutlineImageNotSupported } from "react-icons/md";
-import { CarouselFotosSemAnimacao } from "../../../Carousel/CarouselFotosSemAnimacao";
+import { CarouselFotos } from "../../../Carousel";
 import { Titulo } from "../../../Titulo";
 import styled from "styled-components";
 
@@ -19,7 +19,7 @@ export function ItemFichaDadosImagem(props: ItemFichaDadosImagemProps) {
           ? <MdOutlineImageNotSupported size={100} />
           : (data.length === 1) 
             ? <Imagem data={data[0]} />
-            : <CarouselFotosSemAnimacao data={data} />
+            : <CarouselFotos data={data} />
         }
       </div>
     </ListGroupItemEstilizado>
