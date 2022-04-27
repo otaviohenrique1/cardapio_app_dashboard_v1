@@ -2,7 +2,6 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { ImageListType } from "react-images-uploading";
 import { To } from "react-router-dom";
 import { ButtonGroup, Col, Row } from "reactstrap";
-import { Mensagem } from "../../../utils/Mensagem";
 import { Botao } from "../../Botoes/Botao";
 import { BotaoLink } from "../../Botoes/BotaoLink";
 import { CampoCheckbox } from "../../Campos/CampoCheckbox";
