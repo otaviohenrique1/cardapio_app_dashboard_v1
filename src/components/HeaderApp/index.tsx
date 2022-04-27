@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Nav, Navbar, NavItem, Collapse, DropdownItem, DropdownMenu, DropdownToggle, NavbarBrand, NavbarToggler, Dropdown } from "reactstrap";
 import { BiUserCircle } from "react-icons/bi";
 import { MdMenuBook } from "react-icons/md";
-import { ModalConfirmacao } from "../Modals";
+import { ModalConfirmacao, ModalConfirmacaoProps } from "../Modals";
 import { Titulo } from "../Titulo";
 
 interface HeaderAppProps {
@@ -24,7 +24,13 @@ export function HeaderApp(props: HeaderAppProps) {
   };
 
   function logout() {
-    ModalConfirmacao("warning", "Aviso", "Deseja sair?")
+    const data_modal: ModalConfirmacaoProps = {
+      icone: "warning",
+      titulo: "Aviso",
+      mensagem: "Deseja sair?"
+    };
+
+    ModalConfirmacao(data_modal)
       .then((data) => {
         const { isConfirmed } = data;
         if (isConfirmed) {
