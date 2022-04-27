@@ -4,7 +4,7 @@ import { FormikHelpers } from "formik";
 import { Titulo } from "../../../components/Titulo";
 import { FormularioEmpresa } from "../../../components/Formularios/FormularioEmpresa";
 import { ModalErroCadastro, ModalSucessoCadastro } from "../../../components/Modals";
-import api from "../../../utils/api";
+import { ApiCadastroEmpresa, ApiCadastroEmpresaTypes } from "../../../utils/api";
 import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioUsuario } from "../../../utils/constantes";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { FormatadorCrypto } from "../../../utils/FormatadorCrypto";
@@ -19,7 +19,7 @@ export function EmpresaCadastro() {
     let senha_formatada = FormatadorCrypto.mensagemSHA512(senha);
     let data_hora_formatada = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
 
-    const data = {
+    const data: ApiCadastroEmpresaTypes = {
       'nome': nome,
       'email': email,
       'senha': senha_formatada,
@@ -27,7 +27,8 @@ export function EmpresaCadastro() {
       'data_modificacao_cadastro': data_hora_formatada,
     };
 
-    await api.post('usuario', data)
+    // await api.post('usuario', data)
+    await ApiCadastroEmpresa(data)
       .then(() => {
         ModalSucessoCadastro();
         helpers.resetForm();
