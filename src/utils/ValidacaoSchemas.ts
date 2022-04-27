@@ -23,7 +23,6 @@ export const senha = Yup
   .max(valor_maximo_carateres, MAXIMO_CARACTERES)
   .required(Mensagem.MensagemErro("senha"));
 
-
 export const preco = Yup
   .number()
   .moreThan(0, Mensagem.MensagemErro("preco"))
@@ -46,23 +45,11 @@ export const ingredientes = Yup
   )
   .required(Mensagem.MensagemErro("ingredientes"))
   .min(1, "Minimo 1 ingrediente")
-// .length(0, Mensagem.MensagemErro("ingredientes"))
-// .required(Mensagem.MensagemErro("ingredientes"));
 
 export const imagens = Yup
   .array()
-  // .test({
-  //   message: Mensagem.MensagemErro("imagens"),
-  //   test: arr => arr?.length === 0,
-  // })
-  // .length(0, Mensagem.MensagemErro("imagens"));
   .required(Mensagem.MensagemErro("imagens"))
   .min(1, "Minimo 1 imagem");
-// .mixed()
-// .test({
-//   message: Mensagem.MensagemErro("imagens"),
-//   test: arr => arr.length === 0,
-// })
 
 export const validacaoSchemaFormularioRefeicao = Yup
   .object()
