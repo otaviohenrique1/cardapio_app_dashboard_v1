@@ -6,7 +6,7 @@ import { Titulo } from "../../../components/Titulo";
 import { ItemFichaDados } from "../../../components/Listas/ListaFichaDados/ItemFichaDados";
 import { BotaoLink } from "../../../components/Botoes/BotaoLink";
 import { ModalErroCadastro } from "../../../components/Modals";
-import api from "../../../utils/api";
+import { ApiBuscaDadosUmaRefeicao } from "../../../utils/api";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { FORMATO_DATA_COM_HORA_4, valoresIniciaisRefeicaoDados } from "../../../utils/constantes";
 import { ItemFichaDadosIngredientes } from "../../../components/Listas/ListaFichaDados/ItemFichaDadosIngredientes";
@@ -17,7 +17,10 @@ export function RefeicaoDados() {
   let { id } = useParams();
 
   useEffect(() => {
-    api.get(`refeicao/${id}`)
+    if (!id) { return; }
+    
+    // api.get(`refeicao/${id}`)
+    ApiBuscaDadosUmaRefeicao(id)
       .then((item) => {
         if (!id) { return; }
 
