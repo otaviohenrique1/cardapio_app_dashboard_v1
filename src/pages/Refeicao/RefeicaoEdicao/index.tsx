@@ -6,7 +6,7 @@ import { ContainerApp } from "../../../components/ContainerApp";
 import { FormularioRefeicao } from "../../../components/Formularios/FormularioRefeicao";
 import { ModalErroCadastro, ModalErroDadosNaoCarregados, ModalSucessoCadastro } from "../../../components/Modals";
 import { FORMATO_DATA_COM_HORA_3, valoresIniciaisFormularioRefeicao } from "../../../utils/constantes";
-import api from "../../../utils/api";
+import { ApiBuscaDadosUmaRefeicao, ApiEdicaoRefeicao } from "../../../utils/api";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { validacaoSchemaFormularioRefeicao } from "../../../utils/ValidacaoSchemas";
 
@@ -18,26 +18,20 @@ export function RefeicaoEdicao() {
   let { id } = useParams();
 
   useEffect(() => {
-    api.get(`refeicao/${id}`)
+    if (!id) { return; }
+
+    // api.get(`refeicao/${id}`)
+    ApiBuscaDadosUmaRefeicao(id)
       .then((item) => {
         const { nome, preco, ingredientes, descricao, ativo, imagens } = item.data;
         const ingredientes_lista_formatada = [...ingredientes] as IngredientesTypes[];
         const imagens_antigas_lista_formatada = [...imagens] as FotoTypes[];
 
         const data: RefeicaoTypes = {
-          nome,
-          preco,
-          ativo,
-          ingredientes: ingredientes_lista_formatada,
-          descricao,
-          imagens: [],
-          imagens_antigas: imagens_antigas_lista_formatada,
-          id: "",
-          imagens_removidas: [],
-          data_modificacao_cadastro: "",
-          imagens_galeria: [],
-          codigo: "",
-          data_cadastro: ""
+          nome, preco, ativo, descricao, ingredientes: ingredientes_lista_formatada,
+          imagens: [], imagens_antigas: imagens_antigas_lista_formatada,
+          id: "", codigo: "", imagens_removidas: [], imagens_galeria: [],
+          data_cadastro: "", data_modificacao_cadastro: "",
         };
 
         setData(data);
@@ -67,6 +61,8 @@ export function RefeicaoEdicao() {
   };
 
   async function handleSubmit(values: RefeicaoFormularioEdicaoTypes) {
+    if (!id) { return; }
+
     const data = new FormData();
 
     const { nome, preco, ingredientes, descricao, ativo, imagens, imagens_removidas } = values;
@@ -75,19 +71,20 @@ export function RefeicaoEdicao() {
 
     data.append('nome', nome);
     data.append('preco', String(preco));
-    data.append('ingredientes', JSON.stringify(ingredientes));
-    data.append('ativo', String(ativo));
     data.append('descricao', descricao);
+    data.append('ativo', String(ativo));
+    data.append('ingredientes', JSON.stringify(ingredientes));
     data.append('data_modificacao_cadastro', data_modificacao_cadastro);
-  
+
     /* Lista de imagens que serao removidas no banco de dados */
     data.append('imagens_removidas', JSON.stringify(imagens_removidas));
-  
+
     imagens.forEach(imagem => {
       data.append('imagens', imagem);
     });
 
-    await api.put(`refeicao/${id}`, data)
+    // await api.put(`refeicao/${id}`, data)
+    ApiEdicaoRefeicao(id, data)
       .then(() => {
         ModalSucessoCadastro();
         navigation(`/refeicao/${id}`);
