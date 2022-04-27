@@ -34,10 +34,7 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
   // const tamanho_maximo_em_bytes_do_arquivo = 3000000; // 3000000 bytes => 3 megabytes
   const lista_de_tipos_de_arquivos_aceitos = ['jpg', 'gif', 'png'];
   // const quantidade_maxima_de_arquivos_aceitos = arquivos_aceitos_quantidade;
-  /*
-    resolucao (altura x largura) pixels:
-      1200 x 1200 pixels
-  */
+  /* resolucao (altura x largura) pixels: 1200 x 1200 pixels */
   const resolucao_largura = 1200; // 1200 pixels
   const resolucao_altura = 1200; // 1200 pixels
 
@@ -50,7 +47,7 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
         enableReinitialize={enableReinitialize}
       >
         {(formik_props) => {
-          const { errors, touched, values, setFieldValue,  } = formik_props;
+          const { errors, touched, values, setFieldValue, } = formik_props;
 
           const lista_campos_dados: CampoInputProps[] = [
             {

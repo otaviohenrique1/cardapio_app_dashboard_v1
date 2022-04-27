@@ -58,6 +58,16 @@ export function RefeicaoDados() {
 
   const { nome, codigo, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens_galeria: imagens } = data;
 
+  const lista_dados = [
+    { titulo: "Id", valor: id || 'id' },
+    { titulo: "Preço (R$)", valor: preco },
+    { titulo: "Status", valor: ativo },
+    { titulo: "Descrição", valor: descricao },
+    { titulo: "Código", valor: codigo },
+    { titulo: "Data de cadastro", valor: data_cadastro },
+    { titulo: "Data de atualização do cadastro", valor: data_modificacao_cadastro }
+  ];
+
   return (
     <ContainerApp>
       <Row>
@@ -66,13 +76,7 @@ export function RefeicaoDados() {
         </Col>
         <Col md={12}>
           <ListGroup>
-            <ItemFichaDados titulo="Id" valor={id || 'id'} />
-            <ItemFichaDados titulo="Preço (R$)" valor={preco} />
-            <ItemFichaDados titulo="Status" valor={ativo} />
-            <ItemFichaDados titulo="Descrição" valor={descricao} />
-            <ItemFichaDados titulo="Código" valor={codigo} />
-            <ItemFichaDados titulo="Data de cadastro" valor={data_cadastro} />
-            <ItemFichaDados titulo="Data de atualização do cadastro" valor={data_modificacao_cadastro} />
+            {lista_dados.map((item, index) => <ItemFichaDados key={index} titulo={item.titulo} valor={item.valor} />)}
             <ItemFichaDadosIngredientes data={ingredientes} />
             <ItemFichaDadosImagem data={imagens} />
           </ListGroup>

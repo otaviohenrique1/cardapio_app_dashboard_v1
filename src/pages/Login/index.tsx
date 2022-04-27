@@ -54,12 +54,12 @@ export function Login() {
             {
               md: 12, type: "text", id: "email", name: "email",
               label: "E-mail", placeholder: "Digite o seu e-mail",
-              value: values.email, error: errors.email, touched: touched.email,
+              value: values.email, error: errors.email, touched: touched.email
             },
             {
               md: 12, type: "password", id: "senha", name: "senha", label: "Senha",
               placeholder: "Digite a sua senha", value: values.senha,
-              error: errors.senha, touched: touched.senha,
+              error: errors.senha, touched: touched.senha
             }
           ];
 
@@ -78,17 +78,8 @@ export function Login() {
                     {lista_campos_dados.map((item, index) => {
                       const { md, id, label, name, type, placeholder, value, error, touched } = item;
                       return (
-                        <CampoInput
-                          key={index}
-                          md={md}
-                          id={id}
-                          label={label}
-                          name={name}
-                          type={type}
-                          placeholder={placeholder}
-                          value={value}
-                          error={error}
-                          touched={touched}
+                        <CampoInput key={index} md={md} id={id} label={label} name={name} type={type}
+                          placeholder={placeholder} value={value} error={error} touched={touched}
                         />
                       );
                     })}

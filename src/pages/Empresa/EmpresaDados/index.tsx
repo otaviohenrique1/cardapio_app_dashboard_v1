@@ -45,6 +45,16 @@ export function EmpresaDados() {
 
   const { nome, email, senha, codigo, data_cadastro, data_modificacao_cadastro } = data;
 
+  const lista_dados = [
+    { titulo: "Id", valor: id || "id" },
+    { titulo: "Nome", valor: nome },
+    { titulo: "E-mail", valor: email },
+    { titulo: "Senha", valor: senha },
+    { titulo: "Código", valor: codigo },
+    { titulo: "Data de cadastro", valor: data_cadastro },
+    { titulo: "Data de atualização do cadastro", valor: data_modificacao_cadastro },
+  ];
+
   return (
     <ContainerApp>
       <Row>
@@ -53,13 +63,7 @@ export function EmpresaDados() {
         </Col>
         <Col md={12}>
           <ListGroup>
-            <ItemFichaDados titulo="Id" valor={id || "id"} />
-            <ItemFichaDados titulo="Nome" valor={nome} />
-            <ItemFichaDados titulo="E-mail" valor={email} />
-            <ItemFichaDados titulo="Senha" valor={senha} />
-            <ItemFichaDados titulo="Código" valor={codigo} />
-            <ItemFichaDados titulo="Data de cadastro" valor={data_cadastro} />
-            <ItemFichaDados titulo="Data de atualização do cadastro" valor={data_modificacao_cadastro} />
+            {lista_dados.map((item, index) => <ItemFichaDados key={index} titulo={item.titulo} valor={item.valor} />)}
           </ListGroup>
         </Col>
         <Col md={12} className="d-flex justify-content-end mt-5">
