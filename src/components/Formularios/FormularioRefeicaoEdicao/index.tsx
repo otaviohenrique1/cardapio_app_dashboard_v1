@@ -2,7 +2,6 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { ImageListType } from "react-images-uploading";
 import { To } from "react-router-dom";
 import { ButtonGroup, Col, Row } from "reactstrap";
-import { Mensagem } from "../../../utils/Mensagem";
 import { Botao } from "../../Botoes/Botao";
 import { BotaoLink } from "../../Botoes/BotaoLink";
 import { CampoCheckbox } from "../../Campos/CampoCheckbox";
@@ -12,24 +11,23 @@ import { CampoInput, CampoInputProps } from "../../Campos/CampoInput";
 import { CampoListaFotos } from "../../Campos/CampoListaFotos";
 import { CampoTextArea } from "../../Campos/CampoTextArea";
 
-interface FormularioRefeicaoProps {
-  initialValues: RefeicaoTypes;
+interface FormularioRefeicaoEdicaoProps {
+  initialValues: RefeicaoFormularioEdicaoTypes;
   validationSchema: any;
   onSubmit: (
-    values: RefeicaoTypes,
-    helpers: FormikHelpers<RefeicaoTypes>
+    values: RefeicaoFormularioEdicaoTypes,
+    helpers: FormikHelpers<RefeicaoFormularioEdicaoTypes>
   ) => Promise<void>;
   voltarLink: To;
   enableReinitialize: boolean;
   imagens: never[];
   setImagens: React.Dispatch<React.SetStateAction<never[]>>;
-  exibe_imagens_antigas: boolean;
   arquivos_aceitos_quantidade: number;
 }
 
-export function FormularioRefeicao(props: FormularioRefeicaoProps) {
+export function FormularioRefeicaoEdicao(props: FormularioRefeicaoEdicaoProps) {
   const { initialValues, validationSchema, onSubmit, enableReinitialize, voltarLink,
-    imagens, setImagens, exibe_imagens_antigas, arquivos_aceitos_quantidade } = props;
+    imagens, setImagens, arquivos_aceitos_quantidade } = props;
 
   const tamanho_maximo_em_bytes_do_arquivo = 3145728; // 3145728 bytes => 3 megabytes
   // const tamanho_maximo_em_bytes_do_arquivo = 3000000; // 3000000 bytes => 3 megabytes
@@ -51,7 +49,7 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
         enableReinitialize={enableReinitialize}
       >
         {(formik_props) => {
-          const { errors, touched, values, setFieldValue,  } = formik_props;
+          const { errors, touched, values, setFieldValue } = formik_props;
 
           const lista_campos_dados: CampoInputProps[] = [
             {
@@ -116,14 +114,12 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                   checked={(values.ativo) ? true : false}
                   label="Ativo"
                 />
-                {(exibe_imagens_antigas) ? (
-                  <CampoListaFotos
-                    md={12}
-                    titulo="Fotos"
-                    imagens_antigas={values.imagens_antigas}
-                    imagens_removidas={values.imagens_removidas}
-                  />
-                ) : null}
+                <CampoListaFotos
+                  md={12}
+                  titulo="Fotos"
+                  imagens_antigas={values.imagens_antigas}
+                  imagens_removidas={values.imagens_removidas}
+                />
                 {/*
                   Ideia da logica de exibir ou nao o 'CampoDropzone':
                   1) se arquivos_aceitos_quantidade for 3

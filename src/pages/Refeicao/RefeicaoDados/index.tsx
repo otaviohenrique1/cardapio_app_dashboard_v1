@@ -13,7 +13,7 @@ import { ItemFichaDadosIngredientes } from "../../../components/Listas/ListaFich
 import { ItemFichaDadosImagem } from "../../../components/Listas/ListaFichaDados/ItemFichaDadosImagem";
 
 export function RefeicaoDados() {
-  const [data, setData] = useState<RefeicaoDadosTypes>(valoresIniciaisRefeicaoDados);
+  const [data, setData] = useState<RefeicaoDadosFichaTypes>(valoresIniciaisRefeicaoDados);
   let { id } = useParams();
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export function RefeicaoDados() {
         const ingredientes_lista_formatada = [...ingredientes] as IngredientesTypes[];
         const imagens_lista = [...imagens] as FotoTypes[];
 
-        const data = {
+        const data: RefeicaoDadosFichaTypes = {
           id,
           nome: String(nome),
           preco: preco_formatado,
@@ -43,10 +43,9 @@ export function RefeicaoDados() {
           ingredientes: ingredientes_lista_formatada,
           descricao: String(descricao),
           codigo: String(codigo),
-          imagens: imagens_lista,
+          imagens_galeria: imagens_lista,
           data_cadastro: data_cadastro_formatada,
-          data_modificacao_cadastro: data_modificacao_cadastro_formatada,
-          imagens_antigas: []
+          data_modificacao_cadastro: data_modificacao_cadastro_formatada
         };
 
         setData(data);
@@ -57,7 +56,7 @@ export function RefeicaoDados() {
       });
   }, [id]);
 
-  const { nome, codigo, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens } = data;
+  const { nome, codigo, preco, ingredientes, descricao, ativo, data_cadastro, data_modificacao_cadastro, imagens_galeria: imagens } = data;
 
   return (
     <ContainerApp>

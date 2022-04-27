@@ -1,10 +1,8 @@
 export const EMAIL_INVALIDO = "Email invalido";
 export const valor_minimo_carateres = 8;
-export const MINIMO_CARACTERES = `Minimo ${valor_minimo_carateres} carateres`;
-export const valor_maximo_carateres = 64;
-export const MAXIMO_CARACTERES = `Maximo ${valor_maximo_carateres} carateres`;
-export const valor_minimo_ingredientes = 1;
-export const MINIMO_INGREDIENTES = `Minimo ${valor_minimo_ingredientes} carateres`;
+export const MINIMO_CARACTERES = `Minimo de ${valor_minimo_carateres} carateres`;
+export const valor_maximo_carateres = 255;
+export const MAXIMO_CARACTERES = `Maximo de ${valor_maximo_carateres} carateres`;
 
 export const FORMATO_HORA_1 = 'HH:mm';
 export const FORMATO_HORA_2 = 'HH:mm:ss';
@@ -15,29 +13,20 @@ export const FORMATO_DATA_COM_HORA_2 = 'dd/MM/yyyy HH:mm';
 export const FORMATO_DATA_COM_HORA_3 = 'yyyy-MM-dd HH:mm:ss';
 export const FORMATO_DATA_COM_HORA_4 = 'dd/MM/yyyy HH:mm:ss';
 
-export const valoresIniciaisFormularioRefeicao: RefeicaoTypes = {
-  nome: "",
-  preco: "",
-  ativo: false,
-  ingredientes: [
-    { nome: "", quantidade: "" }
-  ],
-  descricao: "",
-  imagens: [],
-  imagens_antigas: []
-};
-
+/* Usuado nos componentes EmpresaEdicao e EmpresaCadastro */
 export const valoresIniciaisFormularioUsuario: UsuarioTypes = {
   nome: "",
   email: "",
   senha: "",
 };
 
+/* Usuado no componente Login */
 export const dadosIniciaisFormularioLogin: LoginTypes = {
   email: "",
   senha: ""
 };
 
+/* Usuado no componente EmpresaDados */
 export const valoresIniciaisUsuarioDados: UsuarioDadosTypes = {
   id: "",
   nome: "",
@@ -48,23 +37,106 @@ export const valoresIniciaisUsuarioDados: UsuarioDadosTypes = {
   data_modificacao_cadastro: ""
 };
 
-export const valoresIniciaisRefeicaoDados: RefeicaoDadosTypes = {
+/* Usuado no componente ContainerApp */
+export const dadosIniciaisUsuarioLogado: UsuarioLogadoTypes = {
+  id: '',
+  nome: ''
+};
+
+/* Usuado no componente RefeicaoCadastro */
+export const valoresIniciaisFormularioCadastroRefeicao: RefeicaoFormularioCadastroTypes = {
+  nome: "",
+  preco: "",
+  ativo: false,
+  ingredientes: [
+    {
+      nome: "",
+      quantidade: ""
+    }
+  ],
+  descricao: "",
+  imagens: [],
+  imagens_antigas: []
+};
+
+/* Usuado no componente RefeicaoEdicao */
+export const valoresIniciaisFormularioEdicaoRefeicao: RefeicaoFormularioEdicaoTypes = {
+  id: "",
+  nome: "",
+  preco: "",
+  ingredientes: [
+    {
+      nome: "",
+      quantidade: ""
+    }
+  ],
+  descricao: "",
+  ativo: "",
+  imagens: [],
+  imagens_antigas: [],
+  imagens_removidas: [],
+  data_modificacao_cadastro: "",
+};
+
+/* Usuado no componente RefeicaoDados */
+export const valoresIniciaisRefeicaoDados: RefeicaoDadosFichaTypes = {
   id: "",
   nome: "",
   preco: "",
   ativo: "",
   ingredientes: [
-    { nome: "", quantidade: "" }
+    {
+      nome: "",
+      quantidade: ""
+    }
   ],
   descricao: "",
   codigo: "",
-  imagens: [],
+  imagens_galeria: [],
   data_cadastro: "",
-  data_modificacao_cadastro: "",
-  imagens_antigas: []
+  data_modificacao_cadastro: ""
 };
 
-export const dadosIniciaisUsuarioLogado: UsuarioLogadoTypes = {
-  id: '',
-  nome: ''
+export const valoresIniciaisFormularioRefeicao: RefeicaoTypes = {
+  nome: "",
+  preco: "",
+  ingredientes: [
+    {
+      nome: "",
+      quantidade: ""
+    }
+  ],
+  descricao: "",
+  ativo: "",
+  imagens: [],
+  imagens_galeria: [],
+  imagens_antigas: [],
+  imagens_removidas: [],
+  id: "",
+  codigo: "",
+  data_cadastro: "",
+  data_modificacao_cadastro: ""
 };
+
+// interface A {
+//   nome: string;
+// }
+
+// interface B {
+//   path: string;
+// }
+
+// interface C {
+//   imagem: string;
+// }
+
+// interface D extends A, B, C {
+//   caminho: string;
+// }
+
+// let K: D = {
+//   caminho: "",
+//   nome: "",
+//   path: "",
+//   imagem: ""
+// };

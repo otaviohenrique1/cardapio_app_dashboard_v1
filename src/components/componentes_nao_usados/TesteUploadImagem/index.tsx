@@ -1,8 +1,8 @@
 // import { useState } from "react";
 import { Alert, Button, ButtonGroup, Col, InputGroup, Row } from "reactstrap";
-import { Titulo } from "../../components/Titulo";
-import { ContainerApp } from "../../components/ContainerApp";
-import { Botao } from "../../components/Botoes/Botao";
+import { Titulo } from "../../Titulo";
+import { ContainerApp } from "../../ContainerApp";
+import { Botao } from "../../Botoes/Botao";
 import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 

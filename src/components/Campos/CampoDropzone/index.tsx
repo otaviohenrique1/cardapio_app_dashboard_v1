@@ -2,7 +2,7 @@ import ImageUploading, { ErrorsType, ImageListType } from "react-images-uploadin
 import { GrUpdate } from "react-icons/gr";
 import { MdSystemUpdateAlt } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
-import { Button, ButtonGroup, Card, CardBody, CardFooter, /*CardGroup,*/ CardImg, Col } from "reactstrap";
+import { Button, ButtonGroup, Card, CardBody, CardFooter, CardImg, Col } from "reactstrap";
 import styled from "styled-components";
 import { AlertErro } from "../../AlertErro";
 import { ReactNode } from "react";
@@ -174,10 +174,22 @@ function CampoDropzoneErroLista(props: CampoDropzoneErroListaProps) {
   return (
     <>
       {errors && <div className="d-flex flex-column">
-        <CampoDropzoneErro errors={errors.maxNumber} mensagem={numero_maximo_imagems} />
-        <CampoDropzoneErro errors={errors.acceptType} mensagem={mensagem_tipo_nao_aceito_imagem} />
-        <CampoDropzoneErro errors={errors.maxFileSize} mensagem={mensagem_valida_tamanho_maximo_arquivo} />
-        <CampoDropzoneErro errors={errors.resolution} mensagem={mensagem_resolucao_maxima_imagem} />
+        <CampoDropzoneErro
+          errors={errors.maxNumber}
+          mensagem={numero_maximo_imagems}
+        />
+        <CampoDropzoneErro
+          errors={errors.acceptType}
+          mensagem={mensagem_tipo_nao_aceito_imagem}
+        />
+        <CampoDropzoneErro
+          errors={errors.maxFileSize}
+          mensagem={mensagem_valida_tamanho_maximo_arquivo}
+        />
+        <CampoDropzoneErro
+          errors={errors.resolution}
+          mensagem={mensagem_resolucao_maxima_imagem}
+        />
       </div>}
     </>
   );
@@ -198,9 +210,14 @@ export function CampoDropzoneContainerCol(props: CampoDropzoneContainerColProps)
   const { md, xs, sm, lg, xl, xxl, titulo, children } = props;
 
   return (
-    <Col md={md} xs={xs} sm={sm} lg={lg} xl={xl} xxl={xxl} className="pt-3 pb-3 border-bottom border-dark">
+    <Col
+      md={md} xs={xs} sm={sm} lg={lg} xl={xl} xxl={xxl}
+      className="d-flex flex-column pt-3 pb-3 border-bottom border-dark"
+    >
       <Titulo tag="h5" className="w-100 text-start">{titulo}</Titulo>
-      {children}
+      <div>
+        {children}
+      </div>
     </Col>
   );
 }

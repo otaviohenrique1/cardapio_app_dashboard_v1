@@ -8,6 +8,7 @@ import { Titulo } from "../../Titulo";
 interface CampoListaFotosProps {
   titulo: string;
   imagens_antigas: FotoTypes[];
+  imagens_removidas: FotoTypes[];
   md?: ColumnProps;
   xs?: ColumnProps;
   sm?: ColumnProps;
@@ -17,7 +18,7 @@ interface CampoListaFotosProps {
 }
 
 export function CampoListaFotos(props: CampoListaFotosProps) {
-  const { titulo, imagens_antigas, md, xs, sm, lg, xl, xxl } = props;
+  const { titulo, imagens_antigas, imagens_removidas, md, xs, sm, lg, xl, xxl } = props;
 
   return (
     <Col
@@ -93,7 +94,10 @@ export function CampoListaFotos(props: CampoListaFotosProps) {
                           type="button"
                           color="danger"
                           className="d-flex justify-content-center align-items-center w-100"
-                          onClick={() => remove(index)}
+                          onClick={() => {
+                            imagens_removidas.push({ id, nome, url });
+                            remove(index)
+                          }}
                         >Remover</CardBotaoRemoverEstilizado>
                       </CardEstilizado>
                     );

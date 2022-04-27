@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Col, Container, Row, ButtonGroup, Card, CardBody, CardHeader, CardFooter } from "reactstrap";
 import { Form, Formik } from "formik";
 import { Titulo } from "../../components/Titulo";
-import { CampoInput } from "../../components/Campos/CampoInput";
+import { CampoInput, CampoInputProps } from "../../components/Campos/CampoInput";
 import { Botao } from "../../components/Botoes/Botao";
 import { ModalMensagem } from "../../components/Modals";
 import api from "../../utils/api";
@@ -47,55 +47,67 @@ export function Login() {
         onSubmit={onSubmit}
         validationSchema={schemaValidacaoFormularioLogin}
       >
-        {({ errors, touched, values }) => (
-          <Form>
-            <Card>
-              <CardHeader>
-                <Row>
-                  <Col md={12} className="d-flex justify-content-center align-items-center">
-                    <Titulo tag="h1">Login</Titulo>
-                  </Col>
-                </Row>
-              </CardHeader>
-              <CardBody>
-                <Row>
-                  <CampoInput
-                    md={12}
-                    type="text"
-                    id="email"
-                    name="email"
-                    value={values.email}
-                    label="E-mail"
-                    placeholder="Digite o seu e-mail"
-                    error={errors.email}
-                    touched={touched.email}
-                  />
-                  <CampoInput
-                    md={12}
-                    type="password"
-                    id="senha"
-                    name="senha"
-                    value={values.senha}
-                    label="Senha"
-                    placeholder="Digite a sua senha"
-                    error={errors.senha}
-                    touched={touched.senha}
-                  />
-                </Row>
-              </CardBody>
-              <CardFooter>
-                <Row>
-                  <Col md={12} className="w-100 d-flex justify-content-end">
-                    <ButtonGroup>
-                      <Botao color="primary" type="submit">Entrar</Botao>
-                      <Botao color="danger" type="reset">Limpar</Botao>
-                    </ButtonGroup>
-                  </Col>
-                </Row>
-              </CardFooter>
-            </Card>
-          </Form>
-        )}
+        {(formik_props) => {
+          const { errors, touched, values } = formik_props;
+
+          const lista_campos_dados: CampoInputProps[] = [
+            {
+              md: 12, type: "text", id: "email", name: "email",
+              label: "E-mail", placeholder: "Digite o seu e-mail",
+              value: values.email, error: errors.email, touched: touched.email,
+            },
+            {
+              md: 12, type: "password", id: "senha", name: "senha", label: "Senha",
+              placeholder: "Digite a sua senha", value: values.senha,
+              error: errors.senha, touched: touched.senha,
+            }
+          ];
+
+          return (
+            <Form>
+              <Card>
+                <CardHeader>
+                  <Row>
+                    <Col md={12} className="d-flex justify-content-center align-items-center">
+                      <Titulo tag="h1">Login</Titulo>
+                    </Col>
+                  </Row>
+                </CardHeader>
+                <CardBody>
+                  <Row>
+                    {lista_campos_dados.map((item, index) => {
+                      const { md, id, label, name, type, placeholder, value, error, touched } = item;
+                      return (
+                        <CampoInput
+                          key={index}
+                          md={md}
+                          id={id}
+                          label={label}
+                          name={name}
+                          type={type}
+                          placeholder={placeholder}
+                          value={value}
+                          error={error}
+                          touched={touched}
+                        />
+                      );
+                    })}
+                  </Row>
+                </CardBody>
+                <CardFooter>
+                  <Row>
+                    <Col md={12} className="w-100 d-flex justify-content-end">
+                      <ButtonGroup>
+                        <Botao color="primary" type="submit">Entrar</Botao>
+                        <Botao color="danger" type="reset">Limpar</Botao>
+                      </ButtonGroup>
+                    </Col>
+                  </Row>
+                </CardFooter>
+              </Card>
+            </Form>
+          );
+        }}
       </Formik>
     </Container>
   );

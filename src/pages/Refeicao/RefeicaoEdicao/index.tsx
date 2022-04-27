@@ -24,14 +24,20 @@ export function RefeicaoEdicao() {
         const ingredientes_lista_formatada = [...ingredientes] as IngredientesTypes[];
         const imagens_antigas_lista_formatada = [...imagens] as FotoTypes[];
 
-        const data = {
+        const data: RefeicaoTypes = {
           nome,
           preco,
           ativo,
           ingredientes: ingredientes_lista_formatada,
           descricao,
           imagens: [],
-          imagens_antigas: imagens_antigas_lista_formatada
+          imagens_antigas: imagens_antigas_lista_formatada,
+          id: "",
+          imagens_removidas: [],
+          data_modificacao_cadastro: "",
+          imagens_galeria: [],
+          codigo: "",
+          data_cadastro: ""
         };
 
         setData(data);
@@ -52,12 +58,18 @@ export function RefeicaoEdicao() {
     descricao: descricao || "",
     imagens: imagens || [],
     imagens_antigas: imagens_antigas || [],
+    id: "",
+    imagens_removidas: [],
+    data_modificacao_cadastro: "",
+    imagens_galeria: [],
+    codigo: "",
+    data_cadastro: ""
   };
 
-  async function handleSubmit(values: RefeicaoTypes) {
+  async function handleSubmit(values: RefeicaoFormularioEdicaoTypes) {
     const data = new FormData();
 
-    const { nome, preco, ingredientes, descricao, ativo, imagens, imagens_antigas } = values;
+    const { nome, preco, ingredientes, descricao, ativo, imagens, imagens_removidas } = values;
 
     let data_modificacao_cadastro = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
 
@@ -69,10 +81,10 @@ export function RefeicaoEdicao() {
     data.append('data_modificacao_cadastro', data_modificacao_cadastro);
   
     /* Lista de imagens que serao removidas no banco de dados */
-    data.append('imagens_antigas', JSON.stringify((imagens_antigas.length > 0) ? imagens_antigas : []));
+    data.append('imagens_removidas', JSON.stringify(imagens_removidas));
   
     imagens.forEach(imagem => {
-      data.append('images', imagem);
+      data.append('imagens', imagem);
     });
 
     await api.put(`refeicao/${id}`, data)

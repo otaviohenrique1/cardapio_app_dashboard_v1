@@ -8,7 +8,6 @@ import { RefeicaoDados } from "./Refeicao/RefeicaoDados";
 import { RefeicaoEdicao } from "./Refeicao/RefeicaoEdicao";
 import { EmpresaDados } from "./Empresa/EmpresaDados";
 import { EmpresaEdicao } from "./Empresa/EmpresaEdicao";
-import { TesteUploadImagem } from "./TesteUploadImagem";
 
 export function RoutesApp() {
   return (
@@ -22,7 +21,6 @@ export function RoutesApp() {
         <Route path="/refeicao/:id" element={<RefeicaoDados />} />
         <Route path="/refeicao/:id/edicao" element={<RefeicaoEdicao />} />
         <Route path="*" element={<Pagina404 />} />
-        <Route path="/teste_upload_imagem" element={<TesteUploadImagem />} />
       </Routes>
     </BrowserRouter>
   );
