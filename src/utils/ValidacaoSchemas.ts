@@ -23,6 +23,16 @@ export const senha = Yup
   .max(valor_maximo_carateres, MAXIMO_CARACTERES)
   .required(Mensagem.MensagemErro("senha"));
 
+export const confirmacao_senha = Yup
+  .string()
+  .when("senha", {
+    is: (val: string) => (val && val.length > 0 ? true : false),
+    then: Yup.string().oneOf(
+      [Yup.ref("senha")],
+      "As senhas não são iguais!"
+    )
+  });
+
 export const preco = Yup
   .number()
   .moreThan(0, Mensagem.MensagemErro("preco"))
@@ -60,7 +70,7 @@ export const validacaoSchemaFormularioRefeicao = Yup
 export const validacaoSchemaFormularioUsuario = Yup
   .object()
   .shape({
-    nome, email, senha,
+    nome, email, senha, confirmacao_senha
   });
 
 export const schemaValidacaoFormularioLogin = Yup
