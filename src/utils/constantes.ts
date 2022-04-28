@@ -18,6 +18,7 @@ export const valoresIniciaisFormularioUsuario: UsuarioTypes = {
   nome: "",
   email: "",
   senha: "",
+  confirmacao_senha: ""
 };
 
 /* Usuado no componente Login */
@@ -34,7 +35,8 @@ export const valoresIniciaisUsuarioDados: UsuarioDadosTypes = {
   senha: "",
   data_cadastro: "",
   codigo: "",
-  data_modificacao_cadastro: ""
+  data_modificacao_cadastro: "",
+  confirmacao_senha: ""
 };
 
 /* Usuado no componente ContainerApp */

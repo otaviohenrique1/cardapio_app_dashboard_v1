@@ -50,6 +50,7 @@ interface UsuarioTypes {
   nome: string;
   email: string;
   senha: string;
+  confirmacao_senha: string;
 }
 
 interface UsuarioDadosTypes extends UsuarioTypes {
