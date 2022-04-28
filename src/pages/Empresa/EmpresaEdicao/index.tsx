@@ -23,7 +23,7 @@ export function EmpresaEdicao() {
     ApiBuscaDadosUmaEmpresa(id)
       .then((item) => {
         let { nome, email, senha } = item.data;
-        let data = { nome, email, senha };
+        let data = { nome, email, senha, confirmacao_senha: "" };
         setData(data);
       })
       .catch((error) => {
@@ -65,6 +65,7 @@ export function EmpresaEdicao() {
     nome: nome || "",
     email: email || "",
     senha: "",
+    confirmacao_senha: ""
   };
 
   const senha_antiga = FormatadorDados.FormataExibicaoSenha(senha.slice(0, 12));

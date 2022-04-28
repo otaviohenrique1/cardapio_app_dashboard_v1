@@ -26,7 +26,7 @@ export function EmpresaDados() {
         const data_cadastro_formatada = FormatadorDados.FormatadorDataHora(data_cadastro, FORMATO_DATA_COM_HORA_4);
         const data_modificacao_cadastro_formatada = FormatadorDados.FormatadorDataHora(data_modificacao_cadastro, FORMATO_DATA_COM_HORA_4);
 
-        const data = {
+        const data: UsuarioDadosTypes = {
           id,
           nome: String(nome),
           email: String(email),
@@ -34,6 +34,7 @@ export function EmpresaDados() {
           codigo: String(codigo),
           data_cadastro: data_cadastro_formatada,
           data_modificacao_cadastro: data_modificacao_cadastro_formatada,
+          confirmacao_senha: ""
         };
 
         setData(data);

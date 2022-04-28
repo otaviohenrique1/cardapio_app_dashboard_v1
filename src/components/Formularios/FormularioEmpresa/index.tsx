@@ -42,6 +42,11 @@ export function FormularioEmpresa(props: FormularioEmpresaProps) {
             {
               md: 12, id: "senha", label: "Senha", name: "Senha", type: "password", placeholder: "Digite a senha",
               value: values.senha, error: errors.senha, touched: touched.senha
+            },
+            {
+              md: 12, type: "password", id: "confirmacao_senha", name: "confirmacao_senha", label: "Confirme a senha",
+              placeholder: "Digite novamente a sua senha", value: values.confirmacao_senha,
+              error: errors.confirmacao_senha, touched: touched.confirmacao_senha
             }
           ];
 
