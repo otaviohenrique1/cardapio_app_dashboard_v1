@@ -5,7 +5,7 @@ import { ContainerApp } from "../../../components/ContainerApp";
 import { Titulo } from "../../../components/Titulo";
 import { ItemFichaDados } from "../../../components/Listas/ListaFichaDados/ItemFichaDados";
 import { BotaoLink } from "../../../components/Botoes/BotaoLink";
-import { ModalErroCadastro } from "../../../components/Modals";
+import { ModalErroDadosNaoCarregados } from "../../../components/Modals";
 import { ApiBuscaDadosUmaRefeicao } from "../../../utils/api";
 import { FormatadorDados } from "../../../utils/FormatadorDados";
 import { FORMATO_DATA_COM_HORA_4, valoresIniciaisRefeicaoDados } from "../../../utils/constantes";
@@ -54,7 +54,7 @@ export function RefeicaoDados() {
         setData(data);
       })
       .catch((error) => {
-        ModalErroCadastro();
+        ModalErroDadosNaoCarregados();
         console.error(error);
       });
   }, [id]);
