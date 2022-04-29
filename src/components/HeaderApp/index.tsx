@@ -11,12 +11,42 @@ interface HeaderAppProps {
 }
 
 export function HeaderApp(props: HeaderAppProps) {
-  const navigate = useNavigate();
+  const { data_usuario_logado } = props;
 
   const [aberto, setAberto] = useState<boolean>(false);
   const toggle = () => {
     setAberto(!aberto)
   };
+
+  return (
+    <Navbar color="dark" dark expand="sm" light>
+      <NavbarBrand tag='div'>
+        <Link to="/home" className="nav-link d-flex flex-row">
+          <MdMenuBook size={30} color="white" />
+          <span className="fw-bold ms-2 text-white">Cardapio</span>
+        </Link>
+      </NavbarBrand>
+      <NavbarToggler onClick={toggle} />
+      <Collapse navbar isOpen={aberto}>
+        <Nav className="me-auto" navbar>
+          <NavItem>
+            <Link to="/home" className="nav-link">Inicio</Link>
+          </NavItem>
+        </Nav>
+        <DropdownHeader data_usuario_logado={data_usuario_logado} />
+      </Collapse>
+    </Navbar>
+  );
+}
+
+interface DropdownHeaderProps {
+  data_usuario_logado: UsuarioLogadoTypes;
+}
+
+function DropdownHeader(props: DropdownHeaderProps) {
+  const { id, nome } = props.data_usuario_logado;
+
+  const navigate = useNavigate();
 
   const [dropdownAberto, setDropdownAberto] = useState<boolean>(false);
   const toggleDropdown = () => {
@@ -29,11 +59,10 @@ export function HeaderApp(props: HeaderAppProps) {
       titulo: "Aviso",
       mensagem: "Deseja sair?"
     };
-
+  
     ModalConfirmacao(data_modal)
-      .then((data) => {
-        const { isConfirmed } = data;
-        if (isConfirmed) {
+      .then((result) => {
+        if (result.isConfirmed) {
           sessionStorage.clear();
           navigate("/");
         }
@@ -44,40 +73,24 @@ export function HeaderApp(props: HeaderAppProps) {
   }
 
   return (
-    <Navbar color="dark" dark expand="sm" light>
-      <NavbarBrand tag='div'>
-        <Link to="/home" className="nav-link d-flex flex-row">
-          <MdMenuBook size={30} color="white" />
-          <span className="fw-bold ms-2 text-white">Cardapio</span>
-        </Link>
-      </NavbarBrand>
-      <NavbarToggler onClick={toggle} />
-      <Collapse navbar isOpen={aberto}>
-        <Nav className="me-auto d-flex justify-content-between w-100" navbar>
-          <NavItem>
-            <Link to="/home" className="nav-link">Inicio</Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/teste_upload_imagem" className="nav-link">Teste Upload Imagem</Link>
-          </NavItem>
-          <Dropdown toggle={toggleDropdown} isOpen={dropdownAberto}>
-            <DropdownToggle caret className="d-flex flex-row justify-content-center align-items-center">
-              <Titulo tag="h6" className="m-0">{props.data_usuario_logado.nome}</Titulo>
-              <BiUserCircle size={30} className="ms-2" />
-            </DropdownToggle>
-            <DropdownMenu dark>
-              <DropdownItem>
-                <Link
-                  to={`/empresa/${props.data_usuario_logado.id}`}
-                  className="nav-link"
-                >Perfil</Link>
-              </DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem onClick={logout}>Sair</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </Nav>
-      </Collapse>
-    </Navbar>
+    <Dropdown toggle={toggleDropdown} isOpen={dropdownAberto}>
+      <DropdownToggle caret className="d-flex flex-row justify-content-center align-items-center">
+        <Titulo tag="h6" className="m-0">{nome}</Titulo>
+        <BiUserCircle size={30} className="ms-2" />
+      </DropdownToggle>
+      <DropdownMenu dark>
+        <DropdownItem>
+          <Link
+            to={`/empresa/${id}`}
+            className="dropdown-item w-100 text-center"
+          >Perfil</Link>
+        </DropdownItem>
+        <DropdownItem divider />
+        <DropdownItem
+          className="w-100 text-center"
+          onClick={logout}
+        >Sair</DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
   );
 }
