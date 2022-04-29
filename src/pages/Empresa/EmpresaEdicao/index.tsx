@@ -37,15 +37,12 @@ export function EmpresaEdicao() {
 
     if (id === undefined) { return; }
 
-    let senha_formatada = FormatadorCrypto.mensagemSHA512(senha);
-    let data_modificacao_cadastro = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
-
     const data: ApiEdicaoEmpresaTypes = {
       'id': id,
       'nome': nome,
       'email': email,
-      'senha': senha_formatada,
-      'data_modificacao_cadastro': data_modificacao_cadastro,
+      'senha': FormatadorCrypto.mensagemSHA512(senha),
+      'data_modificacao_cadastro': FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3),
     };
 
     // await api.put(`usuario/${id}`, data)
@@ -68,8 +65,6 @@ export function EmpresaEdicao() {
     confirmacao_senha: ""
   };
 
-  const senha_antiga = FormatadorDados.FormataExibicaoSenha(senha.slice(0, 12));
-
   return (
     <ContainerApp>
       <Row>
@@ -83,7 +78,7 @@ export function EmpresaEdicao() {
           enableReinitialize
           voltarLink={`/empresa/${id}`}
           exibe_senha_antiga={true}
-          senha_antiga={senha_antiga}
+          senha_antiga={FormatadorDados.FormataExibicaoSenha(senha.slice(0, 12))}
         />
       </Row>
     </ContainerApp>
