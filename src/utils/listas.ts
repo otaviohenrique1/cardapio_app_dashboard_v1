@@ -1,50 +1,60 @@
-export const lista_teste_refeicoes = [
+export const lista_unidade_quantidade = [
   {
-    id: 1,
-    nome: 'X-burger 1',
-    preco: 10,
-    ativo: 'ativo'
+    valor: 'unidade',
+    texto: 'unidade (un)',
   },
   {
-    id: 2,
-    nome: 'X-burger 2',
-    preco: 10,
-    ativo: 'ativo'
+    valor: 'miligrama',
+    texto: 'miligrama (mg)',
   },
   {
-    id: 3,
-    nome: 'X-burger 3',
-    preco: 10,
-    ativo: 'ativo'
+    valor: 'grama',
+    texto: 'grama (g)',
   },
   {
-    id: 4,
-    nome: 'X-burger 4',
-    preco: 10,
-    ativo: 'ativo'
+    valor: 'quilograma ',
+    texto: 'quilograma (kg)',
   },
   {
-    id: 5,
-    nome: 'X-burger 5',
-    preco: 10,
-    ativo: 'ativo'
+    valor: 'mililitro',
+    texto: 'mililitro (ml)',
   },
   {
-    id: 6,
-    nome: 'X-burger 6',
-    preco: 10,
-    ativo: 'inativo'
-  },
-  {
-    id: 7,
-    nome: 'X-burger 7',
-    preco: 10,
-    ativo: 'inativo'
-  },
-  {
-    id: 8,
-    nome: 'X-burger 8',
-    preco: 10,
-    ativo: 'inativo'
+    valor: 'litro',
+    texto: 'litro (l)',
   },
 ];
+
+export const tipo_refeicao = [
+  {
+    valor: 'comida',
+    texto: 'Comida',
+  },
+  {
+    valor: 'bebida',
+    texto: 'Bebida',
+  },
+]
+
+export const lista_status_produto = [
+  {
+    valor: 'ativo',
+    texto: 'Ativo',
+  },
+  {
+    valor: 'inativo',
+    texto: 'Inativo',
+  },
+  // {
+  //   valor: 'em_avaliacao', // parecido com testes
+  //   texto: 'Em avaliação',
+  // },
+  // {
+  //   valor: 'rejeitado',
+  //   texto: 'Rejeitado',
+  // },
+  {
+    valor: 'testes',
+    texto: 'Testes',
+  },
+]
