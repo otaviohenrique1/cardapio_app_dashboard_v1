@@ -64,6 +64,8 @@ interface UsuarioDadosTypes extends UsuarioTypes {
 interface IngredientesTypes {
   nome: string;
   quantidade: number | string;
+  unidade_quantidade: string;
+  removivel: boolean;
 }
 
 interface FotoTypes {
