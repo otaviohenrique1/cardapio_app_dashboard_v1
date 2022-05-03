@@ -1,10 +1,19 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
-const api = axios.create({
-  baseURL: 'http://localhost:3333/'
-});
+const API_URL = 'http://localhost:3333/';
+
+const axios_request_config: AxiosRequestConfig = {
+  baseURL: API_URL
+};
+
+const api = axios.create(axios_request_config);
 
 export default api;
+
+const EMPRESA = 'empresa';
+const LOGIN = 'login';
+const REFEICAO = 'refeicao';
+const CARDAPIO = 'cardapio';
 
 /* ApiBuscaLoginEmpresa */
 export interface ApiBuscaLoginEmpresaTypes {
@@ -13,9 +22,9 @@ export interface ApiBuscaLoginEmpresaTypes {
 }
 
 export function ApiBuscaLoginEmpresa(data_login: ApiBuscaLoginEmpresaTypes) {
-  // api.post('usuario/login', data, { auth })
+  // api.post('empresa/login', data, { auth })
   const { data, auth } = data_login;
-  return api.post('usuario/login', data, { auth });
+  return api.post(`${EMPRESA}/${LOGIN}`, data, { auth });
 }
 
 /* ApiCadastroEmpresa */
@@ -28,8 +37,8 @@ export interface ApiCadastroEmpresaTypes {
 }
 
 export function ApiCadastroEmpresa(data_cadastro: ApiCadastroEmpresaTypes) {
-  // api.post('usuario', data)
-  return api.post('usuario', data_cadastro);
+  // api.post('empresa', data)
+  return api.post(EMPRESA, data_cadastro);
 }
 
 /* ApiEdicaoEmpresa */
@@ -42,43 +51,43 @@ export interface ApiEdicaoEmpresaTypes {
 }
 
 export function ApiEdicaoEmpresa(data_edicao: ApiEdicaoEmpresaTypes) {
-  // api.put(`usuario/${id}`, data)
-  return api.put(`usuario/${data_edicao.id}`, data_edicao);
+  // api.put(`empresa/${id}`, data)
+  return api.put(`${EMPRESA}/${data_edicao.id}`, data_edicao);
 }
 
 /* ApiBuscaDadosUmaEmpresa */
 export function ApiBuscaDadosUmaEmpresa(id: string) {
-  // api.get(`usuario/${id}`)
-  // api.get(`usuario/${id}`)
-  return api.get(`usuario/${id}`);
+  // api.get(`empresa/${id}`)
+  // api.get(`empresa/${id}`)
+  return api.get(`${EMPRESA}/${id}`);
 }
 
 /* ApiCadastroRefeicao */
 export function ApiCadastroRefeicao(data_cadastro: FormData) {
   // api.post('refeicao', data)
-  return api.post('refeicao', data_cadastro);
+  return api.post(REFEICAO, data_cadastro);
 }
 
 /* ApiEdicaoRefeicao */
 export function ApiEdicaoRefeicao(id: string, data_edicao: FormData) {
   // api.put(`refeicao/${id}`, data)
-  return api.put(`refeicao/${id}`, data_edicao);
+  return api.put(`${REFEICAO}/${id}`, data_edicao);
 }
 
 /* ApiBuscaDadosUmaRefeicao */
 export function ApiBuscaDadosUmaRefeicao(id: string) {
   // api.get(`refeicao/${id}`)
-  return api.get(`refeicao/${id}`);
+  return api.get(`${REFEICAO}/${id}`);
 }
 
 /* ApiBuscaDadosTodasRefeicoes */
 export function ApiBuscaDadosTodasRefeicoes(id: string) {
   // api.get(`refeicao/cardapio/${valida_id}`)
-  return api.get(`refeicao/cardapio/${id}`);
+  return api.get(`${REFEICAO}/${CARDAPIO}/${id}`);
 }
 
 /* ApiRemoveRefeicao */
 export function ApiRemoveRefeicao(id: string) {
   // api.delete(`refeicao/${id_refeicao}`)
-  return api.delete(`refeicao/${id}`);
+  return api.delete(`${REFEICAO}/${id}`);
 }
