@@ -1,33 +1,54 @@
 import { Field } from "formik";
-import { ReactNode } from "react";
 import { Col } from "reactstrap";
 import { ColumnProps } from "reactstrap/types/lib/Col";
 import { Titulo } from "../../Titulo";
 import { CampoErro } from "../CampoErro";
 
-export interface RadioButtonDataTypes {
-  radio_label: string | ReactNode;
+export interface CampoRadioButtonProps {
+  radio_label: string;
   radio_name: string;
   radio_value: string;
   radio_id: string;
 }
 
-export interface CampoRadioButtonProps {
-  radio_list: RadioButtonDataTypes[];
+export function CampoRadioButton(props: CampoRadioButtonProps) {
+  const { radio_label, radio_name, radio_value, radio_id } = props;
+
+  return (
+    <div className="form-check">
+      <Field
+        type="radio"
+        name={radio_name}
+        value={radio_value}
+        className="form-check-input"
+        id={radio_id}
+      />
+      <label
+        className="form-check-label"
+        htmlFor={radio_id}
+      >{radio_label}</label>
+    </div>
+  );
 }
 
-export function CampoRadioButton(props: CampoRadioButtonProps) {
-  const { radio_list } = props;
+export interface CampoGrupoRadioButtonProps {
+  radio_list: CampoRadioButtonProps[];
+}
 
+export function CampoGrupoRadioButton(props: CampoGrupoRadioButtonProps) {
+  const { radio_list } = props;
   return (
     <div className="d-flex flex-row">
       {radio_list.map((item, index) => {
         const { radio_label, radio_id, radio_name, radio_value } = item;
         return (
-          <div className="form-check" key={index}>
-            <Field type="radio" name={radio_name} value={radio_value} className="form-check-input" id={radio_id} />
-            <label className="form-check-label" htmlFor={radio_id}>{radio_label}</label>
-          </div>
+          <CampoRadioButton
+            key={index}
+            radio_name={radio_name}
+            radio_value={radio_value}
+            radio_id={radio_id}
+            radio_label={radio_label}
+          />
         );
       })}
     </div>
@@ -36,7 +57,7 @@ export function CampoRadioButton(props: CampoRadioButtonProps) {
 
 export interface CampoRadioButtonComErroProps {
   md: ColumnProps;
-  radio_list: RadioButtonDataTypes[];
+  radio_list: CampoRadioButtonProps[];
   titulo: string;
   error?: any;
   touched?: any;
@@ -47,7 +68,7 @@ export function CampoRadioButtonComErro(props: CampoRadioButtonComErroProps) {
   return (
     <Col md={md} className="d-flex flex-column border-bottom border-dark">
       <Titulo tag="h6" className="fw-normal">{titulo}</Titulo>
-      <CampoRadioButton radio_list={radio_list} />
+      <CampoGrupoRadioButton radio_list={radio_list} />
       <CampoErro error={error} touched={touched} />
     </Col>
   );
@@ -55,7 +76,6 @@ export function CampoRadioButtonComErro(props: CampoRadioButtonComErroProps) {
 
 // export function CampoRadioButton2(props: CampoRadioButtonProps) {
 //   const { radio_list } = props;
-
 //   return (
 //     <div role="group" aria-labelledby="my-radio-group" className="form-check">
 //       {radio_list.map((item, index) => {
