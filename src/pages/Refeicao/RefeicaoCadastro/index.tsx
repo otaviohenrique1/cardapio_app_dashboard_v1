@@ -16,7 +16,8 @@ export function RefeicaoCadastro() {
   const navigation = useNavigate();
 
   async function handleSubmit(values: RefeicaoTypes, helpers: FormikHelpers<RefeicaoTypes>) {
-    const { nome, preco, ingredientes, ativo, descricao, imagens } = values;
+    const { nome, preco, ingredientes, ativo, descricao, imagens,
+      ingredientes_opcionais, quantidade, unidade_quantidade, tipo_produto } = values;
 
     const data = new FormData();
     data.append('nome', nome);
@@ -24,7 +25,11 @@ export function RefeicaoCadastro() {
     data.append('descricao', descricao);
     data.append('ativo', String(ativo));
     data.append('ingredientes', JSON.stringify(ingredientes));
-    
+    data.append('ingredientes_opcionais', JSON.stringify(ingredientes_opcionais));
+    data.append('quantidade', String(quantidade));
+    data.append('unidade_quantidade', unidade_quantidade);
+    data.append('tipo_produto', tipo_produto);
+
     const data_hora_formata = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
     data.append('data_cadastro', data_hora_formata);
     data.append('data_modificacao_cadastro', data_hora_formata);

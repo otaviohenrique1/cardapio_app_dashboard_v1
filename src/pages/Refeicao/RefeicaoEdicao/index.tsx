@@ -23,12 +23,17 @@ export function RefeicaoEdicao() {
     // api.get(`refeicao/${id}`)
     ApiBuscaDadosUmaRefeicao(id)
       .then((item) => {
-        const { nome, preco, ingredientes, descricao, ativo, imagens } = item.data;
+        const { nome, preco, ingredientes, descricao, ativo, imagens,
+          ingredientes_opcionais, quantidade, unidade_quantidade, tipo_produto } = item.data;
+        
         const ingredientes_lista_formatada = [...ingredientes] as IngredientesTypes[];
+        const ingredientes_opcionais_lista_formatada = [...ingredientes_opcionais] as IngredientesOpcionaisTypes[];
         const imagens_antigas_lista_formatada = [...imagens] as FotoTypes[];
 
         const data: RefeicaoTypes = {
           nome, preco, ativo, descricao, ingredientes: ingredientes_lista_formatada,
+          ingredientes_opcionais: ingredientes_opcionais_lista_formatada,
+          quantidade, unidade_quantidade, tipo_produto,
           imagens: [], imagens_antigas: imagens_antigas_lista_formatada,
           id: "", codigo: "", imagens_removidas: [], imagens_galeria: [],
           data_cadastro: "", data_modificacao_cadastro: "",
@@ -42,13 +47,18 @@ export function RefeicaoEdicao() {
       });
   }, [id]);
 
-  const { nome, preco, ingredientes, descricao, ativo, imagens, imagens_antigas } = data;
+  const { nome, preco, ingredientes, ingredientes_opcionais, quantidade,
+    unidade_quantidade, tipo_produto, descricao, ativo, imagens, imagens_antigas } = data;
 
   const dadosDaRefeicao: RefeicaoTypes = {
     nome: nome || "",
     preco: preco || "",
     ativo: ativo || false,
     ingredientes: ingredientes || [],
+    ingredientes_opcionais: ingredientes_opcionais || [],
+    quantidade: quantidade || "",
+    unidade_quantidade: unidade_quantidade || "",
+    tipo_produto: tipo_produto || "",
     descricao: descricao || "",
     imagens: imagens || [],
     imagens_antigas: imagens_antigas || [],

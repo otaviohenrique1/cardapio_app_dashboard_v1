@@ -2,13 +2,17 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { ImageListType } from "react-images-uploading";
 import { To } from "react-router-dom";
 import { ButtonGroup, Col, Row } from "reactstrap";
+import { lista_tipo_refeicao } from "../../../utils/listas";
 import { Botao } from "../../Botoes/Botao";
 import { BotaoLink } from "../../Botoes/BotaoLink";
 import { CampoCheckbox } from "../../Campos/CampoCheckbox";
 import { CampoDropzone, CampoDropzoneContainerCol } from "../../Campos/CampoDropzone";
+import { CampoIngredientesOpcionais } from "../../Campos/CampoIngredienteOpcional";
 import { CampoIngredientes } from "../../Campos/CampoIngredientes";
-import { CampoInput, CampoInputProps } from "../../Campos/CampoInput";
+import { CampoInputComErro, CampoInputComErroProps } from "../../Campos/CampoInput";
 import { CampoListaFotos } from "../../Campos/CampoListaFotos";
+import { CampoQuantidade } from "../../Campos/CampoQuantidade";
+import { CampoSelectComErro } from "../../Campos/CampoSelect";
 import { CampoTextArea } from "../../Campos/CampoTextArea";
 
 interface FormularioRefeicaoProps {
@@ -49,7 +53,7 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
         {(formik_props) => {
           const { errors, touched, values, setFieldValue, } = formik_props;
 
-          const lista_campos_dados: CampoInputProps[] = [
+          const lista_campos_dados: CampoInputComErroProps[] = [
             {
               md: 12,
               id: "nome",
@@ -80,7 +84,7 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                 {lista_campos_dados.map((item, index) => {
                   const { md, id, label, name, type, placeholder, value, error, touched } = item;
                   return (
-                    <CampoInput
+                    <CampoInputComErro
                       key={index}
                       md={md}
                       id={id}
@@ -94,6 +98,15 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                     />
                   );
                 })}
+                <CampoQuantidade
+                  md={12}
+                  quantidade={values.quantidade}
+                  unidade_quantidade={values.unidade_quantidade}
+                  errors_quantidade={errors.quantidade}
+                  touched_quantidade={touched.quantidade}
+                  errors_unidade_quantidade={errors.unidade_quantidade}
+                  touched_unidade_quantidade={touched.unidade_quantidade}
+                />
                 <CampoTextArea
                   md={12}
                   id="descricao"
@@ -107,10 +120,25 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
                 <CampoIngredientes
                   ingredientes={values.ingredientes}
                 />
+                <CampoIngredientesOpcionais
+                  ingredientes_opcionais={values.ingredientes_opcionais}
+                />
                 <CampoCheckbox
                   name="ativo"
                   checked={(values.ativo) ? true : false}
                   label="Ativo"
+                />
+                <CampoSelectComErro
+                  md={12}
+                  id="tipo_produto"
+                  label="Tipo da refeição"
+                  name="tipo_produto"
+                  placeholder="Tipo da refeição"
+                  value={values.tipo_produto}
+                  error={errors.tipo_produto}
+                  touched={touched.tipo_produto}
+                  label_item_vazio="Selecione"
+                  data={lista_tipo_refeicao}
                 />
                 {(exibe_imagens_antigas) ? (
                   <CampoListaFotos
