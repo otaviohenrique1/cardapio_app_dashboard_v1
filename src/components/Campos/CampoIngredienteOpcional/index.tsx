@@ -5,16 +5,11 @@ import { Botao } from "../../Botoes/Botao";
 import { Titulo } from "../../Titulo";
 import { CampoListaItem, CampoListaItemProps } from "../CampoListaItem";
 
-interface IngredientesOpcionaisTypes {
-  nome: string;
-  preco: number;
-}
-
-interface CampoIngredienteOpcionalProps {
+interface CampoIngredientesOpcionaisProps {
   ingredientes_opcionais: IngredientesOpcionaisTypes[];
 }
 
-export function CampoIngredienteOpcional(props: CampoIngredienteOpcionalProps) {
+export function CampoIngredientesOpcionais(props: CampoIngredientesOpcionaisProps) {
   const { ingredientes_opcionais } = props;
 
   return (
