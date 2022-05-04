@@ -53,7 +53,9 @@ export const valoresIniciaisFormularioCadastroRefeicao: RefeicaoFormularioCadast
   ingredientes: [
     {
       nome: "",
-      quantidade: ""
+      quantidade: 0,
+      removivel: false,
+      unidade_quantidade: "",
     }
   ],
   descricao: "",
@@ -69,7 +71,9 @@ export const valoresIniciaisFormularioEdicaoRefeicao: RefeicaoFormularioEdicaoTy
   ingredientes: [
     {
       nome: "",
-      quantidade: ""
+      quantidade: 0,
+      removivel: false,
+      unidade_quantidade: "",
     }
   ],
   descricao: "",
@@ -89,7 +93,9 @@ export const valoresIniciaisRefeicaoDados: RefeicaoDadosFichaTypes = {
   ingredientes: [
     {
       nome: "",
-      quantidade: ""
+      quantidade:0,
+      removivel: false,
+      unidade_quantidade: "",
     }
   ],
   descricao: "",
@@ -105,7 +111,9 @@ export const valoresIniciaisFormularioRefeicao: RefeicaoTypes = {
   ingredientes: [
     {
       nome: "",
-      quantidade: ""
+      quantidade: 0,
+      removivel: false,
+      unidade_quantidade: "",
     }
   ],
   descricao: "",
@@ -117,7 +125,11 @@ export const valoresIniciaisFormularioRefeicao: RefeicaoTypes = {
   id: "",
   codigo: "",
   data_cadastro: "",
-  data_modificacao_cadastro: ""
+  data_modificacao_cadastro: "",
+  ingredientes_opcionais: [],
+  quantidade: 0,
+  unidade_quantidade: "",
+  tipo_produto: ""
 };
 
 // interface A {
