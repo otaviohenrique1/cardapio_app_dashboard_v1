@@ -1,4 +1,5 @@
 import { FieldArray } from "formik";
+import { IoAddCircleOutline } from "react-icons/io5";
 import { Card, CardBody, Col, Row } from "reactstrap";
 import styled from "styled-components";
 import { Botao } from "../../Botoes/Botao";
@@ -28,7 +29,8 @@ export function CampoIngredientesOpcionais(props: CampoIngredientesOpcionaisProp
                   onClick={() => push({ nome: '', preco: '' })}
                   className="d-flex flex-row justify-content-center align-items-center"
                 >
-                  <span className="me-2">Adicionar</span>
+                  <span className="me-2">Adicionar opcional</span>
+                  <IoAddCircleOutline size={10} />
                 </Botao>
               </Col>
               {(ingredientes_opcionais.length > 0) ? (
@@ -37,6 +39,7 @@ export function CampoIngredientesOpcionais(props: CampoIngredientesOpcionaisProp
 
                     const campo_ingrediente_dados: CampoListaItemProps[] = [
                       {
+                        id: `ingredientes.${index}.nome`,
                         name: `ingredientes.${index}.nome`,
                         placeholder: "Nome",
                         type: "text",
@@ -44,6 +47,7 @@ export function CampoIngredientesOpcionais(props: CampoIngredientesOpcionaisProp
                         name_messagem_erro: `ingredientes.${index}.nome`
                       },
                       {
+                        id: `ingredientes.${index}.preco`,
                         name: `ingredientes.${index}.preco`,
                         placeholder: "Preço",
                         type: "number",
@@ -58,10 +62,11 @@ export function CampoIngredientesOpcionais(props: CampoIngredientesOpcionaisProp
                           <CardBody className="p-1">
                             <Row className="m-0 p-0">
                               {campo_ingrediente_dados.map((item, index) => {
-                                const { name, placeholder, type, value, name_messagem_erro } = item;
+                                const { id, name, placeholder, type, value, name_messagem_erro } = item;
                                 return (
                                   <Col md={12} key={index}>
                                     <CampoListaItem
+                                      id={id}
                                       name={name}
                                       placeholder={placeholder}
                                       type={type}
