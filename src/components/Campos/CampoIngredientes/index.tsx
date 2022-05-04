@@ -7,6 +7,7 @@ import { CampoCheckbox } from "../CampoCheckbox";
 import { lista_unidade_quantidade } from "../../../utils/listas";
 import { CampoListaItem } from "../CampoListaItem";
 import { CampoSelect, CampoSelectProps } from "../CampoSelect";
+import { IoAddCircleOutline } from "react-icons/io5";
 
 interface CampoIngredientesProps {
   ingredientes: IngredientesTypes[];
@@ -31,7 +32,8 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
                   onClick={() => push({ nome: '' })}
                   className="d-flex flex-row justify-content-center align-items-center"
                 >
-                  <span className="me-2">Adicionar ingrediente</span>
+                  <span className="me-2">Adicionar ingredientes</span>
+                  <IoAddCircleOutline size={10} />
                 </Botao>
               </Col>
               {(ingredientes.length > 0) ? (
@@ -44,6 +46,7 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
                           <Row className="m-0 p-0">
                             <Col md={12}>
                               <CampoListaItem
+                                id={`ingredientes.${index}.nome`}
                                 name={`ingredientes.${index}.nome`}
                                 placeholder={"Nome"}
                                 type={"text"}
@@ -53,6 +56,7 @@ export function CampoIngredientes(props: CampoIngredientesProps) {
                             </Col>
                             <Col md={6}>
                               <CampoListaItem
+                                id={`ingredientes.${index}.quantidade`}
                                 name={`ingredientes.${index}.quantidade`}
                                 placeholder={"Quantidade"}
                                 type={"number"}
