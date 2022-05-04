@@ -9,7 +9,7 @@ import { CampoCheckbox } from "../../Campos/CampoCheckbox";
 import { CampoDropzone, CampoDropzoneContainerCol } from "../../Campos/CampoDropzone";
 import { CampoIngredientesOpcionais } from "../../Campos/CampoIngredienteOpcional";
 import { CampoIngredientes } from "../../Campos/CampoIngredientes";
-import { CampoInputComErro, CampoInputComErroProps } from "../../Campos/CampoInput";
+import { CampoInputComErro } from "../../Campos/CampoInput";
 import { CampoListaFotos } from "../../Campos/CampoListaFotos";
 import { CampoQuantidade } from "../../Campos/CampoQuantidade";
 import { CampoSelectComErro } from "../../Campos/CampoSelect";
@@ -53,51 +53,31 @@ export function FormularioRefeicao(props: FormularioRefeicaoProps) {
         {(formik_props) => {
           const { errors, touched, values, setFieldValue, } = formik_props;
 
-          const lista_campos_dados: CampoInputComErroProps[] = [
-            {
-              md: 12,
-              id: "nome",
-              label: "Nome da refeição",
-              name: "nome",
-              type: "text",
-              placeholder: "Digite o nome da refeição",
-              value: values.nome,
-              error: errors.nome,
-              touched: touched.nome,
-            },
-            {
-              md: 12,
-              id: "preco",
-              label: "Preço da refeição",
-              name: "preco",
-              type: "number",
-              placeholder: "Digite o preco da refeição",
-              value: String(values.preco),
-              error: errors.preco,
-              touched: touched.preco,
-            }
-          ];
-
           return (
             <Form encType="multipart/form-data">
               <Row>
-                {lista_campos_dados.map((item, index) => {
-                  const { md, id, label, name, type, placeholder, value, error, touched } = item;
-                  return (
-                    <CampoInputComErro
-                      key={index}
-                      md={md}
-                      id={id}
-                      label={label}
-                      name={name}
-                      type={type}
-                      placeholder={placeholder}
-                      value={value}
-                      error={error}
-                      touched={touched}
-                    />
-                  );
-                })}
+                <CampoInputComErro
+                  md={12}
+                  id="nome"
+                  label="Nome da refeição"
+                  name="nome"
+                  type="text"
+                  placeholder="Digite o nome da refeição"
+                  value={values.nome}
+                  error={errors.nome}
+                  touched={touched.nome}
+                />
+                <CampoInputComErro
+                  md={12}
+                  id="preco"
+                  label="Preço da refeição"
+                  name="preco"
+                  type="number"
+                  placeholder="Digite o preco da refeição"
+                  value={String(values.preco)}
+                  error={errors.preco}
+                  touched={touched.preco}
+                />
                 <CampoQuantidade
                   md={12}
                   quantidade={values.quantidade}
