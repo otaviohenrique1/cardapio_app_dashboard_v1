@@ -1,4 +1,7 @@
 import { Field } from "formik";
+import Col, { ColumnProps } from "reactstrap/types/lib/Col";
+import { CampoErro } from "../CampoErro";
+import { LabelCampoInput } from "../LabelCampoInput";
 
 export interface CampoSelectItemBaseTypes {
   valor: string | number;
@@ -34,5 +37,34 @@ export function CampoSelect(props: CampoSelectProps) {
         );
       })}
     </Field>
+  );
+}
+
+
+export interface CampoSelectPropsComErroProps extends CampoSelectProps {
+  label: string;
+  data: CampoSelectItemBaseTypes[];
+  error?: any;
+  touched?: any;
+  md: ColumnProps;
+  xs?: ColumnProps;
+  sm?: ColumnProps;
+  lg?: ColumnProps;
+  xl?: ColumnProps;
+  xxl?: ColumnProps;
+}
+
+export function CampoSelectComErro(props: CampoSelectPropsComErroProps) {
+  const { id, label, data, name, value, placeholder,
+    label_item_vazio, error, touched, md, xs, sm, lg, xl, xxl } = props;
+
+  return (
+    <Col md={md} xs={xs} sm={sm} lg={lg} xl={xl} xxl={xxl} className="d-flex flex-column mt-3">
+      <LabelCampoInput htmlFor={id} label={label} />
+      <CampoSelect id={id} name={name}
+        value={value} placeholder={placeholder}
+        data={data} label_item_vazio={label_item_vazio} />
+      <CampoErro error={error} touched={touched} />
+    </Col>
   );
 }
