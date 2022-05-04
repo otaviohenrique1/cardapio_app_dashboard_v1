@@ -25,7 +25,7 @@ export const lista_unidade_quantidade = [
   },
 ];
 
-export const tipo_refeicao = [
+export const lista_tipo_refeicao = [
   {
     valor: 'comida',
     texto: 'Comida',
