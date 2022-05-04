@@ -1,9 +1,10 @@
 import { ErrorMessage, Field } from "formik";
+import { InputType } from "reactstrap/types/lib/Input";
 
 export interface CampoListaItemProps {
   name: string;
   placeholder: string;
-  type: CampoInputTypes;
+  type: InputType;
   value: string;
   name_messagem_erro: string;
 }

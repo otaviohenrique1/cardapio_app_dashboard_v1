@@ -1,6 +1,7 @@
 import { Field } from "formik";
 import { Col, Alert } from "reactstrap";
 import { ColumnProps } from "reactstrap/types/lib/Col";
+import { InputType } from "reactstrap/types/lib/Input";
 import { LabelCampoInput } from "../LabelCampoInput";
 
 export interface CampoInputComErroProps extends CampoInputProps {
@@ -33,7 +34,7 @@ export function CampoInputComErro(props: CampoInputComErroProps) {
 export interface CampoInputProps {
   id: string;
   name: string;
-  type: CampoInputTypes;
+  type: InputType;
   value: string;
   placeholder: string;
 }
