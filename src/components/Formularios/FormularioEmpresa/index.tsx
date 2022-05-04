@@ -3,7 +3,7 @@ import { To } from "react-router-dom";
 import { ButtonGroup, Col, Row } from "reactstrap";
 import { Botao } from "../../Botoes/Botao";
 import { BotaoLink } from "../../Botoes/BotaoLink";
-import { CampoInput, CampoInputProps } from "../../Campos/CampoInput";
+import { CampoInputComErro, CampoInputComErroProps } from "../../Campos/CampoInput";
 import { CampoSenhaAntiga } from "../../Campos/CampoSenhaAntiga";
 
 interface FormularioEmpresaProps {
@@ -30,7 +30,7 @@ export function FormularioEmpresa(props: FormularioEmpresaProps) {
         {(formik_props) => {
           const { errors, touched, values } = formik_props;
 
-          const lista_campos_dados: CampoInputProps[] = [
+          const lista_campos_dados: CampoInputComErroProps[] = [
             {
               md: 12, id: "nome", label: "Nome", name: "Nome", type: "text", placeholder: "Digite o nome",
               value: values.nome, error: errors.nome, touched: touched.nome
@@ -57,7 +57,7 @@ export function FormularioEmpresa(props: FormularioEmpresaProps) {
                   const { md, id, label, name, type, placeholder, value, error, touched } = item;
 
                   return (
-                    <CampoInput
+                    <CampoInputComErro
                       key={index}
                       md={md}
                       id={id}
