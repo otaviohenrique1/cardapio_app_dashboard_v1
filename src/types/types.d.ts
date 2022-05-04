@@ -103,10 +103,19 @@ interface RefeicaoFormularioEdicaoTypes extends RefeicaoBaseTypes {
   data_modificacao_cadastro: string;
 }
 
+interface IngredientesOpcionaisTypes {
+  nome: string;
+  preco: number;
+}
+
 interface RefeicaoTypes {
   nome: string;
   preco: string | number;
   ingredientes: IngredientesTypes[];
+  ingredientes_opcionais: IngredientesOpcionaisTypes[];
+  quantidade: number | string,
+  unidade_quantidade: string,
+  tipo_produto: string,
   descricao: string;
   ativo: string | boolean;
   imagens: File[];
