@@ -24,11 +24,12 @@ export function RefeicaoCadastro() {
     data.append('preco', String(preco));
     data.append('descricao', descricao);
     data.append('ativo', String(ativo));
-    data.append('ingredientes', JSON.stringify(ingredientes));
-    data.append('ingredientes_opcionais', JSON.stringify(ingredientes_opcionais));
     data.append('quantidade', String(quantidade));
     data.append('unidade_quantidade', unidade_quantidade);
     data.append('tipo_produto', tipo_produto);
+
+    data.append('ingredientes', JSON.stringify(ingredientes));
+    data.append('ingredientes_opcionais', JSON.stringify(ingredientes_opcionais));
 
     const data_hora_formata = FormatadorDados.GeradorDataHoraFormatada(FORMATO_DATA_COM_HORA_3);
     data.append('data_cadastro', data_hora_formata);
