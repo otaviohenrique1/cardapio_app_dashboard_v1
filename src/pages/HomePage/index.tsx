@@ -53,6 +53,11 @@ export function HomePage() {
           id: 'nome'
         },
         {
+          Header: 'Tipo de produto',
+          accessor: 'tipo_produto',
+          id: 'tipo_produto'
+        },
+        {
           Header: 'Preço (R$)',
           accessor: 'preco',
           id: 'preco',
