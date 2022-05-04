@@ -40,7 +40,6 @@ export function CampoSelect(props: CampoSelectProps) {
   );
 }
 
-
 export interface CampoSelectPropsComErroProps extends CampoSelectProps {
   label: string;
   data: CampoSelectItemBaseTypes[];
