@@ -30,6 +30,7 @@ type CampoInputTypes =
 interface TabelaTypes {
   id: number;
   nome: string;
+  tipo_produto: string;
   preco: number;
   ativo: string;
 }
