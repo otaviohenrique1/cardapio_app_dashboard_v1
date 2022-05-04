@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Col, Container, Row, ButtonGroup, Card, CardBody, CardHeader, CardFooter } from "reactstrap";
 import { Form, Formik } from "formik";
 import { Titulo } from "../../components/Titulo";
-import { CampoInput, CampoInputProps } from "../../components/Campos/CampoInput";
+import { CampoInputComErro, CampoInputComErroProps } from "../../components/Campos/CampoInput";
 import { Botao } from "../../components/Botoes/Botao";
 import { ModalMensagem, ModalMensagemProps } from "../../components/Modals";
 import { ApiBuscaLoginEmpresa, ApiBuscaLoginEmpresaTypes } from "../../utils/api";
@@ -56,7 +56,7 @@ export function Login() {
         {(formik_props) => {
           const { errors, touched, values } = formik_props;
 
-          const lista_campos_dados: CampoInputProps[] = [
+          const lista_campos_dados: CampoInputComErroProps[] = [
             {
               md: 12, type: "text", id: "email", name: "email",
               label: "E-mail", placeholder: "Digite o seu e-mail",
@@ -84,7 +84,7 @@ export function Login() {
                     {lista_campos_dados.map((item, index) => {
                       const { md, id, label, name, type, placeholder, value, error, touched } = item;
                       return (
-                        <CampoInput key={index} md={md} id={id} label={label} name={name} type={type}
+                        <CampoInputComErro key={index} md={md} id={id} label={label} name={name} type={type}
                           placeholder={placeholder} value={value} error={error} touched={touched}
                         />
                       );
